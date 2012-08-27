@@ -135,7 +135,7 @@ Default Settings
                    preloader: true,
     preloaderFadeOutDuration: 250,
            preloaderElements: 'img,video,iframe,object'
-    
+```
     
     
     
