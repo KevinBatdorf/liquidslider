@@ -36,8 +36,9 @@ See [here](http://liquidslider.kevinbatdorf.com) for further details.
 Install the slider in the head after jQuery.
 
 ```javascript
-    <script src="./js/jquery.liquid-slider.0.1.min.js"></script>  
+    <script src="./js/jquery-1.8.0.min.js"></script>
     <script src="./js/jquery-ui-1.8.20.custom.min.js"></script>  
+    <script src="./js/jquery.liquid-slider.0.1.min.js"></script>  
     (function(){
         $('#slider-id').liquidSlider();
       });
@@ -113,6 +114,7 @@ Default Settings
            hashTitleSelector: "h2.title",
             hashTagSeparator: '/',
                      hashTLD: '.html',
+                     
           keyboardNavigation: false,
                      leftKey: 39,
                     rightKey: 37,
