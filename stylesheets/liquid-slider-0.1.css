@@ -1,9 +1,13 @@
 /***********************************************************************
 *
-* Liquid Slider 0.1
-* Kevin Batdorf
+*  Liquid Slider 0.1
+*  Kevin Batdorf
 *
-* http://liquidslider.kevinbatdorf.com
+*  http://liquidslider.kevinbatdorf.com
+*
+*  This version is not under any specific license. The next version will be.
+*  Howwever, you may use it for any purpose EXCEPT for redistributing. Just use common sense.
+*  You can use this for commercial websites, etc.
 *
 ************************************************************************/
 
