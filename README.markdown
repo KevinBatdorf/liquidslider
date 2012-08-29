@@ -135,6 +135,11 @@ Default Settings
                    preloader: true,
     preloaderFadeOutDuration: 250,
            preloaderElements: 'img,video,iframe,object'
+
+                topScrolling: false,
+        topScrollingDuration: 1500,
+          topScrollingOnLoad: false,
+     topScrollingExtraPixels: 0
 ```
     
     

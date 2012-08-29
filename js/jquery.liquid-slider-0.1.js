@@ -957,12 +957,12 @@ if (typeof Object.create !== 'function') {
 
 		scrollToTheTop: function () {
 			var self = this,
-				offset = (self.$sliderWrap).offset(),
-				minusTabs = ($(self.sliderId + '-nav-ul').height() || 0);
+				offset = (self.$sliderWrap).offset();
+				//minusTabs = (($(self.sliderId + '-nav-ul').height() || 0) + self.options.topScrollingExtraPixels);
 				// If the offset is larger than the panel height, scroll up the panel height
 			if (offset > self.setHeight) {
-				$('html, body').animate({'scrollTop': offset.top}, self.options.topScrollingDuration);
-			} else { $('html, body').animate({'scrollTop': self.setHeight}, self.options.topScrollingDuration); }
+				$('html, body').animate({'scrollTop': offset.top - self.options.topScrollingExtraPixels}, self.options.topScrollingDuration);
+			} //else { $('html, body').animate({'scrollTop': self.setHeight}, self.options.topScrollingDuration); }
 		},
 
 		animationCallback: function () {
@@ -1076,7 +1076,7 @@ if (typeof Object.create !== 'function') {
 		navElementTag: "div",
 		crossLinks: false,
 
-		hashLinking: true,
+		hashLinking: false,
 		hashNames: true,
 		hashTitleSelector: "h2.title",
 		hashTagSeparator: '/',
@@ -1105,7 +1105,8 @@ if (typeof Object.create !== 'function') {
 
 		topScrolling: false,
 		topScrollingDuration: 1500,
-		topScrollingOnLoad: false
+		topScrollingOnLoad: false,
+		topScrollingExtraPixels: 0
 		//topScrollingOnAutoPlay: null  (potential feature)
 
 		//swipe: true,
