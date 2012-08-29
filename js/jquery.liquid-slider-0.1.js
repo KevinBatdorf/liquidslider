@@ -89,6 +89,8 @@ if (typeof Object.create !== 'function') {
 				if (self.options.responsive) {self.responsiveEvents(self.loaded); }
 
 				self.configureCSSTransitions();
+
+
 			});
 		},
 
@@ -849,7 +851,15 @@ if (typeof Object.create !== 'function') {
 				self.updateHashTags(self.currentTab);
 
 				// Update arrows if side arrows enabled
-				if (self.options.hideSideArrows) {self.hideArrows(); }
+				if (self.options.hideSideArrows) { self.hideArrows(); }
+
+				// Show arrows if hoverArrows is disabled
+				if (!self.options.hoverArrows) {
+					(self.$leftArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDuration * 3);
+					(self.$rightArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDuration * 3);
+
+				}
+
 
 				this.transition();
 			}
@@ -1064,7 +1074,7 @@ if (typeof Object.create !== 'function') {
 		dynamicArrowRightText: "right &#187;",
 		hideSideArrows: false,
 		hideSideArrowsDuration: 750,
-		hoverArrows: true,
+		hoverArrows: false,
 		hoverArrowDuration: 250,
 
 
