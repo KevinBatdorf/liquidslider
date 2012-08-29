@@ -857,7 +857,6 @@ if (typeof Object.create !== 'function') {
 				if (!self.options.hoverArrows) {
 					(self.$leftArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDuration * 3);
 					(self.$rightArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDuration * 3);
-
 				}
 
 
@@ -1074,7 +1073,7 @@ if (typeof Object.create !== 'function') {
 		dynamicArrowRightText: "right &#187;",
 		hideSideArrows: false,
 		hideSideArrowsDuration: 750,
-		hoverArrows: false,
+		hoverArrows: true,
 		hoverArrowDuration: 250,
 
 
