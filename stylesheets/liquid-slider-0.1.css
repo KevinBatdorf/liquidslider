@@ -160,7 +160,7 @@
   font-weight: bold;
 }
 .liquid-slider-wrapper .liquid-nav ul {  
-  
+  padding:0;
   /* Do not edit below this line */
   clear: both;
   display: block;

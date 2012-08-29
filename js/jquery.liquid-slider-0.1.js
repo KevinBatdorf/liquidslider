@@ -12,6 +12,9 @@
 ************************************************************************/
 
 /*jslint bitwise: true */
+/*jslint browser: true*/
+/*global $, jQuery, window, document*/
+
 // Utility for creating objects in older browsers
 if (typeof Object.create !== 'function') {
 	Object.create = function (obj) {
@@ -46,31 +49,31 @@ if (typeof Object.create !== 'function') {
 			self.pSign =  (self.options.responsive) ? '%' : 'px';
 
 			// Slide animations bad in ie7, so use fade
-			if (navigator.appVersion.indexOf("MSIE 7.") != -1) {
+			if (navigator.appVersion.indexOf("MSIE 7.") !== -1) {
 				self.options.slideEaseFunction = "fade";
 				self.options.autoHeight = false;
 			}
 
-			if (self.options.responsive) {self.determineAnimationType();}
+			if (self.options.responsive) { self.determineAnimationType(); }
 
 			// Build the tabs and navigation
 			self.build();
 
 			// Add preloader
-			if (self.options.preloader) {self.addPreloader();}
-			
+			if (self.options.preloader) { self.addPreloader(); }
+
 			// Start auto slider
-			if (self.options.autoSlide) {self.autoSlide();}
+			if (self.options.autoSlide) { self.autoSlide(); }
 
 			self.events();
 
 
-			if (self.options.preloader & !self.useCSS) {self.removePreloader();}
+			if (self.options.preloader & !self.useCSS) { self.removePreloader(); }
 
 			// Disable clicking until fully loaded. Otherwise buggy with css transitions
-			if (self.useCSS) {self.clickable = false;}
+			if (self.useCSS) { self.clickable = false; }
 
-			$(window).bind("load", function() {
+			$(window).bind("load", function () {
 				// Remove preloader from remaining elements
 				if (self.options.preloader) {
 					$('.liquid-slider-preloader').each(function () {
@@ -81,31 +84,31 @@ if (typeof Object.create !== 'function') {
 				self.loaded = true;
 				self.clickable = true;
 				// This will adjust the slider's height in case of images, etc.
-				self.transition();
+				self.adjustHeight();
 				// Adjust the width after load (IE won't otherwise).
-				if (self.options.responsive) {self.responsiveEvents(self.loaded);}
+				if (self.options.responsive) {self.responsiveEvents(self.loaded); }
 
 				self.configureCSSTransitions();
 			});
 		},
 
 		determineAnimationType: function () {
-			var self = this;
-
+			var self = this,
+				animationstring = 'animation',
+				keyframeprefix = '',
+				domPrefixes = 'Webkit Moz O ms Khtml'.split(' '),
+				pfx  = '',
+				i = 0;
 			// Decide whether or not to use CSS transitions or jQuery
 			// https://developer.mozilla.org/en-US/docs/CSS/CSS_animations/Detecting_CSS_animation_support
 			self.useCSS = false;
-			var animationstring = 'animation',
-				keyframeprefix = '',
-				domPrefixes = 'Webkit Moz O ms Khtml'.split(' '),
-				pfx  = '';
-	
-			if( self.elem.style.animationName ) { self.useCSS = true; }
 
-			if( self.useCSS === false ) {
-				for( var i = 0; i < domPrefixes.length; i++ ) {
-					if( self.elem.style[ domPrefixes[i] + 'AnimationName' ] !== undefined ) {
-						pfx = domPrefixes[ i ];
+			if (self.elem.style.animationName) { self.useCSS = true; }
+
+			if (self.useCSS === false) {
+				for (i = 0; i < domPrefixes.length; i++) {
+					if (self.elem.style[domPrefixes[i] + 'AnimationName'] !== undefined) {
+						pfx = domPrefixes[i];
 						animationstring = pfx + 'Animation';
 						keyframeprefix = '-' + pfx.toLowerCase() + '-';
 						self.useCSS = true;
@@ -115,14 +118,16 @@ if (typeof Object.create !== 'function') {
 			}
 			// Disable CSS transitions if the width is wider than the max
 			// Some features are disabled or different when using CSS transitions
-			if ($(window).outerWidth() > self.options.useCSSMaxWidth ) {self.useCSS = false;}
+			if ($(window).outerWidth() > self.options.useCSSMaxWidth) {self.useCSS = false; }
 
 			// Disable some buggy settings for css transitions(for now)
 			// Preloader also works differently
 			if (self.useCSS) { self.options.continuous = false; }
 		},
 		configureCSSTransitions: function () {
-			var self = this;
+			var self = this,
+				slideEasing,
+				heightEasing;
 
 			self.easing = {
 				// Penner equations
@@ -153,26 +158,28 @@ if (typeof Object.create !== 'function') {
 
 			// Build a CSS class depending on the type of transition
 			if (self.useCSS) {
-				var slideEasing = 'all ' + self.options.slideEaseDuration + 'ms ' + self.easing[self.options.slideEaseFunction],
-					heightEasing = 'all ' + self.options.autoHeightEaseDuration + 'ms ' + self.easing[self.options.autoHeightEaseFunction];
+				slideEasing = 'all ' + self.options.slideEaseDuration + 'ms ' + self.easing[self.options.slideEaseFunction];
+				heightEasing = 'all ' + self.options.autoHeightEaseDuration + 'ms ' + self.easing[self.options.autoHeightEaseFunction];
 
 				// Build the width transition rules
 				$(self.panelContainer).css({
 					'-webkit-transition': slideEasing,
-					   '-moz-transition': slideEasing,
-					    '-ms-transition': slideEasing,
-					     '-o-transition': slideEasing,
-					        'transition': slideEasing
+					'-moz-transition': slideEasing,
+					'-ms-transition': slideEasing,
+					'-o-transition': slideEasing,
+					'transition': slideEasing
 				});
 
 				// Build the height transition rules
-				(self.$sliderId).css({
-				'-webkit-transition': heightEasing,
-				   '-moz-transition': heightEasing,
-				    '-ms-transition': heightEasing,
-				     '-o-transition': heightEasing,
-				        'transition': heightEasing
-				});
+				if (self.options.autoHeight) {
+					(self.$sliderId).css({
+						'-webkit-transition': heightEasing,
+						'-moz-transition': heightEasing,
+						'-ms-transition': heightEasing,
+						'-o-transition': heightEasing,
+						'transition': heightEasing
+					});
+				}
 			}
 		},
 
@@ -197,14 +204,11 @@ if (typeof Object.create !== 'function') {
 					// If it has images, get the highest panel and use that until the page is fully loaded
 					// Otherwise, the panels with images may be too short.
 					if ($(this).find(self.options.preloaderElements).not('.liquid-slider-preloader').length) {
-						$(self.sliderId + ' .panel').each(function () {
-							heightCandidate = $(this).height();
-							height = (heightCandidate > height) ? heightCandidate : height;
-						});
+						height = self.getHeighestPanel();
 					} else {
 						var $this = $(this);
 						$this.find('.liquid-slider-preloader').remove();
-						if ($this.parent()[0] == $((self.$panelContainer).children()[self.currentTab + ~~self.options.continuous])[0]) {
+						if ($this.parent()[0] === $((self.$panelContainer).children()[self.currentTab + ~~self.options.continuous])[0] && self.options.autoHeight) {
 							$(self.sliderId).css('height', $((self.$panelContainer).children()[self.currentTab + ~~self.options.continuous]).css('height'));
 						}
 					}
@@ -227,7 +231,7 @@ if (typeof Object.create !== 'function') {
 							var $this = $(this).text().replace(/(\s)/g, '-');
 							self.hashValue = self.hashValue.replace(self.options.hashTagSeparator, '');
 							self.hashValue = self.hashValue.replace(self.options.hashTLD, '');
-							if ( ($this).toLowerCase() === self.hashValue.toLowerCase()) {
+							if (($this).toLowerCase() === self.hashValue.toLowerCase()) {
 								self.hashValue = parseInt(n + 1, 10);
 								return false;
 							}
@@ -237,24 +241,25 @@ if (typeof Object.create !== 'function') {
 			}
 		},
 
-		updateHashTags: function(tab) {
+		updateHashTags: function (tab) {
 			var self = this;
 			if (self.options.hashLinking) {
 					//console.log( ((self.$elem).find(self.options.hashTitleSelector)[self.currentTab] ));
-					if (self.options.continuous) {
-						if (self.currentTab === self.panelCount - 2) {
-							window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[1]).text().replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : 1;
-						} else if (self.currentTab === -1) {
-							window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[self.panelCount - 2]).text().replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : self.panelCount - 2;
-						} else {
-							window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[tab + 1]).text().replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : tab + 1;
-						}
-					} else { window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[tab]).text().replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : tab + 1;}
-				}
+				if (self.options.continuous) {
+					if (self.currentTab === self.panelCount - 2) {
+						window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[1]).text().replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : 1;
+					} else if (self.currentTab === -1) {
+						window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[self.panelCount - 2]).text().replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : self.panelCount - 2;
+					} else {
+						window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[tab + 1]).text().replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : tab + 1;
+					}
+				} else { window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[tab]).text().replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : tab + 1; }
+			}
 		},
 
 		build: function () {
-			var self = this;
+			var self = this,
+				isAbsolute;
 
 			// Grab the current hash tag
 			self.getHashTags(window.location.hash);
@@ -302,7 +307,7 @@ if (typeof Object.create !== 'function') {
 			}
 
 			// Create a container width to allow for a smooth float right. Won't calculate arrows if absolute
-			var isAbsolute = ((self.$leftArrow) && (self.$leftArrow).css('position') === 'absolute') ? 0 : 1;
+			isAbsolute = ((self.$leftArrow) && (self.$leftArrow).css('position') === 'absolute') ? 0 : 1;
 
 			self.totalSliderWidth = (self.$sliderId).outerWidth(true) +
 				~~($(self.$leftArrow).outerWidth(true)) * isAbsolute +
@@ -348,7 +353,7 @@ if (typeof Object.create !== 'function') {
 			if (self.options.responsive) { self.makeResponsive(); }
 
 			// Apply margin for css3 transitions
-			if (self.useCSS){
+			if (self.useCSS) {
 				self.panelWidth = $(self.panelClass).outerWidth();
 				(self.panelContainer).css({
 					'margin-left': '0%'
@@ -367,9 +372,9 @@ if (typeof Object.create !== 'function') {
 			// The id is assigned here to allow for responsive
 				dropDownList,
 				dynamicTabsElm = '<' + self.options.navElementTag + ' class="liquid-nav"><ul id="' + (self.$elem).attr('id') + '-nav-ul"></ul></' + self.options.navElementTag + '>',
-				selectBoxDefault = (self.options.mobileNavDefaultText) ? '<option disabled="disabled" selected="selected">' + self.options.mobileNavDefaultText + '</option>' : null ;
+				selectBoxDefault = (self.options.mobileNavDefaultText) ? '<option disabled="disabled" selected="selected">' + self.options.mobileNavDefaultText + '</option>' : null;
 			if (self.options.responsive && self.options.mobileNavigation) {
-				dropDownList = '<div class="liquid-slider-select-box"><select id="' + (self.$elem).attr('id') + '-nav-select" name="navigation">' + selectBoxDefault +'</select></div>';
+				dropDownList = '<div class="liquid-slider-select-box"><select id="' + (self.$elem).attr('id') + '-nav-select" name="navigation">' + selectBoxDefault + '</select></div>';
 			}
 
 			// Add basic frame
@@ -506,7 +511,7 @@ if (typeof Object.create !== 'function') {
 			$(self.sliderId + ' .panel').css('width', 100 / self.panelCount + self.pSign);
 
 			// Set the initial height
-			//(self.$sliderId).css('height', self.getHeight());
+			if (!self.options.autoHeight) { (self.$sliderId).css('height', self.getHeighestPanel() + 'px'); }
 
 			// Cache the padding for add/removing arrows
 			if (self.options.hideArrowsWhenMobile) {
@@ -523,7 +528,7 @@ if (typeof Object.create !== 'function') {
 			self.pSign = 'px';
 
 			// Change navigation when the screen size is too small.
-			if (self.options.responsive) {self.responsiveEvents();}
+			if (self.options.responsive) {self.responsiveEvents(); }
 
 			// Do something when an item is selected from the select box
 			$(self.sliderId + '-nav-select').change(function () { self.setCurrent(parseInt($(this).val().split('tab')[1], 10) - 1); });
@@ -536,43 +541,44 @@ if (typeof Object.create !== 'function') {
 				$(window).bind('resize', function () {
 					self.responsiveEvents();
 					//console.log(self.useCSS);
-					
-			//if ((self.$sliderId).outerWidth() > self.options.useCSSMaxWidth && self.useCSS) {self.useCSS = false;}
+
+			//if ((self.$sliderId).outerWidth() > self.options.useCSSMaxWidth && self.useCSS) {self.useCSS = false; }
 				});
 			}
 		},
 
 		responsiveEvents: function () {
-			var self = this;
+			var self = this,
+				mobileNavChangeOver;
 
 			if (self.options.responsive) {
-				var mobileNavChangeOver = (self.options.mobileUIThreshold) ? self.options.mobileUIThreshold : self.totalNavWidth + 10;
+				mobileNavChangeOver = (self.options.mobileUIThreshold || self.totalNavWidth + 10);
 				if ((self.$sliderId).outerWidth() < mobileNavChangeOver) {
 					if (self.options.mobileNavigation) {
 						(self.$sliderNavUl).css('display', 'none');
 						$(self.sliderId + '-wrapper .liquid-slider-select-box').css('display', 'block');
 						$(self.sliderId + '-nav-select').css('display', 'block');
 						// Update the navigation
-						if (self.loaded) {$(self.sliderId + '-nav-select').val(self.options.mobileNavDefaultText);}
+						if (self.loaded) {$(self.sliderId + '-nav-select').val(self.options.mobileNavDefaultText); }
 
 					}
 					if (self.options.hideArrowsWhenMobile && self.options.dynamicArrows) {
 						(self.$leftArrow).remove();
 						(self.$rightArrow).remove();
 					} else if (!self.options.dynamicArrowsGraphical) {
-							(self.$leftArrow).css('margin-' + self.options.dynamicTabsPosition, '0');
-							(self.$rightArrow).css('margin-' + self.options.dynamicTabsPosition, '0');
-						}
+						(self.$leftArrow).css('margin-' + self.options.dynamicTabsPosition, '0');
+						(self.$rightArrow).css('margin-' + self.options.dynamicTabsPosition, '0');
+					}
 				} else {
-					if (self.options.mobileNavigation) {
+					if (self.options.mobileNavigation && self.options.dynamicTabs) {
 						(self.$sliderNavUl).css('display', 'block');
 						$(self.sliderId + '-wrapper .liquid-slider-select-box').css('display', 'none');
 						$(self.sliderId + '-nav-select').css('display', 'none');
 					}
 					if (self.options.hideArrowsWhenMobile && self.options.dynamicArrows && !($(self.leftArrow).length || $(self.rightArrow).length)) {
 						self.addArrows();
-					} else if (!self.options.dynamicArrowsGraphical) {(
-						self.$leftArrow).css('margin-' + self.options.dynamicTabsPosition, (self.$sliderNavUl).css('height'));
+					} else if (!self.options.dynamicArrowsGraphical) {
+						(self.$leftArrow).css('margin-' + self.options.dynamicTabsPosition, (self.$sliderNavUl).css('height'));
 						(self.$rightArrow).css('margin-' + self.options.dynamicTabsPosition, (self.$sliderNavUl).css('height'));
 					}
 				}
@@ -582,6 +588,7 @@ if (typeof Object.create !== 'function') {
 				// Set the width to slide
 				self.slideWidth = $(self.sliderId).width();
 				// Send to adjust the height
+				self.adjustHeight();
 				self.transition();
 			}
 
@@ -589,11 +596,11 @@ if (typeof Object.create !== 'function') {
 
 		events: function () {
 			var self = this;
-				
+
 			// CLick arrows
 			if (self.options.dynamicArrows) {
 				$((self.$sliderWrap).find('[class^=liquid-nav-]')).on('click', function (e) {
-					
+
 					// These prevent clicking when in continuous mode, which would break it otherwise.
 					if (!self.clickable && self.options.continuous) { return false; }
 					self.setCurrent($(this).attr('class').split('-')[2]);
@@ -605,7 +612,7 @@ if (typeof Object.create !== 'function') {
 			// Click tabs
 			if (self.options.dynamicTabs) {
 				(self.$sliderWrap).find('[class^=liquid-nav] li').on('click', function (e) {
-					
+
 					if (!self.clickable && self.options.continuous) {return false; }
 					self.setCurrent(parseInt($(this).attr('class').split('tab')[1], 10) - 1);
 					if (self.options.continuous) {self.clickable = false; }
@@ -616,7 +623,8 @@ if (typeof Object.create !== 'function') {
 			// Click cross links
 			if (self.options.crossLinks) {
 				(self.$crosslinks).on('click', function (e) {
-				
+					self.readyToScroll = true; // For scrollTop()
+
 					if (!self.clickable && self.options.continuous) {return false; }
 					// Stop and Play controls
 					if (self.options.autoSlideControls) {
@@ -649,7 +657,8 @@ if (typeof Object.create !== 'function') {
 			}
 			// Click to stop (or pause) autoslider
 			(self.$sliderWrap).find('*').on('click', function (e) {
-				
+				self.readyToScroll = true; // For scrollTop()
+
 				// AutoSlide controls.
 				if (!self.clickable && self.options.continuous) {
 					self.checkAutoSlideStop();
@@ -669,12 +678,11 @@ if (typeof Object.create !== 'function') {
 			self.hover();
 
 			// Enable Touch Events
-			if (self.options.swipe) {self.touch();}
+			if (self.options.swipe) {self.touch(); }
 
 			// Enable Keyboard Events
-			if (self.options.keyboardNavigation) {self.keyboard();}
+			if (self.options.keyboardNavigation) {self.keyboard(); }
 
-			
 		},
 
 		hover: function () {
@@ -686,7 +694,17 @@ if (typeof Object.create !== 'function') {
 				(self.$sliderWrap).hover(
 					function () {clearTimeout(self.autoslideTimeout); },
 					function () {
-						if (!self.autoSlideStopped) { self.setCurrent(self.options.autoSliderDirection); self.autoSlide(); }
+						if (!self.autoSlideStopped) {
+							if (!self.autoSlideStopWhenClicked) {
+								self.hoverTimeout = setTimeout(function () {
+									self.setCurrent(self.options.autoSliderDirection);
+									self.autoSlide();
+								}, self.options.autoSlideInterval);
+							} else {
+								self.setCurrent(self.options.autoSliderDirection);
+								self.autoSlide();
+							}
+						}
 					}
 				);
 			}
@@ -759,6 +777,7 @@ if (typeof Object.create !== 'function') {
 			// Keyboard Events
 			var self = this;
 			$(document).keydown(function (event) {
+				self.readyToScroll = true; // For scrollTop()
 				var key = event.keyCode || event.which;
 				if (event.target.type !== 'textarea' && event.target.type !== 'textbox') {
 					if (key === self.options.leftKey) {
@@ -777,7 +796,6 @@ if (typeof Object.create !== 'function') {
 				self.checkAutoSlideStop();
 				if (typeof self.options.callbackFunction === 'function') { self.animationCallback(); }
 			});
-		
 		},
 
 		setCurrent: function (direction) {
@@ -817,69 +835,92 @@ if (typeof Object.create !== 'function') {
 				// Add current class to cross linked Tabs
 				if (self.options.crossLinks) {
 					(self.$crosslinks).each(function () {
-						if ( $(this).attr('href') === '#' + (self.setTab + 1)) {
+						if ($(this).attr('href') === '#' + (self.setTab + 1)) {
 							$(this).addClass('currentCrossLink')
-							.siblings().removeClass('currentCrossLink');
+								.siblings().removeClass('currentCrossLink');
 						}
 					});
 				}
 
 				// Update the dropdown menu when small.
 				if (self.options.responsive && self.options.mobileNavigation && self.loaded) { $(self.sliderId + '-nav-select').val('tab' + (self.setTab + 1)); }
-				
+
 				// Update hash tags
 				self.updateHashTags(self.currentTab);
 
 				// Update arrows if side arrows enabled
-				if (self.options.hideSideArrows) {self.hideArrows();}
+				if (self.options.hideSideArrows) {self.hideArrows(); }
 
 				this.transition();
-
 			}
 		},
 
 		getHeight: function (loaded) {
-			var self = this;
+			var self = this,
+				currentPanelHeight;
 			// Cache the original height of the current panel
-			var currentPanelHeight = $($(self.panelContainer).children()[self.panelHeightCount]).css('height').split('px')[0];
+			currentPanelHeight = $($(self.panelContainer).children()[self.panelHeightCount]).css('height').split('px')[0];
 			// Create a new height based on the user settings (Beta)
 			self.setHeight = (self.options.autoHeightRatio) ?
-				(((self.$sliderWrap).outerWidth(true) / (self.options.autoHeightRatio).split(':')[1] * (self.options.autoHeightRatio).split(':')[0])) :
-				currentPanelHeight;
+					(((self.$sliderWrap).outerWidth(true) / (self.options.autoHeightRatio).split(':')[1] * (self.options.autoHeightRatio).split(':')[0])) :
+					currentPanelHeight;
 			// If the user settings indicate a height too high, use the smaller value
 			self.setHeight = (self.setHeight < currentPanelHeight) ? self.setHeight : currentPanelHeight;
-			
+
 			self.setHeight = (self.setHeight < self.options.autoHeightMin) ? self.options.autoHeightMin : self.setHeight;
 			if (!loaded) {
 				// Only run once
 				return self.removePreloader();
 
-			}else {return self.setHeight;}
-			
+			}
+			return self.setHeight;
 		},
 
-		transition: function () {
+		getHeighestPanel: function () {
+			var self = this,
+				height = 0,
+				heightCandidate;
+			$(self.sliderId + ' .panel').each(function () {
+				heightCandidate = $(this).height();
+				height = (heightCandidate > height) ? heightCandidate : height;
+			});
+			return height;
+		},
+
+		adjustHeight: function () {
 			var self = this;
+
 			// Adjust the height
 			if (self.options.autoHeight && self.useCSS && self.loaded) {
 				$(self.panelContainer).parent().css({
-					'height': self.getHeight(self.loaded) + 'px'
+					'height': self.getHeight(true) + 'px'
 				});
 			} else if (self.options.autoHeight && self.loaded) {
 				$(self.panelContainer).parent().animate({
-					'height': self.getHeight(self.loaded) + 'px'
+					'height': self.getHeight(true) + 'px'
 				}, {
 					easing: self.options.autoHeightEaseFunction,
 					duration: self.options.autoHeightEaseDuration,
 					queue: false
 				});
 			}
+		},
+
+		transition: function () {
+			var self = this;
+			// Adjust the scroll distance
+			if (self.options.topScrolling && !self.useCSS && (self.readyToScroll || self.options.topScrollingOnLoad)) { self.scrollToTheTop(); }
+
+			// Adjust the height
+			if (self.options.autoHeight) { self.adjustHeight(); }
+
+
 			// Transition for fade option
 			if (self.options.slideEaseFunction === 'fade' && self.loaded) {
 				$($(self.panelContainer).children()[self.currentTab])
 					.fadeTo(self.options.slideEaseDuration, 1.0)
 					.siblings().css('display', 'none');
-			} else if (self.loaded || !self.useCSS){
+			} else if (self.loaded || !self.useCSS) {
 				// Adjust the margin for continuous sliding
 				if (self.options.continuous) {
 					self.marginLeft = -(self.currentTab * self.slideWidth) - self.slideWidth;
@@ -890,11 +931,11 @@ if (typeof Object.create !== 'function') {
 				// Animate the slider
 				if (self.useCSS && self.loaded) {
 					(self.panelContainer).css({
-					'-webkit-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
-					   '-moz-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
-					    '-ms-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
-					     '-o-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
-					        'transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)'
+						'-webkit-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
+						'-moz-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
+						'-ms-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
+						'-o-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
+						'transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)'
 					});
 				} else {
 					(self.panelContainer).animate({
@@ -914,11 +955,20 @@ if (typeof Object.create !== 'function') {
 			if (self.options.hideSideArrows && !self.options.hoverArrows) { self.hideArrows(); }
 		},
 
-		animationCallback: function () {
-			var self = this;
-			setTimeout(function () {self.options.callbackFunction.call(this);}, self.options.slideEaseDuration + 50);
+		scrollToTheTop: function () {
+			var self = this,
+				offset = (self.$sliderWrap).offset(),
+				minusTabs = ($(self.sliderId + '-nav-ul').height() || 0);
+				// If the offset is larger than the panel height, scroll up the panel height
+			if (offset > self.setHeight) {
+				$('html, body').animate({'scrollTop': offset.top}, self.options.topScrollingDuration);
+			} else { $('html, body').animate({'scrollTop': self.setHeight}, self.options.topScrollingDuration); }
 		},
 
+		animationCallback: function () {
+			var self = this;
+			setTimeout(function () {self.options.callbackFunction.call(this); }, self.options.slideEaseDuration + 50);
+		},
 
 		autoSlide: function () {
 			var self = this;
@@ -972,7 +1022,7 @@ if (typeof Object.create !== 'function') {
 					self.clickable = true;
 				}, delay);
 			} else { self.clickable = true; }
-			//if (element) {(element).addClass('hello');}
+			//if (element) {(element).addClass('hello'); }
 		}
 	};
 
@@ -987,70 +1037,77 @@ if (typeof Object.create !== 'function') {
 	};
 
 	$.fn.liquidSlider.options = {
-                  autoHeight: true,
-               autoHeightMin: 0,
-      autoHeightEaseDuration: 1500,
-      autoHeightEaseFunction: "easeInOutExpo",
-             autoHeightRatio: null, // still in development
+		autoHeight: true,
+		autoHeightMin: 0,
+		autoHeightEaseDuration: 1500,
+		autoHeightEaseFunction: "easeInOutExpo",
+		autoHeightRatio: null, // still in development
 
-           slideEaseDuration: 1500,
-           slideEaseFunction: "easeInOutExpo",  // will fallback to fade on IE7
-            callbackFunction: null,
+		slideEaseDuration: 1500,
+		slideEaseFunction: "easeInOutExpo",  // will fallback to fade on IE7
+		callbackFunction: null,
 
-                   autoSlide: false,
-         autoSliderDirection: 'right',
-           autoSlideInterval: 7000,
-           autoSlideControls: false,
-          autoSlideStartText: 'Start',
-           autoSlideStopText: 'Stop',
-    autoSlideStopWhenClicked: true,
-       autoSlidePauseOnHover: true,
+		autoSlide: false,
+		autoSliderDirection: 'right',
+		autoSlideInterval: 7000,
+		autoSlideControls: false,
+		autoSlideStartText: 'Start',
+		autoSlideStopText: 'Stop',
+		autoSlideStopWhenClicked: true,
+		autoSlidePauseOnHover: true,
 
-                  continuous: true,
+		continuous: true,
 
-               dynamicArrows: true,
-      dynamicArrowsGraphical: true,
-        dynamicArrowLeftText: "&#171; left",
-       dynamicArrowRightText: "right &#187;",
-              hideSideArrows: false,
-      hideSideArrowsDuration: 750,
-                 hoverArrows: true,
-          hoverArrowDuration: 250,
+		dynamicArrows: true,
+		dynamicArrowsGraphical: true,
+		dynamicArrowLeftText: "&#171; left",
+		dynamicArrowRightText: "right &#187;",
+		hideSideArrows: false,
+		hideSideArrowsDuration: 750,
+		hoverArrows: true,
+		hoverArrowDuration: 250,
 
 
-                 dynamicTabs: true,
-            dynamicTabsAlign: "left",
-         dynamicTabsPosition: "top",
-            firstPanelToLoad: 1,
-          panelTitleSelector: "h2.title",
-               navElementTag: "div",
-                  crossLinks: false,
-           
-                 hashLinking: false,
-                   hashNames: true,
-           hashTitleSelector: "h2.title",
-            hashTagSeparator: '/',
-                     hashTLD: '.html',
-          keyboardNavigation: false,
-                     leftKey: 39,
-                    rightKey: 37,
-                   panelKeys: {
-                      1: 49,
-                      2: 50,
-                      3: 51,
-                      4: 52
-                    },
-                    
-                  responsive: true,
-            mobileNavigation: true,
-        mobileNavDefaultText: 'Menu',
-           mobileUIThreshold: 0,
-        hideArrowsWhenMobile: true,
-              useCSSMaxWidth: 1030,
+		dynamicTabs: true,
+		dynamicTabsAlign: "left",
+		dynamicTabsPosition: "top",
+		firstPanelToLoad: 1,
+		panelTitleSelector: "h2.title",
+		navElementTag: "div",
+		crossLinks: false,
 
-                   preloader: true,
-    preloaderFadeOutDuration: 250,
-           preloaderElements: 'img,video,iframe,object'
+		hashLinking: true,
+		hashNames: true,
+		hashTitleSelector: "h2.title",
+		hashTagSeparator: '/',
+		hashTLD: '.html',
+
+		keyboardNavigation: false,
+		leftKey: 39,
+		rightKey: 37,
+		panelKeys: {
+			1: 49,
+			2: 50,
+			3: 51,
+			4: 52
+		},
+
+		responsive: true,
+		mobileNavigation: true,
+		mobileNavDefaultText: 'Menu',
+		mobileUIThreshold: 0,
+		hideArrowsWhenMobile: true,
+		useCSSMaxWidth: 1030,
+
+		preloader: true,
+		preloaderFadeOutDuration: 250,
+		preloaderElements: 'img,video,iframe,object',
+
+		topScrolling: false,
+		topScrollingDuration: 1500,
+		topScrollingOnLoad: false
+		//topScrollingOnAutoPlay: null  (potential feature)
+
 		//swipe: true,
 		//swipeThreshold: 100
 	};
