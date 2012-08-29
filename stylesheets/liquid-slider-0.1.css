@@ -104,17 +104,22 @@
 /******************************************************
 * These provide a base starting point for images and
 * video. However, you will have to add more rules
-* based on the content you use.
+* based on the content you use. Use the @media queries 
+* at the bottom of this file.
 *******************************************************/
 .liquid-slider-wrapper .liquid-slider .panel img{
+  /*
   width:100%;
   height:auto;  
   margin:0 5px;
+  */
 }
 
 .liquid-slider-wrapper .liquid-slider .panel video {
+  /*
   width:100%;  
   height:auto;
+  */
 }
 
 /******************************************************
@@ -355,8 +360,11 @@
 ******************************************************************/
 @media only screen and (min-width: 481px) {
   .liquid-slider-wrapper .liquid-slider .panel img{
-    width:30%;
+    /* Example */
+    /*
+    width:24%;
     margin:2px;
+    */
   }
 
 }
@@ -367,8 +375,10 @@
 ******************************************************************/
 @media only screen and (min-width: 768px) {
   .liquid-slider-wrapper .liquid-slider .panel img{
+    /* Example */
+    /*
     width:24%;
-    margin:2px;
+    */
   }
 }
 
