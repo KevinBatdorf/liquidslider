@@ -541,8 +541,9 @@ if (typeof Object.create !== 'function') {
 			// Change navigation if the user resizes the screen.
 			if (self.options.responsive) {
 				$(window).bind('resize', function () {
+					//This way we know the window is being resized.
+					self.resizing = true;
 					self.responsiveEvents();
-					//console.log(self.useCSS);
 
 			//if ((self.$sliderId).outerWidth() > self.options.useCSSMaxWidth && self.useCSS) {self.useCSS = false; }
 				});
@@ -918,7 +919,7 @@ if (typeof Object.create !== 'function') {
 		transition: function () {
 			var self = this;
 			// Adjust the scroll distance
-			if (self.options.topScrolling && !self.useCSS && (self.readyToScroll || self.options.topScrollingOnLoad)) { self.scrollToTheTop(); }
+			if (self.options.topScrolling && !self.resizing && !self.useCSS && (self.readyToScroll || self.options.topScrollingOnLoad)) { self.scrollToTheTop(); }
 
 			// Adjust the height
 			if (self.options.autoHeight) { self.adjustHeight(); }
@@ -962,6 +963,7 @@ if (typeof Object.create !== 'function') {
 				$(self.sliderId + '-wrapper').css('width', (self.$sliderId).outerWidth(true));
 			}
 			if (self.options.hideSideArrows && !self.options.hoverArrows) { self.hideArrows(); }
+			self.resizing = false;
 		},
 
 		scrollToTheTop: function () {
@@ -1112,7 +1114,7 @@ if (typeof Object.create !== 'function') {
 		preloaderFadeOutDuration: 250,
 		preloaderElements: 'img,video,iframe,object',
 
-		topScrolling: false,
+		topScrolling: true,
 		topScrollingDuration: 1500,
 		topScrollingOnLoad: false,
 		topScrollingExtraPixels: 0
