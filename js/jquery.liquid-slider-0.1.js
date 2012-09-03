@@ -1090,8 +1090,8 @@ if (typeof Object.create !== 'function') {
 		hashLinking: false,
 		hashNames: true,
 		hashTitleSelector: "h2.title",
-		hashTagSeparator: '/',
-		hashTLD: '.html',
+		hashTagSeparator: '', // suggestion '/'
+		hashTLD: '', // suggestion: '.html'
 
 		keyboardNavigation: false,
 		leftKey: 39,

@@ -306,7 +306,7 @@
   margin: 0;
 }
 .liquid-responsive .liquid-slider .panel .panel-wrapper {
-  padding: 20px 35px;
+  padding: 10px;
 }
 .liquid-responsive .liquid-nav-left {
   /* Left non-graphical arrows */
@@ -379,6 +379,9 @@
     /*
     width:24%;
     */
+  }
+  .liquid-responsive .liquid-slider .panel .panel-wrapper {
+    padding: 20px 35px;
   }
 }
 
