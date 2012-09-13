@@ -1091,7 +1091,7 @@ if (typeof Object.create !== 'function') {
 		hashNames: true,
 		hashTitleSelector: "h2.title",
 		hashTagSeparator: '', // suggestion '/'
-		hashTLD: '', // suggestion: '.html'
+		hashTLD: '',
 
 		keyboardNavigation: false,
 		leftKey: 39,
