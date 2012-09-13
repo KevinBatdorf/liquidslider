@@ -46,10 +46,10 @@ if (typeof Object.create !== 'function') {
 			// Variable for the % sign if needed (responsive), otherwise px
 			self.pSign =  (self.options.responsive) ? '%' : 'px';
 
-			// Slide animations bad in ie7, so use fade
+			// Slide animations bad in ie7, so use fade (fixed?)
 			if (navigator.appVersion.indexOf("MSIE 7.") !== -1) {
-				self.options.slideEaseFunction = "fade";
-				self.options.autoHeight = false;
+				//self.options.slideEaseFunction = "fade";
+				//self.options.autoHeight = false;
 			}
 
 			if (self.options.responsive) { self.determineAnimationType(); }
@@ -924,10 +924,12 @@ if (typeof Object.create !== 'function') {
 
 
 			// Transition for fade option
-			if (self.options.slideEaseFunction === 'fade' && self.loaded) {
-				$($(self.panelContainer).children()[self.currentTab])
-					.fadeTo(self.options.slideEaseDuration, 1.0)
-					.siblings().css('display', 'none');
+			if (self.options.slideEaseFunction === 'fade') {
+				if (self.loaded) {
+					$($(self.panelContainer).children()[self.currentTab])
+						.fadeTo(self.options.slideEaseDuration, 1.0)
+						.siblings().css('display', 'none');
+				}
 			} else if (self.loaded || !self.useCSS) {
 				// Adjust the margin for continuous sliding
 				if (self.options.continuous) {
