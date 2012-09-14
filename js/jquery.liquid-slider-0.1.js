@@ -1114,7 +1114,7 @@ if (typeof Object.create !== 'function') {
 		preloaderFadeOutDuration: 250,
 		preloaderElements: 'img,video,iframe,object',
 
-		topScrolling: true,
+		topScrolling: false,
 		topScrollingDuration: 1500,
 		topScrollingOnLoad: false,
 		topScrollingExtraPixels: 0,
