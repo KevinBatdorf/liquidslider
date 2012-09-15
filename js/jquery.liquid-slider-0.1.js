@@ -863,11 +863,11 @@ if (typeof Object.create !== 'function') {
 			}
 		},
 
-		getHeight: function (loaded) {
+		getHeight: function (height) {
 			var self = this,
 				currentPanelHeight;
 			// Cache the original height of the current panel
-			currentPanelHeight = $($(self.panelContainer).children()[self.panelHeightCount]).css('height').split('px')[0];
+			currentPanelHeight = height || $($(self.panelContainer).children()[self.panelHeightCount]).css('height').split('px')[0];
 			// Create a new height based on the user settings (Beta)
 			self.setHeight = (self.options.autoHeightRatio) ?
 					(((self.$sliderWrap).outerWidth(true) / (self.options.autoHeightRatio).split(':')[1] * (self.options.autoHeightRatio).split(':')[0])) :
@@ -876,7 +876,7 @@ if (typeof Object.create !== 'function') {
 			self.setHeight = (self.setHeight < currentPanelHeight) ? self.setHeight : currentPanelHeight;
 
 			self.setHeight = (self.setHeight < self.options.autoHeightMin) ? self.options.autoHeightMin : self.setHeight;
-			if (!loaded) {
+			if (!self.loaded) {
 				// Only run once
 				return self.removePreloader();
 
@@ -895,17 +895,17 @@ if (typeof Object.create !== 'function') {
 			return height;
 		},
 
-		adjustHeight: function () {
+		adjustHeight: function (height) {
 			var self = this;
 
 			// Adjust the height
 			if (self.options.autoHeight && self.useCSS && self.loaded) {
 				$(self.panelContainer).parent().css({
-					'height': self.getHeight(true) + 'px'
+					'height': self.getHeight(height) + 'px'
 				});
 			} else if (self.options.autoHeight && self.loaded) {
 				$(self.panelContainer).parent().animate({
-					'height': self.getHeight(true) + 'px'
+					'height': self.getHeight(height) + 'px'
 				}, {
 					easing: self.options.autoHeightEaseFunction,
 					duration: self.options.autoHeightEaseDuration,
