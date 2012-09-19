@@ -578,6 +578,7 @@ if (typeof Object.create !== 'function') {
 					}
 					if (self.options.hideArrowsWhenMobile && self.options.dynamicArrows && !($(self.leftArrow).length || $(self.rightArrow).length)) {
 						self.addArrows();
+						self.events();
 					} else if (!self.options.dynamicArrowsGraphical) {
 						(self.$leftArrow).css('margin-' + self.options.dynamicTabsPosition, (self.$sliderNavUl).css('height'));
 						(self.$rightArrow).css('margin-' + self.options.dynamicTabsPosition, (self.$sliderNavUl).css('height'));
@@ -920,7 +921,7 @@ if (typeof Object.create !== 'function') {
 			if (self.options.topScrolling && !self.resizing && !self.useCSS && (self.readyToScroll || self.options.topScrollingOnLoad)) { self.scrollToTheTop(); }
 
 			// Adjust the height
-			if (self.options.autoHeight) { self.adjustHeight(); }
+			if (self.options.autoHeight && !self.resizing) { self.adjustHeight(); }
 
 
 			// Transition for fade option
@@ -939,7 +940,7 @@ if (typeof Object.create !== 'function') {
 					self.marginLeft = -(self.currentTab * self.slideWidth);
 				}
 				// Animate the slider
-				if (self.useCSS && self.loaded) {
+				if (self.useCSS && self.loaded && !self.resizing) {
 					(self.panelContainer).css({
 						'-webkit-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
 						'-moz-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
@@ -947,7 +948,7 @@ if (typeof Object.create !== 'function') {
 						'-o-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
 						'transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)'
 					});
-				} else {
+				} else if (!self.resizing) {
 					(self.panelContainer).animate({
 						'margin-left': self.marginLeft + self.pSign
 					}, {
@@ -963,7 +964,11 @@ if (typeof Object.create !== 'function') {
 				$(self.sliderId + '-wrapper').css('width', (self.$sliderId).outerWidth(true));
 			}
 			if (self.options.hideSideArrows && !self.options.hoverArrows) { self.hideArrows(); }
-			self.resizing = false;
+			if (self.resizing) {
+				// Make sure the screen updates properly
+				self.resizing = false;
+				self.responsiveEvents();
+			}
 		},
 
 		scrollToTheTop: function () {
