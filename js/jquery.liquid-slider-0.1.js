@@ -896,20 +896,22 @@ if (typeof Object.create !== 'function') {
 			return height;
 		},
 
-		adjustHeight: function (height) {
+		adjustHeight: function (easing, duration, height) {
 			var self = this;
 
 			// Adjust the height
 			if (self.options.autoHeight && self.useCSS && self.loaded) {
+				// CSS transitions
 				$(self.panelContainer).parent().css({
 					'height': self.getHeight(height) + 'px'
 				});
 			} else if (self.options.autoHeight && self.loaded) {
+				// jQuery animations
 				$(self.panelContainer).parent().animate({
 					'height': self.getHeight(height) + 'px'
 				}, {
-					easing: self.options.autoHeightEaseFunction,
-					duration: self.options.autoHeightEaseDuration,
+					easing: easing || self.options.autoHeightEaseFunction,
+					duration: duration || self.options.autoHeightEaseDuration,
 					queue: false
 				});
 			}
