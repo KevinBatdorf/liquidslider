@@ -49,7 +49,7 @@ if (typeof Object.create !== 'function') {
 			// Slide animations bad in ie7, so use fade (fixed?)
 			if ((self.options.setIeToFade === true) && ((navigator.appVersion.indexOf("MSIE 7.") !== -1) || navigator.appVersion.indexOf("MSIE 8.") !== -1)) {
 				self.options.slideEaseFunction = "fade";
-				self.options.autoHeight = false;
+				self.dontAnimateHeight = true;
 			}
 
 			if (self.options.responsive) { self.determineAnimationType(); }
@@ -900,7 +900,7 @@ if (typeof Object.create !== 'function') {
 			var self = this;
 
 			// Adjust the height
-			if (self.options.autoHeight && self.loaded && (self.useCSS || self.options.setIeToFade) ) {
+			if (self.options.autoHeight && self.loaded && (self.useCSS || self.dontAnimateHeight) ) {
 				// CSS transitions or IE
 				$(self.panelContainer).parent().css({
 					'height': self.getHeight(height) + 'px'
