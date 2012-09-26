@@ -900,8 +900,8 @@ if (typeof Object.create !== 'function') {
 			var self = this;
 
 			// Adjust the height
-			if (self.options.autoHeight && self.useCSS && self.loaded) {
-				// CSS transitions
+			if (self.options.autoHeight && self.loaded && (self.useCSS || self.options.setIeToFade) ) {
+				// CSS transitions or IE
 				$(self.panelContainer).parent().css({
 					'height': self.getHeight(height) + 'px'
 				});
@@ -1062,7 +1062,7 @@ if (typeof Object.create !== 'function') {
 		autoHeightRatio: null, // still in development
 
 		slideEaseDuration: 1500,
-		slideEaseFunction: "easeInOutExpo",  // will fallback to fade on IE7
+		slideEaseFunction: "easeInOutExpo",
 		callbackFunction: null,
 
 		autoSlide: false,
