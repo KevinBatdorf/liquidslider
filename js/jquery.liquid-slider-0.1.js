@@ -839,7 +839,7 @@ if (typeof Object.create !== 'function') {
 					(self.$crosslinks).each(function () {
 						if ($(this).attr('href') === '#' + (self.setTab + 1)) {
 							$(this).addClass('currentCrossLink')
-								.siblings().removeClass('currentCrossLink');
+								.parent().siblings().children().removeClass('currentCrossLink');
 						}
 					});
 				}

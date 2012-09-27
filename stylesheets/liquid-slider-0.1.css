@@ -157,7 +157,6 @@
 }
 .liquid-slider-wrapper .liquid-nav .current {
   background: #f2f2f2;
-  border-top-left-radius:0;
 }
 .currentCrossLink {
   font-weight: bold;
