@@ -47,8 +47,8 @@ if (typeof Object.create !== 'function') {
 			self.pSign =  (self.options.responsive) ? '%' : 'px';
 
 			// Slide animations bad in ie7, so use fade (fixed?)
-			if ((self.options.setIeToFade === true) && ((navigator.appVersion.indexOf("MSIE 7.") !== -1) || navigator.appVersion.indexOf("MSIE 8.") !== -1)) {
-				self.options.slideEaseFunction = "fade";
+			if ( ((navigator.appVersion.indexOf("MSIE 7.") !== -1) || navigator.appVersion.indexOf("MSIE 8.") !== -1)) {
+				//self.options.slideEaseFunction = "fade";
 				self.dontAnimateHeight = true;
 			}
 
@@ -1124,9 +1124,9 @@ if (typeof Object.create !== 'function') {
 		topScrolling: false,
 		topScrollingDuration: 1500,
 		topScrollingOnLoad: false,
-		topScrollingExtraPixels: 0,
+		topScrollingExtraPixels: 0
 
-		setIeToFade:false
+		//setIeToFade:true (disabled for now)
 		//topScrollingOnAutoPlay: null  (potential feature)
 
 		//swipe: true,
