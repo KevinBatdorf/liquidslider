@@ -275,8 +275,8 @@ if (typeof Object.create !== 'function') {
 			self.$sliderWrap = $(self.sliderId + '-wrapper');
 
 			// Add the .panel class to the individual panels
-			$(self.sliderId).children().addClass('panel');
-			self.panelClass = self.sliderId + ' .panel';
+			$(self.sliderId).children().addClass((self.$elem).attr('id') + '-panel panel');
+			self.panelClass = self.sliderId + ' .' + (self.$elem).attr('id') + '-panel';
 			self.$panelClass = $(self.panelClass);
 
 			// Wrap all panels in a div, and wrap inner content in a div (not backwards compatible)
