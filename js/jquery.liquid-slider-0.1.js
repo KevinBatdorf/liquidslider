@@ -88,6 +88,8 @@ if (typeof Object.create !== 'function') {
 
 				self.configureCSSTransitions();
 
+				self.readyToSlide = true;
+
 
 			});
 		},
@@ -578,7 +580,7 @@ if (typeof Object.create !== 'function') {
 					}
 					if (self.options.hideArrowsWhenMobile && self.options.dynamicArrows && !($(self.leftArrow).length || $(self.rightArrow).length)) {
 						self.addArrows();
-						self.events();
+						self.registerArrows();
 					} else if (!self.options.dynamicArrowsGraphical) {
 						(self.$leftArrow).css('margin-' + self.options.dynamicTabsPosition, (self.$sliderNavUl).css('height'));
 						(self.$rightArrow).css('margin-' + self.options.dynamicTabsPosition, (self.$sliderNavUl).css('height'));
@@ -596,9 +598,8 @@ if (typeof Object.create !== 'function') {
 
 		},
 
-		events: function () {
+		registerArrows: function () {
 			var self = this;
-
 			// CLick arrows
 			if (self.options.dynamicArrows) {
 				$((self.$sliderWrap).find('[class^=liquid-nav-]')).on('click', function (e) {
@@ -611,6 +612,14 @@ if (typeof Object.create !== 'function') {
 					return false;
 				});
 			}
+
+		},
+
+		events: function () {
+			var self = this;
+
+			if (self.options.dynamicArrows) { self.registerArrows(); }
+
 			// Click tabs
 			if (self.options.dynamicTabs) {
 				(self.$sliderWrap).find('[class^=liquid-nav] li').on('click', function (e) {
@@ -950,14 +959,16 @@ if (typeof Object.create !== 'function') {
 						'-o-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
 						'transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)'
 					});
-				} else if (!self.resizing) {
+				} else if (!self.resizing && self.readyToSlide) {
 					(self.panelContainer).animate({
 						'margin-left': self.marginLeft + self.pSign
 					}, {
 						easing: self.options.slideEaseFunction,
 						duration: self.options.slideEaseDuration,
 						queue: false,
-						complete: self.continuousSlide(self.options.slideEaseDuration + 50) // Wonder about this "+50", so far so good...
+						complete: function () {
+							self.continuousSlide();
+						}
 					});
 				}
 			}
@@ -1022,25 +1033,22 @@ if (typeof Object.create !== 'function') {
 			}
 		},
 
-		continuousSlide: function (delay, element) {
+		continuousSlide: function () {
 			var self = this;
 
 			if (self.options.continuous) {
-				self.continuousTimeout = setTimeout(function () {
 
-					// If on the last panel (the clone of panel 1), set the margin to the original.
-					if (self.currentTab === self.panelCount - 2) {
-						$(self.panelContainer).css('margin-left', -self.slideWidth + self.pSign);
-						self.currentTab = 0;
-					} else if (self.currentTab === -1) {
-					// If on the first panel the clone of the last panel), set the margin to the original.
-						$(self.panelContainer).css('margin-left', -(((self.slideWidth * self.panelCount) - (self.slideWidth * 2))) + self.pSign);
-						self.currentTab = (self.panelCount - 3);
-					}
-					self.clickable = true;
-				}, delay);
+				// If on the last panel (the clone of panel 1), set the margin to the original.
+				if (self.currentTab === self.panelCount - 2) {
+					$(self.panelContainer).css('margin-left', -self.slideWidth + self.pSign);
+					self.currentTab = 0;
+				} else if (self.currentTab === -1) {
+				// If on the first panel the clone of the last panel), set the margin to the original.
+					$(self.panelContainer).css('margin-left', -(((self.slideWidth * self.panelCount) - (self.slideWidth * 2))) + self.pSign);
+					self.currentTab = (self.panelCount - 3);
+				}
+				self.clickable = true;
 			} else { self.clickable = true; }
-			//if (element) {(element).addClass('hello'); }
 		}
 	};
 
