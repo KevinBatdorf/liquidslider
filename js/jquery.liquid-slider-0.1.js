@@ -615,24 +615,12 @@ if (typeof Object.create !== 'function') {
 
 		},
 
-		events: function () {
+		registerCrossLinks: function () {
 			var self = this;
-
-			if (self.options.dynamicArrows) { self.registerArrows(); }
-
-			// Click tabs
-			if (self.options.dynamicTabs) {
-				(self.$sliderWrap).find('[class^=liquid-nav] li').on('click', function (e) {
-
-					if (!self.clickable && self.options.continuous) {return false; }
-					self.setCurrent(parseInt($(this).attr('class').split('tab')[1], 10) - 1);
-					if (self.options.continuous) {self.clickable = false; }
-					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(); }
-					return false;
-				});
-			}
 			// Click cross links
 			if (self.options.crossLinks) {
+				// Re calculate cross links (for applying current tabs)
+				self.$crosslinks = $('[data-liquidslider-ref*=' + (self.sliderId).split('#')[1] + ']');
 				(self.$crosslinks).on('click', function (e) {
 					self.readyToScroll = true; // For scrollTop()
 
@@ -666,6 +654,26 @@ if (typeof Object.create !== 'function') {
 					return false;
 				});
 			}
+		},
+
+		events: function () {
+			var self = this;
+
+			if (self.options.dynamicArrows) { self.registerArrows(); }
+			if (self.options.crossLinks) { self.registerCrossLinks();}
+
+			// Click tabs
+			if (self.options.dynamicTabs) {
+				(self.$sliderWrap).find('[class^=liquid-nav] li').on('click', function (e) {
+
+					if (!self.clickable && self.options.continuous) {return false; }
+					self.setCurrent(parseInt($(this).attr('class').split('tab')[1], 10) - 1);
+					if (self.options.continuous) {self.clickable = false; }
+					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(); }
+					return false;
+				});
+			}
+			
 			// Click to stop (or pause) autoslider
 			(self.$sliderWrap).find('*').on('click', function (e) {
 				self.readyToScroll = true; // For scrollTop()

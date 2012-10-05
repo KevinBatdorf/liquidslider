@@ -188,6 +188,7 @@
 *******************************************************/
 .liquid-slider-wrapper .liquid-nav {
   overflow:hidden;
+  clear:both;
 }
 .liquid-slider-wrapper .liquid-slider-select-box {  
   /* Delete these if you want the standard select box.
