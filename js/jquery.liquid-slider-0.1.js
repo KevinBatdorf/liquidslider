@@ -697,7 +697,7 @@ if (typeof Object.create !== 'function') {
 			self.hover();
 
 			// Enable Touch Events
-			if (self.options.swipe) {self.touch(); }
+			//if (self.options.swipe) {self.touch(); }
 
 			// Enable Keyboard Events
 			if (self.options.keyboardNavigation) {self.keyboard(); }
@@ -958,26 +958,30 @@ if (typeof Object.create !== 'function') {
 					// Otherwise adjust as normal
 					self.marginLeft = -(self.currentTab * self.slideWidth);
 				}
-				// Animate the slider
-				if (self.useCSS && self.loaded && !self.resizing) {
-					(self.panelContainer).css({
-						'-webkit-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
-						'-moz-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
-						'-ms-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
-						'-o-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
-						'transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)'
-					});
-				} else if (!self.resizing && self.readyToSlide) {
-					(self.panelContainer).animate({
-						'margin-left': self.marginLeft + self.pSign
-					}, {
-						easing: self.options.slideEaseFunction,
-						duration: self.options.slideEaseDuration,
-						queue: false,
-						complete: function () {
-							self.continuousSlide();
-						}
-					});
+				// Don't transition on load if the slider has the same margin. This messes up when the
+				// user clicks before fully loaded
+				if ((self.marginLeft + self.pSign) !== (self.panelContainer).css('margin-left') || (self.marginLeft !== -100)) {
+					// Animate the slider
+					if (self.useCSS && self.loaded && !self.resizing) {
+						(self.panelContainer).css({
+							'-webkit-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
+							'-moz-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
+							'-ms-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
+							'-o-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
+							'transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)'
+						});
+					} else if (!self.resizing) {
+						(self.panelContainer).animate({
+							'margin-left': self.marginLeft + self.pSign
+						}, {
+							easing: self.options.slideEaseFunction,
+							duration: self.options.slideEaseDuration,
+							queue: false,
+							complete: function () {
+								self.continuousSlide();
+							}
+						});
+					}
 				}
 			}
 			if (self.options.responsive) {
