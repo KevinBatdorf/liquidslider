@@ -271,8 +271,8 @@ if (typeof Object.create !== 'function') {
 			// Store a temp var for callback functions
 			self.tabTemp = self.currentTab;
 
-			// Wrap the entire slider (not backwards compatible)
-			(self.$sliderId).wrap('<div id="' + (self.$elem).attr('id') + '-wrapper" class="liquid-slider-wrapper"></div>');
+			// Wrap the entire slider (backwards compatible)
+			if ( (self.$sliderId).parent().attr('class') != 'liquid-slider-wrapper' ) {(self.$sliderId).wrap('<div id="' + (self.$elem).attr('id') + '-wrapper" class="liquid-slider-wrapper"></div>');}
 			// Cache the wrapper
 			self.$sliderWrap = $(self.sliderId + '-wrapper');
 
