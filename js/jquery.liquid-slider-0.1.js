@@ -47,7 +47,7 @@ if (typeof Object.create !== 'function') {
 			self.pSign =  (self.options.responsive) ? '%' : 'px';
 
 			// Slide animations bad in ie7, so use fade (fixed?)
-			if ( ((navigator.appVersion.indexOf("MSIE 7.") !== -1) || navigator.appVersion.indexOf("MSIE 8.") !== -1)) {
+			if (((navigator.appVersion.indexOf("MSIE 7.") !== -1) || navigator.appVersion.indexOf("MSIE 8.") !== -1)) {
 				//self.options.slideEaseFunction = "fade";
 				self.dontAnimateHeight = true;
 			}
@@ -272,7 +272,7 @@ if (typeof Object.create !== 'function') {
 			self.tabTemp = self.currentTab;
 
 			// Wrap the entire slider (backwards compatible)
-			if ( (self.$sliderId).parent().attr('class') != 'liquid-slider-wrapper' ) {(self.$sliderId).wrap('<div id="' + (self.$elem).attr('id') + '-wrapper" class="liquid-slider-wrapper"></div>');}
+			if ((self.$sliderId).parent().attr('class') !== 'liquid-slider-wrapper') {(self.$sliderId).wrap('<div id="' + (self.$elem).attr('id') + '-wrapper" class="liquid-slider-wrapper"></div>'); }
 			// Cache the wrapper
 			self.$sliderWrap = $(self.sliderId + '-wrapper');
 
@@ -295,7 +295,11 @@ if (typeof Object.create !== 'function') {
 			}
 
 			// Apply starting height to the container
-			if (self.options.autoHeight && !self.options.responsive) { (self.$sliderId).css('height', $($(self.panelContainer).children()[self.currentTab]).height() + ~~($(self.sliderId + '-wrapper .liquid-nav-right').height()) + self.pSign); }
+			if (self.options.autoHeight && !self.options.responsive) {
+				(self.$sliderId).css('height', $($(self.panelContainer).children()[self.currentTab]).height() + ~~($(self.sliderId + '-wrapper .liquid-nav-right').height()) + self.pSign);
+			} else if (!self.options.preloader) {
+				(self.$sliderId).css('height', $($(self.panelContainer).children()[self.currentTab]).height());
+			}
 
 			// Build navigation tabs
 			if (self.options.dynamicTabs) { self.addNavigation(); }
@@ -660,7 +664,7 @@ if (typeof Object.create !== 'function') {
 			var self = this;
 
 			if (self.options.dynamicArrows) { self.registerArrows(); }
-			if (self.options.crossLinks) { self.registerCrossLinks();}
+			if (self.options.crossLinks) { self.registerCrossLinks(); }
 
 			// Click tabs
 			if (self.options.dynamicTabs) {
@@ -673,7 +677,7 @@ if (typeof Object.create !== 'function') {
 					return false;
 				});
 			}
-			
+
 			// Click to stop (or pause) autoslider
 			(self.$sliderWrap).find('*').on('click', function (e) {
 				self.readyToScroll = true; // For scrollTop()
@@ -917,7 +921,7 @@ if (typeof Object.create !== 'function') {
 			var self = this;
 
 			// Adjust the height
-			if (self.options.autoHeight && self.loaded && (self.useCSS || self.dontAnimateHeight) ) {
+			if (self.options.autoHeight && self.loaded && (self.useCSS || self.dontAnimateHeight)) {
 				// CSS transitions or IE
 				$(self.panelContainer).parent().css({
 					'height': self.getHeight(height) + 'px'
