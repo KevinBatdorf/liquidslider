@@ -111,6 +111,7 @@ Default Settings
            
                  hashLinking: false,
                    hashNames: true,
+              hashCrossLinks: true,
            hashTitleSelector: "h2.title",
             hashTagSeparator: '/',
                      hashTLD: '.html',

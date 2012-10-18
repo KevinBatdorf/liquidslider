@@ -221,11 +221,9 @@ if (typeof Object.create !== 'function') {
 
 		getHashTags: function (hash) {
 			var self = this;
-			//console.log(hash);
 			if (hash && self.options.hashLinking) {
 				//set the value as a variable, and remove the #
 				self.hashValue = (hash).replace('#', '');
-
 				if (self.options.hashNames) {
 					$.each(
 						(self.$elem).find(self.options.hashTitleSelector),
@@ -235,6 +233,8 @@ if (typeof Object.create !== 'function') {
 							self.hashValue = self.hashValue.replace(self.options.hashTLD, '');
 							if (($this).toLowerCase() === self.hashValue.toLowerCase()) {
 								self.hashValue = parseInt(n + 1, 10);
+								// Adjust if continuous
+								if (self.panelCount && self.options.continuous && self.hashValue === 1) {self.hashValue = self.panelCount - 1;}
 								return false;
 							}
 						}
@@ -651,7 +651,14 @@ if (typeof Object.create !== 'function') {
 					var direction = ($(this).attr('href').split('#')[1]);
 					if (direction  === 'left' || direction === 'right') {
 						self.setCurrent(direction);
-					} else { self.setCurrent(parseInt(direction - 1, 10)); }
+					} else if (self.options.hashCrossLinks) {
+						self.getHashTags('#' + direction);
+						self.currentTab = self.hashValue - ~~(self.options.continuous);
+						self.setCurrent();
+
+					} else {
+						self.setCurrent(parseInt(direction - 1, 10));
+					}
 					if (self.options.continuous) {self.clickable = false; }
 					self.checkAutoSlideStop();
 					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(); }
@@ -1120,6 +1127,7 @@ if (typeof Object.create !== 'function') {
 
 		hashLinking: false,
 		hashNames: true,
+		hashCrossLinks: true,
 		hashTitleSelector: "h2.title",
 		hashTagSeparator: '', // suggestion '/'
 		hashTLD: '',
