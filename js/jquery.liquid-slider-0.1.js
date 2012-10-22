@@ -612,7 +612,7 @@ if (typeof Object.create !== 'function') {
 					if (!self.clickable && self.options.continuous) { return false; }
 					self.setCurrent($(this).attr('class').split('-')[2]);
 					if (self.options.continuous) { self.clickable = false; }
-					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(); }
+					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
 					return false;
 				});
 			}
@@ -661,7 +661,7 @@ if (typeof Object.create !== 'function') {
 					}
 					if (self.options.continuous) {self.clickable = false; }
 					self.checkAutoSlideStop();
-					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(); }
+					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
 					return false;
 				});
 			}
@@ -680,20 +680,19 @@ if (typeof Object.create !== 'function') {
 					if (!self.clickable && self.options.continuous) {return false; }
 					self.setCurrent(parseInt($(this).attr('class').split('tab')[1], 10) - 1);
 					if (self.options.continuous) {self.clickable = false; }
-					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(); }
+					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
 					return false;
 				});
 			}
 
 			// Click to stop (or pause) autoslider
 			(self.$sliderWrap).find('*').on('click', function (e) {
+
 				self.readyToScroll = true; // For scrollTop()
 
 				// AutoSlide controls.
-				if (!self.clickable && self.options.continuous) {
-					self.checkAutoSlideStop();
-					return false;
-				}
+				self.checkAutoSlideStop();
+
 				if (self.options.autoSlide) {
 					if (!self.options.autoSlideStopWhenClicked) {
 						self.clickable = true;
@@ -705,7 +704,10 @@ if (typeof Object.create !== 'function') {
 			});
 
 			// Enable Hover Events
-			self.hover();
+			if (self.options.autoSlidePauseOnHover || (self.options.hoverArrows && self.options.dynamicArrows) ) {
+				self.hoverable = true;
+				self.hover();
+			}
 
 			// Enable Touch Events
 			//if (self.options.swipe) {self.touch(); }
@@ -719,13 +721,47 @@ if (typeof Object.create !== 'function') {
 			var self = this;
 			// Hover events
 
-			// Pause on hover
-			if (self.options.autoSlidePauseOnHover && self.options.autoSlide) {
-				(self.$sliderWrap).hover(
-					function () {clearTimeout(self.autoslideTimeout); },
-					function () {
-						if (!self.autoSlideStopped) {
-							if (!self.autoSlideStopWhenClicked) {
+			(self.$sliderWrap).hover(
+				function () {
+					// Hover Arrows
+					if (self.options.hoverArrows && self.options.dynamicArrows) {
+						self.hoverOn = true;
+						(self.$leftArrow).stop(true);
+						(self.$rightArrow).stop(true);
+						if (self.options.hideSideArrows) {
+							self.hideArrows();
+						} else {
+							(self.$leftArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDurations);
+							(self.$rightArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDurations);
+						}
+					}
+					// Pause on Hover
+					if (self.options.autoSlidePauseOnHover && self.options.autoSlide) {
+						self.dontCallback = true;
+						clearTimeout(self.autoslideTimeout);
+					}
+				},
+
+
+
+				function () {
+					// Hover Arrows
+					if (self.options.hoverArrows && self.options.dynamicArrows) {
+						self.hoverOn = false;
+						(self.$leftArrow).fadeOut(self.options.hideSideArrowsDuration, function () {
+							$(this).show().css({visibility: "hidden"});
+						});
+						(self.$rightArrow).fadeOut(self.options.hideSideArrowsDuration, function () {
+							$(this).show().css({visibility: "hidden"});
+						});
+					}
+
+					// Pause on Hover
+					if (self.options.autoSlidePauseOnHover && self.options.autoSlide && self.clickable) {
+						self.dontCallback = false;
+						var isAnimating = $('.' + self.panelContainer.attr('class') + ':animated').hasClass(self.panelContainer.attr('class'));
+						if (!self.autoSlideStopped && !isAnimating) {
+							if (!self.options.autoSlideStopWhenClicked) {
 								self.hoverTimeout = setTimeout(function () {
 									self.setCurrent(self.options.autoSliderDirection);
 									self.autoSlide();
@@ -736,33 +772,8 @@ if (typeof Object.create !== 'function') {
 							}
 						}
 					}
-				);
-			}
-			// Hover Arrows
-			if (self.options.hoverArrows && self.options.dynamicArrows) {
-				(self.$sliderWrap).hover(
-					function () {
-						self.hoverOn = true;
-						(self.$leftArrow).stop(true);
-						(self.$rightArrow).stop(true);
-						if (self.options.hideSideArrows) {
-							self.hideArrows();
-						} else {
-							(self.$leftArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDurations);
-							(self.$rightArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDurations);
-						}
-					},
-					function () {
-						self.hoverOn = false;
-						(self.$leftArrow).fadeOut(self.options.hideSideArrowsDuration, function () {
-							$(this).show().css({visibility: "hidden"});
-						});
-						(self.$rightArrow).fadeOut(self.options.hideSideArrowsDuration, function () {
-							$(this).show().css({visibility: "hidden"});
-						});
-					}
-				);
-			}
+				}
+			);
 		},
 
 		touch: function () {
@@ -798,7 +809,7 @@ if (typeof Object.create !== 'function') {
 					}
 					
 					self.checkAutoSlideStop();
-					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(); }
+					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
 				});
 			*/
 		},
@@ -824,7 +835,7 @@ if (typeof Object.create !== 'function') {
 				}
 				if (self.options.continuous) { self.clickable = false; }
 				self.checkAutoSlideStop();
-				if (typeof self.options.callbackFunction === 'function') { self.animationCallback(); }
+				if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
 			});
 		},
 
@@ -1022,9 +1033,11 @@ if (typeof Object.create !== 'function') {
 			} //else { $('html, body').animate({'scrollTop': self.setHeight}, self.options.topScrollingDuration); }
 		},
 
-		animationCallback: function () {
+		animationCallback: function (go) {
 			var self = this;
-			setTimeout(function () {self.options.callbackFunction.call(this); }, self.options.slideEaseDuration + 50);
+			if (!self.dontCallback || go) {
+				setTimeout(function () {self.options.callbackFunction.call(this); }, self.options.slideEaseDuration + 50);
+			}
 		},
 
 		autoSlide: function () {
@@ -1040,7 +1053,7 @@ if (typeof Object.create !== 'function') {
 				self.autoSlide();
 
 			}, self.options.autoSlideInterval);
-			if (typeof self.options.callbackFunction === 'function') { self.animationCallback(); }
+			if (typeof self.options.callbackFunction === 'function' && self.loaded) { self.animationCallback(); }
 		},
 
 		checkAutoSlideStop: function () {
