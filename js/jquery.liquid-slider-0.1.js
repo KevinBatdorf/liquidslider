@@ -865,9 +865,14 @@ if (typeof Object.create !== 'function') {
 				// Add current class to cross linked Tabs
 				if (self.options.crossLinks) {
 					(self.$crosslinks).each(function () {
-						if ($(this).attr('href') === '#' + (self.setTab + 1)) {
-							$(this).addClass('currentCrossLink')
-								.parent().siblings().children().removeClass('currentCrossLink');
+						if (self.options.hashCrossLinks) {
+							if ( $(this).attr('href') === ('#' + $($(self.panelContainer).children()[(self.setTab + 1)]).find(self.options.panelTitleSelector).text().replace(/(\s)/g, '-').toLowerCase()) ) {
+								$('.currentCrossLink').removeClass('currentCrossLink');
+								$(this).addClass('currentCrossLink');
+							}
+						} else if ($(this).attr('href') === '#' + (self.setTab + 1)) {
+							$('.currentCrossLink').removeClass('currentCrossLink');
+							$(this).addClass('currentCrossLink');
 						}
 					});
 				}
@@ -1127,7 +1132,7 @@ if (typeof Object.create !== 'function') {
 
 		hashLinking: false,
 		hashNames: true,
-		hashCrossLinks: true,
+		hashCrossLinks: false,
 		hashTitleSelector: "h2.title",
 		hashTagSeparator: '', // suggestion '/'
 		hashTLD: '',
