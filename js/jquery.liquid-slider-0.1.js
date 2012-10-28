@@ -9,9 +9,8 @@
 *
 ************************************************************************/
 
-/*jslint bitwise: true */
-/*jslint browser: true*/
-/*global $, jQuery, window, document*/
+/*jslint bitwise: true, browser: true */
+/*global $, jQuery */
 
 // Utility for creating objects in older browsers
 if (typeof Object.create !== 'function') {
@@ -234,7 +233,7 @@ if (typeof Object.create !== 'function') {
 							if (($this).toLowerCase() === self.hashValue.toLowerCase()) {
 								self.hashValue = parseInt(n + 1, 10);
 								// Adjust if continuous
-								if (self.panelCount && self.options.continuous && self.hashValue === 1) {self.hashValue = self.panelCount - 1;}
+								if (self.panelCount && self.options.continuous && self.hashValue === 1) { self.hashValue = self.panelCount - 1; }
 								return false;
 							}
 						}
@@ -460,8 +459,8 @@ if (typeof Object.create !== 'function') {
 					self.rightArrow = self.sliderId + '-wrapper [class^=liquid-nav-right]';
 					self.$leftArrow  = $(self.leftArrow);
 					self.$rightArrow = $(self.rightArrow);
-					(self.$leftArrow).css({visibility: "hidden"});
-					(self.$rightArrow).css({visibility: "hidden"});
+					(self.$leftArrow).css({visibility: "hidden", opacity: 0});
+					(self.$rightArrow).css({visibility: "hidden", opacity: 0});
 				}
 				// Add a margin to the top of responsive arrows
 				if (self.options.responsive && self.options.dynamicArrows && !self.options.dynamicArrowsGraphical && (self.options.dynamicTabsAlign !== 'center')) {
@@ -483,7 +482,7 @@ if (typeof Object.create !== 'function') {
 					$(this).show().css({visibility: "hidden"});
 				});
 				if ((self.$rightArrow).css('visibility') === 'hidden' && (!self.options.hoverArrows || self.hoverOn)) {
-					(self.$rightArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDuration * 3);
+					(self.$rightArrow).css({opacity: 1, visibility: "visible"});
 				}
 			} else if (self.currentTab === (self.panelCount - (~~(self.options.continuous) * 2) - 1) || self.currentTab === -1) {
 				// Fade out the right and make sure the left is faded in (used for on load)
@@ -491,7 +490,6 @@ if (typeof Object.create !== 'function') {
 					$(this).show().css({visibility: "hidden"});
 				});
 				if ((self.$leftArrow).css('visibility') === 'hidden' && (!self.options.hoverArrows || self.hoverOn)) {
-					(self.$leftArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDuration * 3);
 				}
 			} else if (!self.options.hoverArrows || self.hoverOn) {
 				// Fade in on all other tabs
@@ -609,9 +607,9 @@ if (typeof Object.create !== 'function') {
 				$((self.$sliderWrap).find('[class^=liquid-nav-]')).on('click', function (e) {
 
 					// These prevent clicking when in continuous mode, which would break it otherwise.
-					if (!self.clickable && self.options.continuous) { return false; }
+					if (!self.clickable) { return false; }
 					self.setCurrent($(this).attr('class').split('-')[2]);
-					if (self.options.continuous) { self.clickable = false; }
+					self.clickable = false;
 					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
 					return false;
 				});
@@ -628,7 +626,7 @@ if (typeof Object.create !== 'function') {
 				(self.$crosslinks).on('click', function (e) {
 					self.readyToScroll = true; // For scrollTop()
 
-					if (!self.clickable && self.options.continuous) {return false; }
+					if (!self.clickable) {return false; }
 					// Stop and Play controls
 					if (self.options.autoSlideControls) {
 						if ($(this).attr('name') === 'stop') {
@@ -659,7 +657,7 @@ if (typeof Object.create !== 'function') {
 					} else {
 						self.setCurrent(parseInt(direction - 1, 10));
 					}
-					if (self.options.continuous) {self.clickable = false; }
+					self.clickable = false;
 					self.checkAutoSlideStop();
 					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
 					return false;
@@ -677,9 +675,9 @@ if (typeof Object.create !== 'function') {
 			if (self.options.dynamicTabs) {
 				(self.$sliderWrap).find('[class^=liquid-nav] li').on('click', function (e) {
 
-					if (!self.clickable && self.options.continuous) {return false; }
+					if (!self.clickable) {return false; }
 					self.setCurrent(parseInt($(this).attr('class').split('tab')[1], 10) - 1);
-					if (self.options.continuous) {self.clickable = false; }
+					self.clickable = false;
 					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
 					return false;
 				});
@@ -704,7 +702,7 @@ if (typeof Object.create !== 'function') {
 			});
 
 			// Enable Hover Events
-			if (self.options.autoSlidePauseOnHover || (self.options.hoverArrows && self.options.dynamicArrows) ) {
+			if (self.options.autoSlidePauseOnHover || (self.options.hoverArrows && self.options.dynamicArrows)) {
 				self.hoverable = true;
 				self.hover();
 			}
@@ -833,7 +831,7 @@ if (typeof Object.create !== 'function') {
 						}
 					});
 				}
-				if (self.options.continuous) { self.clickable = false; }
+				self.clickable = false;
 				self.checkAutoSlideStop();
 				if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
 			});
@@ -877,7 +875,7 @@ if (typeof Object.create !== 'function') {
 				if (self.options.crossLinks) {
 					(self.$crosslinks).each(function () {
 						if (self.options.hashCrossLinks) {
-							if ( $(this).attr('href') === ('#' + $($(self.panelContainer).children()[(self.setTab + 1)]).find(self.options.panelTitleSelector).text().replace(/(\s)/g, '-').toLowerCase()) ) {
+							if ($(this).attr('href') === ('#' + $($(self.panelContainer).children()[(self.setTab + 1)]).find(self.options.panelTitleSelector).text().replace(/(\s)/g, '-').toLowerCase())) {
 								$('.currentCrossLink').removeClass('currentCrossLink');
 								$(this).addClass('currentCrossLink');
 							}
@@ -1015,7 +1013,6 @@ if (typeof Object.create !== 'function') {
 				// Match the slider margin with the width of the slider (better height transitions)
 				$(self.sliderId + '-wrapper').css('width', (self.$sliderId).outerWidth(true));
 			}
-			if (self.options.hideSideArrows && !self.options.hoverArrows) { self.hideArrows(); }
 			if (self.resizing) {
 				// Make sure the screen updates properly
 				self.resizing = false;
@@ -1046,7 +1043,7 @@ if (typeof Object.create !== 'function') {
 			if (self.options.autoSlideInterval < self.options.slideEaseDuration) {
 				self.options.autoSlideInterval = (self.options.slideEaseDuration > self.options.autoHeightEaseDuration) ? self.options.slideEaseDuration : self.options.autoHeightEaseDuration;
 			}
-			if (self.options.continuous) {self.clickable = false; }
+			self.clickable = false;
 			self.autoslideTimeout = setTimeout(function () {
 				// Slide left or right
 				self.setCurrent(self.options.autoSliderDirection);
