@@ -24,7 +24,7 @@ Hide First and Last Arrows Conditionally
 Auto Play Controls  
 Keyboard Navigation  
 
-Continuous Sliding (not mobile)  
+Continuous Sliding (not on mobile)  
 Cross Linking  
 
 
@@ -40,8 +40,8 @@ Install the slider in the head after jQuery.
     <script src="./js/jquery-ui-1.8.20.custom.min.js"></script>  
     <script src="./js/jquery.liquid-slider.0.1.min.js"></script>  
     (function(){
-        $('#slider-id').liquidSlider();
-      });
+      $('#slider-id').liquidSlider();
+    });
 ```
 
 Where the slider-id matches the id of the content, as follows:
@@ -111,7 +111,7 @@ Default Settings
            
                  hashLinking: false,
                    hashNames: true,
-              hashCrossLinks: true,
+              hashCrossLinks: false,
            hashTitleSelector: "h2.title",
             hashTagSeparator: '/',
                      hashTLD: '.html',
@@ -154,8 +154,3 @@ Documentation is [here](http://liquidslider.kevinbatdorf.com/#/documentation.htm
 Submit bugs [here](https://github.com/kevinbatdorf/liquidslider/issues)
 
 Maintained by [Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
-
-
-### Very Special Thanks to:
-Niall Doherty, the original creater of the Coda Slider.
-
