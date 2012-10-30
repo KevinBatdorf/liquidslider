@@ -875,7 +875,7 @@ if (typeof Object.create !== 'function') {
 				if (self.options.crossLinks) {
 					(self.$crosslinks).each(function () {
 						if (self.options.hashCrossLinks) {
-							if ($(this).attr('href') === ('#' + $($(self.panelContainer).children()[(self.setTab + 1)]).find(self.options.panelTitleSelector).text().replace(/(\s)/g, '-').toLowerCase())) {
+							if ($(this).attr('href') === ('#' + $($(self.panelContainer).children()[(self.setTab + ~~(self.options.continuous))]).find(self.options.panelTitleSelector).text().replace(/(\s)/g, '-').toLowerCase())) {
 								$('.currentCrossLink').removeClass('currentCrossLink');
 								$(this).addClass('currentCrossLink');
 							}

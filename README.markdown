@@ -4,6 +4,8 @@ A Responsive jQuery HTML Content Slider
 
 [Download](https://github.com/KevinBatdorf/liquidslider/zipball/master)
 
+[Live Examples](https://github.com/KevinBatdorf/liquidslider/wiki/Liquid-Slider-In-Action)
+
 
 Features
 --------
