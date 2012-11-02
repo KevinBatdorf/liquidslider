@@ -89,7 +89,6 @@ if (typeof Object.create !== 'function') {
 
 				self.readyToSlide = true;
 
-
 			});
 		},
 
@@ -542,12 +541,8 @@ if (typeof Object.create !== 'function') {
 
 			// Change navigation if the user resizes the screen.
 			if (self.options.responsive) {
-				$(window).bind('resize', function () {
-					//This way we know the window is being resized.
-					self.resizing = true;
+				$(window).bind('resize', function() {
 					self.responsiveEvents();
-
-			//if ((self.$sliderId).outerWidth() > self.options.useCSSMaxWidth && self.useCSS) {self.useCSS = false; }
 				});
 			}
 		},
@@ -593,11 +588,14 @@ if (typeof Object.create !== 'function') {
 
 				// Set the width to slide
 				self.slideWidth = $(self.sliderId).width();
-				// Send to adjust the height
-				self.adjustHeight();
-				self.transition();
-			}
 
+				clearTimeout(self.resizingTimeout);
+				self.resizingTimeout = setTimeout(function () {
+				// Send to adjust the height after resizing completes
+					self.adjustHeight();
+					self.transition();
+				}, 500);
+			}
 		},
 
 		registerArrows: function () {
@@ -609,12 +607,10 @@ if (typeof Object.create !== 'function') {
 					// These prevent clicking when in continuous mode, which would break it otherwise.
 					if (!self.clickable) { return false; }
 					self.setCurrent($(this).attr('class').split('-')[2]);
-					self.clickable = false;
 					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
 					return false;
 				});
 			}
-
 		},
 
 		registerCrossLinks: function () {
@@ -657,7 +653,6 @@ if (typeof Object.create !== 'function') {
 					} else {
 						self.setCurrent(parseInt(direction - 1, 10));
 					}
-					self.clickable = false;
 					self.checkAutoSlideStop();
 					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
 					return false;
@@ -677,7 +672,6 @@ if (typeof Object.create !== 'function') {
 
 					if (!self.clickable) {return false; }
 					self.setCurrent(parseInt($(this).attr('class').split('tab')[1], 10) - 1);
-					self.clickable = false;
 					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
 					return false;
 				});
@@ -698,7 +692,6 @@ if (typeof Object.create !== 'function') {
 				}
 				// Stops from speedy clicking for continuous sliding.
 				if (self.options.continuous) {clearTimeout(self.continuousTimeout); }
-
 			});
 
 			// Enable Hover Events
@@ -712,7 +705,6 @@ if (typeof Object.create !== 'function') {
 
 			// Enable Keyboard Events
 			if (self.options.keyboardNavigation) {self.keyboard(); }
-
 		},
 
 		hover: function () {
@@ -840,6 +832,7 @@ if (typeof Object.create !== 'function') {
 		setCurrent: function (direction) {
 			var self = this;
 			if (self.clickable) {
+				self.clickable = false;
 				if (typeof direction === 'number') {
 					self.currentTab = direction;
 				} else {
@@ -901,7 +894,6 @@ if (typeof Object.create !== 'function') {
 					(self.$rightArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDuration * 3);
 				}
 
-
 				this.transition();
 			}
 		},
@@ -962,10 +954,10 @@ if (typeof Object.create !== 'function') {
 		transition: function () {
 			var self = this;
 			// Adjust the scroll distance
-			if (self.options.topScrolling && !self.resizing && !self.useCSS && (self.readyToScroll || self.options.topScrollingOnLoad)) { self.scrollToTheTop(); }
+			if (self.options.topScrolling && !self.useCSS && (self.readyToScroll || self.options.topScrollingOnLoad)) { self.scrollToTheTop(); }
 
 			// Adjust the height
-			if (self.options.autoHeight && !self.resizing) { self.adjustHeight(); }
+			if (self.options.autoHeight) { self.adjustHeight(); }
 
 
 			// Transition for fade option
@@ -987,7 +979,7 @@ if (typeof Object.create !== 'function') {
 				// user clicks before fully loaded
 				if ((self.marginLeft + self.pSign) !== (self.panelContainer).css('margin-left') || (self.marginLeft !== -100)) {
 					// Animate the slider
-					if (self.useCSS && self.loaded && !self.resizing) {
+					if (self.useCSS && self.loaded) {
 						(self.panelContainer).css({
 							'-webkit-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
 							'-moz-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
@@ -995,7 +987,9 @@ if (typeof Object.create !== 'function') {
 							'-o-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
 							'transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)'
 						});
-					} else if (!self.resizing) {
+						// Timeout to replace callback function
+						setTimeout(function () { self.clickable = true; }, self.options.slideEaseDuration + 50);
+					} else {
 						(self.panelContainer).animate({
 							'margin-left': self.marginLeft + self.pSign
 						}, {
@@ -1013,11 +1007,6 @@ if (typeof Object.create !== 'function') {
 				// Match the slider margin with the width of the slider (better height transitions)
 				$(self.sliderId + '-wrapper').css('width', (self.$sliderId).outerWidth(true));
 			}
-			if (self.resizing) {
-				// Make sure the screen updates properly
-				self.resizing = false;
-				self.responsiveEvents();
-			}
 		},
 
 		scrollToTheTop: function () {
@@ -1032,7 +1021,7 @@ if (typeof Object.create !== 'function') {
 
 		animationCallback: function (go) {
 			var self = this;
-			if (!self.dontCallback || go) {
+			if ((!self.dontCallback || go) && self.clickable) {
 				setTimeout(function () {self.options.callbackFunction.call(this); }, self.options.slideEaseDuration + 50);
 			}
 		},
@@ -1043,7 +1032,7 @@ if (typeof Object.create !== 'function') {
 			if (self.options.autoSlideInterval < self.options.slideEaseDuration) {
 				self.options.autoSlideInterval = (self.options.slideEaseDuration > self.options.autoHeightEaseDuration) ? self.options.slideEaseDuration : self.options.autoHeightEaseDuration;
 			}
-			self.clickable = false;
+			//self.clickable = false;
 			self.autoslideTimeout = setTimeout(function () {
 				// Slide left or right
 				self.setCurrent(self.options.autoSliderDirection);
@@ -1075,12 +1064,11 @@ if (typeof Object.create !== 'function') {
 			var self = this;
 
 			if (self.options.continuous) {
-
 				// If on the last panel (the clone of panel 1), set the margin to the original.
-				if (self.currentTab === self.panelCount - 2) {
+				if (self.currentTab === self.panelCount - 2 || self.marginLeft === -((self.slideWidth * self.panelCount) - self.slideWidth)) {
 					$(self.panelContainer).css('margin-left', -self.slideWidth + self.pSign);
 					self.currentTab = 0;
-				} else if (self.currentTab === -1) {
+				} else if (self.currentTab === -1 || self.marginLeft === 0) {
 				// If on the first panel the clone of the last panel), set the margin to the original.
 					$(self.panelContainer).css('margin-left', -(((self.slideWidth * self.panelCount) - (self.slideWidth * 2))) + self.pSign);
 					self.currentTab = (self.panelCount - 3);
