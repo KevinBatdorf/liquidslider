@@ -627,7 +627,7 @@ if (typeof Object.create !== 'function') {
 				// Re calculate cross links (for applying current tabs)
 				self.$crosslinks = $('[data-liquidslider-ref*=' + (self.sliderId).split('#')[1] + ']');
 				(self.$crosslinks).on('click', function (e) {
-					self.readyToScroll = true; // For scrollTop()
+					//self.readyToScroll = true; // For scrollTop()
 
 					if (!self.clickable) {return false; }
 					// Stop and Play controls
@@ -687,7 +687,7 @@ if (typeof Object.create !== 'function') {
 			// Click to stop (or pause) autoslider
 			(self.$sliderWrap).find('*').on('click', function (e) {
 
-				self.readyToScroll = true; // For scrollTop()
+				//self.readyToScroll = true; // For scrollTop()
 
 				// AutoSlide controls.
 				self.checkAutoSlideStop();
@@ -815,7 +815,7 @@ if (typeof Object.create !== 'function') {
 			// Keyboard Events
 			var self = this;
 			$(document).keydown(function (event) {
-				self.readyToScroll = true; // For scrollTop()
+				//self.readyToScroll = true; // For scrollTop()
 				var key = event.keyCode || event.which;
 				if (event.target.type !== 'textarea' && event.target.type !== 'textbox') {
 					if (key === self.options.leftKey) {
@@ -965,8 +965,8 @@ if (typeof Object.create !== 'function') {
 
 		transition: function () {
 			var self = this;
-			// Adjust the scroll distance
-			if (self.options.topScrolling && !self.useCSS && (self.readyToScroll || self.options.topScrollingOnLoad)) { self.scrollToTheTop(); }
+			// Adjust the scroll distance (disabled)
+			//if (self.options.topScrolling && !self.useCSS && (self.readyToScroll || self.options.topScrollingOnLoad)) { self.scrollToTheTop(); }
 
 			// Adjust the height
 			if (self.options.autoHeight) { self.adjustHeight(); }
@@ -1021,15 +1021,15 @@ if (typeof Object.create !== 'function') {
 			}
 		},
 
-		scrollToTheTop: function () {
-			var self = this,
-				offset = (self.$sliderWrap).offset();
-				//minusTabs = (($(self.sliderId + '-nav-ul').height() || 0) + self.options.topScrollingExtraPixels);
-				// If the offset is larger than the panel height, scroll up the panel height
-			if (offset > self.setHeight) {
-				$('html, body').animate({'scrollTop': offset.top - self.options.topScrollingExtraPixels}, self.options.topScrollingDuration);
-			} //else { $('html, body').animate({'scrollTop': self.setHeight}, self.options.topScrollingDuration); }
-		},
+		// scrollToTheTop: function () {
+		//	var self = this,
+		//	offset = (self.$sliderWrap).offset();
+		//		//minusTabs = (($(self.sliderId + '-nav-ul').height() || 0) + self.options.topScrollingExtraPixels);
+		//		// If the offset is larger than the panel height, scroll up the panel height
+		//	if (offset > self.setHeight) {
+		//		$('html, body').animate({'scrollTop': offset.top - self.options.topScrollingExtraPixels}, self.options.topScrollingDuration);
+		//	} //else { $('html, body').animate({'scrollTop': self.setHeight}, self.options.topScrollingDuration); }
+		//	},
 
 		animationCallback: function (go) {
 			var self = this;
@@ -1166,12 +1166,14 @@ if (typeof Object.create !== 'function') {
 
 		preloader: true,
 		preloaderFadeOutDuration: 250,
-		preloaderElements: 'img,video,iframe,object',
+		preloaderElements: 'img,video,iframe,object'
 
-		topScrolling: false,
-		topScrollingDuration: 1500,
-		topScrollingOnLoad: false,
-		topScrollingExtraPixels: 0
+
+		// Use a plugin instead
+		// topScrolling: false,
+		// topScrollingDuration: 1500,
+		// topScrollingOnLoad: false,
+		// topScrollingExtraPixels: 0
 
 		//setIeToFade:true (disabled for now)
 		//topScrollingOnAutoPlay: null  (potential feature)
