@@ -45,7 +45,7 @@ if (typeof Object.create !== 'function') {
 			// Variable for the % sign if needed (responsive), otherwise px
 			self.pSign =  (self.options.responsive) ? '%' : 'px';
 
-			// Slide animations bad in ie7, so use fade (fixed?)
+			// Slide animations bad in ie7, so don't animate height
 			if (((navigator.appVersion.indexOf("MSIE 7.") !== -1) || navigator.appVersion.indexOf("MSIE 8.") !== -1)) {
 				//self.options.slideEaseFunction = "fade";
 				self.dontAnimateHeight = true;
@@ -81,13 +81,16 @@ if (typeof Object.create !== 'function') {
 				self.loaded = true;
 				self.clickable = true;
 				// This will adjust the slider's height in case of images, etc.
-				self.adjustHeight();
+				self.adjustHeightNoAnimation();
 				// Adjust the width after load (IE won't otherwise).
 				if (self.options.responsive) {self.responsiveEvents(self.loaded); }
 
 				self.configureCSSTransitions();
 
 				self.readyToSlide = true;
+
+				// Adjust the height again (Chrome seems to like this)
+				self.adjustHeightNoAnimation();
 
 			});
 		},
@@ -118,7 +121,7 @@ if (typeof Object.create !== 'function') {
 			}
 			// Disable CSS transitions if the width is wider than the max
 			// Some features are disabled or different when using CSS transitions
-			if ($(window).outerWidth() > self.options.useCSSMaxWidth) {self.useCSS = false; }
+			if (window.screen.width > self.options.useCSSMaxWidth) {self.useCSS = false; }
 
 			// Disable some buggy settings for css transitions(for now)
 			// Preloader also works differently
@@ -294,9 +297,9 @@ if (typeof Object.create !== 'function') {
 
 			// Apply starting height to the container
 			if (self.options.autoHeight && !self.options.responsive) {
-				(self.$sliderId).css('height', $($(self.panelContainer).children()[self.currentTab]).height() + ~~($(self.sliderId + '-wrapper .liquid-nav-right').height()) + self.pSign);
+				self.adjustHeightNoAnimation($($(self.panelContainer).children()[self.currentTab]).height() + ~~($(self.sliderId + '-wrapper .liquid-nav-right').height()) + self.pSign);
 			} else if (!self.options.preloader) {
-				(self.$sliderId).css('height', $($(self.panelContainer).children()[self.currentTab]).height());
+				self.adjustHeightNoAnimation($($(self.panelContainer).children()[self.currentTab]).height());
 			}
 
 			// Build navigation tabs
@@ -514,7 +517,11 @@ if (typeof Object.create !== 'function') {
 			$(self.sliderId + ' .panel').css('width', 100 / self.panelCount + self.pSign);
 
 			// Set the initial height
-			if (!self.options.autoHeight) { (self.$sliderId).css('height', self.getHeighestPanel() + 'px'); }
+			if (!self.options.autoHeight) {
+				(self.$sliderId).css('height', self.getHeighestPanel() + 'px');
+			} else{
+				self.adjustHeightNoAnimation();
+			}
 
 			// Cache the padding for add/removing arrows
 			if (self.options.hideArrowsWhenMobile) {
@@ -543,6 +550,13 @@ if (typeof Object.create !== 'function') {
 			if (self.options.responsive) {
 				$(window).bind('resize', function() {
 					self.responsiveEvents();
+
+					clearTimeout(self.resizingTimeout);
+					self.resizingTimeout = setTimeout(function () {
+					// Send to adjust the height after resizing completes
+						self.adjustHeight();
+						self.transition();
+					}, 500);
 				});
 			}
 		},
@@ -588,13 +602,6 @@ if (typeof Object.create !== 'function') {
 
 				// Set the width to slide
 				self.slideWidth = $(self.sliderId).width();
-
-				clearTimeout(self.resizingTimeout);
-				self.resizingTimeout = setTimeout(function () {
-				// Send to adjust the height after resizing completes
-					self.adjustHeight();
-					self.transition();
-				}, 500);
 			}
 		},
 
@@ -936,12 +943,10 @@ if (typeof Object.create !== 'function') {
 			// Adjust the height
 			if (self.options.autoHeight && self.loaded && (self.useCSS || self.dontAnimateHeight)) {
 				// CSS transitions or IE
-				$(self.panelContainer).parent().css({
-					'height': self.getHeight(height) + 'px'
-				});
+				self.adjustHeightNoAnimation(height);
 			} else if (self.options.autoHeight && self.loaded) {
 				// jQuery animations
-				$(self.panelContainer).parent().animate({
+				(self.$sliderId).animate({
 					'height': self.getHeight(height) + 'px'
 				}, {
 					easing: easing || self.options.autoHeightEaseFunction,
@@ -949,6 +954,13 @@ if (typeof Object.create !== 'function') {
 					queue: false
 				});
 			}
+		},
+
+		adjustHeightNoAnimation: function (height) {
+			var self = this;
+			(self.$sliderId).css({
+				'height': self.getHeight(height) + 'px'
+			});
 		},
 
 		transition: function () {
