@@ -1033,7 +1033,7 @@ if (typeof Object.create !== 'function') {
 
 		animationCallback: function (go) {
 			var self = this;
-			if ((!self.dontCallback || go) && self.clickable) {
+			if (!self.dontCallback || go) {
 				setTimeout(function () {self.options.callbackFunction.call(this); }, self.options.slideEaseDuration + 50);
 			}
 		},
