@@ -978,6 +978,7 @@ if (typeof Object.create !== 'function') {
 					$($(self.panelContainer).children()[self.currentTab])
 						.fadeTo(self.options.slideEaseDuration, 1.0)
 						.siblings().css('display', 'none');
+						self.clickable = true;
 				}
 			} else if (self.loaded || !self.useCSS) {
 				// Adjust the margin for continuous sliding
