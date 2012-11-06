@@ -1,6 +1,6 @@
 /***********************************************************************
 *
-*  Liquid Slider 0.1
+*  Liquid Slider 1.0
 *  Kevin Batdorf
 *
 *  http://liquidslider.kevinbatdorf.com
