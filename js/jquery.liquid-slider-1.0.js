@@ -91,7 +91,7 @@ if (typeof Object.create !== 'function') {
 
 				// Adjust the height again (Chrome seems to like this)
 				self.adjustHeightNoAnimation();
-
+				self.transition();
 			});
 		},
 
@@ -601,7 +601,7 @@ if (typeof Object.create !== 'function') {
 				$(self.sliderId + '-wrapper').css('width', '100%');
 
 				// Set the width to slide
-				self.slideWidth = $(self.sliderId).width();
+				self.slideWidth = $(self.sliderId).outerWidth(true);
 			}
 		},
 
@@ -1000,7 +1000,7 @@ if (typeof Object.create !== 'function') {
 							'-o-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
 							'transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)'
 						});
-						// Timeout to replace callback function
+						// Timeout to replicate callback function
 						setTimeout(function () { self.clickable = true; }, self.options.slideEaseDuration + 50);
 					} else {
 						(self.panelContainer).animate({
