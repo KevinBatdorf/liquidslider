@@ -207,7 +207,7 @@
 
   width: 150%;
   -webkit-appearance: none;
-  -mox-appearance: none;
+  -moz-appearance: none;
   appearance:none;
   background: transparent;
   padding: 5px;
