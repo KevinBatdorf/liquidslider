@@ -519,7 +519,7 @@ if (typeof Object.create !== 'function') {
 			// Set the initial height
 			if (!self.options.autoHeight) {
 				(self.$sliderId).css('height', self.getHeighestPanel() + 'px');
-			} else{
+			} else {
 				self.adjustHeightNoAnimation();
 			}
 
@@ -548,7 +548,7 @@ if (typeof Object.create !== 'function') {
 
 			// Change navigation if the user resizes the screen.
 			if (self.options.responsive) {
-				$(window).bind('resize', function() {
+				$(window).bind('resize', function () {
 					self.responsiveEvents();
 
 					clearTimeout(self.resizingTimeout);
@@ -617,6 +617,7 @@ if (typeof Object.create !== 'function') {
 					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
 					return false;
 				});
+				self.checkAutoSlideStop();
 			}
 		},
 
@@ -627,7 +628,6 @@ if (typeof Object.create !== 'function') {
 				// Re calculate cross links (for applying current tabs)
 				self.$crosslinks = $('[data-liquidslider-ref*=' + (self.sliderId).split('#')[1] + ']');
 				(self.$crosslinks).on('click', function (e) {
-					//self.readyToScroll = true; // For scrollTop()
 
 					if (!self.clickable) {return false; }
 					// Stop and Play controls
@@ -684,21 +684,15 @@ if (typeof Object.create !== 'function') {
 				});
 			}
 
-			// Click to stop (or pause) autoslider
+			// Click to stop autoslider
 			(self.$sliderWrap).find('*').on('click', function (e) {
+				if (!self.options.autoSlidePauseOnHover || self.options.autoSlideStopWhenClicked) {
+					// AutoSlide controls.
+					self.checkAutoSlideStop();
 
-				//self.readyToScroll = true; // For scrollTop()
-
-				// AutoSlide controls.
-				self.checkAutoSlideStop();
-
-				if (self.options.autoSlide) {
-					if (!self.options.autoSlideStopWhenClicked) {
-						self.clickable = true;
-					}
+					// Stops from speedy clicking for continuous sliding.
+					if (self.options.continuous) {clearTimeout(self.continuousTimeout); }
 				}
-				// Stops from speedy clicking for continuous sliding.
-				if (self.options.continuous) {clearTimeout(self.continuousTimeout); }
 			});
 
 			// Enable Hover Events
@@ -756,17 +750,9 @@ if (typeof Object.create !== 'function') {
 					// Pause on Hover
 					if (self.options.autoSlidePauseOnHover && self.options.autoSlide && self.clickable) {
 						self.dontCallback = false;
-						var isAnimating = $('.' + self.panelContainer.attr('class') + ':animated').hasClass(self.panelContainer.attr('class'));
-						if (!self.autoSlideStopped && !isAnimating) {
-							if (!self.options.autoSlideStopWhenClicked) {
-								self.hoverTimeout = setTimeout(function () {
-									self.setCurrent(self.options.autoSliderDirection);
-									self.autoSlide();
-								}, self.options.autoSlideInterval);
-							} else {
-								self.setCurrent(self.options.autoSliderDirection);
-								self.autoSlide();
-							}
+						var isAnimating = $('.panel-container:animated');
+						if (!self.autoSlideStopped && !~~isAnimating) {
+							self.autoSlide(clearTimeout(self.autoslideTimeout));
 						}
 					}
 				}
@@ -815,7 +801,6 @@ if (typeof Object.create !== 'function') {
 			// Keyboard Events
 			var self = this;
 			$(document).keydown(function (event) {
-				//self.readyToScroll = true; // For scrollTop()
 				var key = event.keyCode || event.which;
 				if (event.target.type !== 'textarea' && event.target.type !== 'textbox') {
 					if (key === self.options.leftKey) {
@@ -965,8 +950,6 @@ if (typeof Object.create !== 'function') {
 
 		transition: function () {
 			var self = this;
-			// Adjust the scroll distance (disabled)
-			//if (self.options.topScrolling && !self.useCSS && (self.readyToScroll || self.options.topScrollingOnLoad)) { self.scrollToTheTop(); }
 
 			// Adjust the height
 			if (self.options.autoHeight) { self.adjustHeight(); }
@@ -978,7 +961,7 @@ if (typeof Object.create !== 'function') {
 					$($(self.panelContainer).children()[self.currentTab])
 						.fadeTo(self.options.slideEaseDuration, 1.0)
 						.siblings().css('display', 'none');
-						self.clickable = true;
+					setTimeout(function () { self.continuousSlide(); }, self.options.slideEaseDuration + 50);
 				}
 			} else if (self.loaded || !self.useCSS) {
 				// Adjust the margin for continuous sliding
@@ -1001,7 +984,7 @@ if (typeof Object.create !== 'function') {
 							'transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)'
 						});
 						// Timeout to replicate callback function
-						setTimeout(function () { self.clickable = true; }, self.options.slideEaseDuration + 50);
+						setTimeout(function () { self.continuousSlide(); }, self.options.slideEaseDuration + 50);
 					} else {
 						(self.panelContainer).animate({
 							'margin-left': self.marginLeft + self.pSign
@@ -1021,16 +1004,6 @@ if (typeof Object.create !== 'function') {
 				$(self.sliderId + '-wrapper').css('width', (self.$sliderId).outerWidth(true));
 			}
 		},
-
-		// scrollToTheTop: function () {
-		//	var self = this,
-		//	offset = (self.$sliderWrap).offset();
-		//		//minusTabs = (($(self.sliderId + '-nav-ul').height() || 0) + self.options.topScrollingExtraPixels);
-		//		// If the offset is larger than the panel height, scroll up the panel height
-		//	if (offset > self.setHeight) {
-		//		$('html, body').animate({'scrollTop': offset.top - self.options.topScrollingExtraPixels}, self.options.topScrollingDuration);
-		//	} //else { $('html, body').animate({'scrollTop': self.setHeight}, self.options.topScrollingDuration); }
-		//	},
 
 		animationCallback: function (go) {
 			var self = this;
@@ -1066,9 +1039,8 @@ if (typeof Object.create !== 'function') {
 						$('body').find('[data-liquidslider-ref*=' + (self.sliderId).split('#')[1] + '][name=stop]').html(self.options.autoSlideStartText);
 						clearTimeout(self.autoslideTimeout);
 					}
-				} else {
+				} else if (!self.options.hoverArrows && !self.options.autoSlidePauseOnHover) {
 					self.autoSlide(clearTimeout(self.autoslideTimeout));
-					self.clickable = true;
 				}
 			}
 		},
@@ -1168,16 +1140,6 @@ if (typeof Object.create !== 'function') {
 		preloader: true,
 		preloaderFadeOutDuration: 250,
 		preloaderElements: 'img,video,iframe,object'
-
-
-		// Use a plugin instead
-		// topScrolling: false,
-		// topScrollingDuration: 1500,
-		// topScrollingOnLoad: false,
-		// topScrollingExtraPixels: 0
-
-		//setIeToFade:true (disabled for now)
-		//topScrollingOnAutoPlay: null  (potential feature)
 
 		//swipe: true,
 		//swipeThreshold: 100
