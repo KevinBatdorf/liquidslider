@@ -903,8 +903,9 @@ if (typeof Object.create !== 'function') {
 			self.setHeight = (self.setHeight < currentPanelHeight) ? self.setHeight : currentPanelHeight;
 
 			self.setHeight = (self.setHeight < self.options.autoHeightMin) ? self.options.autoHeightMin : self.setHeight;
-			if (!self.loaded) {
+			if (!self.removePre) {
 				// Only run once
+				self.removePre = true;
 				return self.removePreloader();
 
 			}
