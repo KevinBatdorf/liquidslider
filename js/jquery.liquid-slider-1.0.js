@@ -926,10 +926,10 @@ if (typeof Object.create !== 'function') {
 			var self = this;
 
 			// Adjust the height
-			if (self.options.autoHeight && self.loaded && (self.useCSS || self.dontAnimateHeight)) {
+			if (self.options.autoHeight && (self.useCSS || self.dontAnimateHeight)) {
 				// CSS transitions or IE
 				self.adjustHeightNoAnimation(height);
-			} else if (self.options.autoHeight && self.loaded) {
+			} else if (self.options.autoHeight) {
 				// jQuery animations
 				(self.$sliderId).animate({
 					'height': self.getHeight(height) + 'px'
@@ -1031,7 +1031,7 @@ if (typeof Object.create !== 'function') {
 		checkAutoSlideStop: function () {
 			var self = this;
 			// If the slider has not stopped, check whether it should stop
-			if (!self.autoSlideStopped) {
+			if (!self.autoSlideStopped && self.loaded) {
 				if (self.options.autoSlideStopWhenClicked) {
 					clearTimeout(self.autoslideTimeout);
 					self.autoSlideStopped = true;
