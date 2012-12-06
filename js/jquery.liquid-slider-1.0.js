@@ -121,7 +121,7 @@ if (typeof Object.create !== 'function') {
 			}
 			// Disable CSS transitions if the width is wider than the max
 			// Some features are disabled or different when using CSS transitions
-			if (window.screen.width > self.options.useCSSMaxWidth) {self.useCSS = false; }
+			if (document.documentElement.clientWidth > self.options.useCSSMaxWidth) {self.useCSS = false; }
 
 			// Disable some buggy settings for css transitions(for now)
 			// Preloader also works differently
