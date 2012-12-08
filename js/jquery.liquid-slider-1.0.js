@@ -1,4 +1,4 @@
-/***********************************************************************
+/*!*********************************************************************
 *
 *  Liquid Slider 1.0
 *  Kevin Batdorf
@@ -520,7 +520,7 @@ if (typeof Object.create !== 'function') {
 			if (!self.options.autoHeight) {
 				(self.$sliderId).css('height', self.getHeighestPanel() + 'px');
 			} else {
-				self.adjustHeightNoAnimation();
+				//self.adjustHeightNoAnimation();
 			}
 
 			// Cache the padding for add/removing arrows
@@ -592,7 +592,7 @@ if (typeof Object.create !== 'function') {
 					if (self.options.hideArrowsWhenMobile && self.options.dynamicArrows && !($(self.leftArrow).length || $(self.rightArrow).length)) {
 						self.addArrows();
 						self.registerArrows();
-					} else if (!self.options.dynamicArrowsGraphical) {
+					} else if (!self.options.dynamicArrowsGraphical && self.options.dynamicArrows) {
 						(self.$leftArrow).css('margin-' + self.options.dynamicTabsPosition, (self.$sliderNavUl).css('height'));
 						(self.$rightArrow).css('margin-' + self.options.dynamicTabsPosition, (self.$sliderNavUl).css('height'));
 					}
