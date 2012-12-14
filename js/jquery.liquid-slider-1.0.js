@@ -566,9 +566,9 @@ if (typeof Object.create !== 'function') {
 				mobileNavChangeOver;
 
 			if (self.options.responsive) {
-				mobileNavChangeOver = (self.options.mobileUIThreshold || self.totalNavWidth + 10);
+				mobileNavChangeOver = (self.options.mobileUIThreshold || (self.totalNavWidth + 10 || self.options.useCSSMaxWidth));
 				if ((self.$sliderId).outerWidth() < mobileNavChangeOver) {
-					if (self.options.mobileNavigation) {
+					if (self.options.mobileNavigation && self.totalNavWidth) {
 						(self.$sliderNavUl).css('display', 'none');
 						$(self.sliderId + '-wrapper .liquid-slider-select-box').css('display', 'block');
 						$(self.sliderId + '-nav-select').css('display', 'block');
