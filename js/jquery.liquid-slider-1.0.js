@@ -566,7 +566,7 @@ if (typeof Object.create !== 'function') {
 				mobileNavChangeOver;
 
 			if (self.options.responsive) {
-				mobileNavChangeOver = (self.options.mobileUIThreshold || (self.totalNavWidth + 10 || self.options.useCSSMaxWidth));
+				mobileNavChangeOver = (self.options.mobileUIThreshold || (self.totalNavWidth + 10 || self.options.hideArrowsThreshold));
 				if ((self.$sliderId).outerWidth() < mobileNavChangeOver) {
 					if (self.options.mobileNavigation && self.totalNavWidth) {
 						(self.$sliderNavUl).css('display', 'none');
@@ -1136,6 +1136,7 @@ if (typeof Object.create !== 'function') {
 		mobileNavDefaultText: 'Menu',
 		mobileUIThreshold: 0,
 		hideArrowsWhenMobile: true,
+		hideArrowsThreshold: 481,
 		useCSSMaxWidth: 1030,
 
 		preloader: true,
