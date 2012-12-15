@@ -492,6 +492,7 @@ if (typeof Object.create !== 'function') {
 					$(this).show().css({visibility: "hidden"});
 				});
 				if ((self.$leftArrow).css('visibility') === 'hidden' && (!self.options.hoverArrows || self.hoverOn)) {
+					(self.$leftArrow).css({opacity: 1, visibility: "visible"});
 				}
 			} else if (!self.options.hoverArrows || self.hoverOn) {
 				// Fade in on all other tabs
