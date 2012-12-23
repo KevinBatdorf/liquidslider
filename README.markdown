@@ -40,7 +40,7 @@ Install the slider in the head after jQuery.
 ```javascript
     <script src="./js/jquery-1.8.0.min.js"></script>
     <script src="./js/jquery-ui-1.8.20.custom.min.js"></script>  
-    <script src="./js/jquery.liquid-slider.1.0.min.js"></script>  
+    <script src="./js/jquery.liquid-slider.1.1.min.js"></script>  
     (function(){
       $('#slider-id').liquidSlider();
     });
@@ -80,6 +80,7 @@ Default Settings
       autoHeightEaseFunction: "easeInOutExpo",
            slideEaseDuration: 1500,
            slideEaseFunction: "easeInOutExpo",
+         callforwardFunction: null,
             callbackFunction: null,
 
                    autoSlide: false,

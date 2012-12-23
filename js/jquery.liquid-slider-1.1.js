@@ -1,6 +1,6 @@
 /*!*********************************************************************
 *
-*  Liquid Slider 1.0
+*  Liquid Slider 1.1
 *  Kevin Batdorf
 *
 *  http://liquidslider.kevinbatdorf.com
@@ -614,6 +614,7 @@ if (typeof Object.create !== 'function') {
 
 					// These prevent clicking when in continuous mode, which would break it otherwise.
 					if (!self.clickable) { return false; }
+					if (typeof self.options.callforwardFunction === 'function') { self.animationCallForward(true); }
 					self.setCurrent($(this).attr('class').split('-')[2]);
 					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
 					return false;
@@ -629,6 +630,7 @@ if (typeof Object.create !== 'function') {
 				// Re calculate cross links (for applying current tabs)
 				self.$crosslinks = $('[data-liquidslider-ref*=' + (self.sliderId).split('#')[1] + ']');
 				(self.$crosslinks).on('click', function (e) {
+
 
 					if (!self.clickable) {return false; }
 					// Stop and Play controls
@@ -649,6 +651,7 @@ if (typeof Object.create !== 'function') {
 							return false;
 						}
 					}
+					if (typeof self.options.callforwardFunction === 'function') { self.animationCallForward(true); }
 					// Stores the clicked data-liquidslider-ref and checks if it is a # or left or right
 					var direction = ($(this).attr('href').split('#')[1]);
 					if (direction  === 'left' || direction === 'right') {
@@ -679,6 +682,7 @@ if (typeof Object.create !== 'function') {
 				(self.$sliderWrap).find('[class^=liquid-nav] li').on('click', function (e) {
 
 					if (!self.clickable) {return false; }
+					if (typeof self.options.callforwardFunction === 'function') { self.animationCallForward(true); }
 					self.setCurrent(parseInt($(this).attr('class').split('tab')[1], 10) - 1);
 					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
 					return false;
@@ -766,6 +770,7 @@ if (typeof Object.create !== 'function') {
 			
 			var self = this;
 				$(self.sliderId + ' .panel').on('touchstart', function (e) {
+					if (typeof self.options.callforwardFunction === 'function') { self.animationCallForward(true); }
 					
 					var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
 					// Starting point
@@ -802,6 +807,7 @@ if (typeof Object.create !== 'function') {
 			// Keyboard Events
 			var self = this;
 			$(document).keydown(function (event) {
+				if (typeof self.options.callforwardFunction === 'function') { self.animationCallForward(true); }
 				var key = event.keyCode || event.which;
 				if (event.target.type !== 'textarea' && event.target.type !== 'textbox') {
 					if (key === self.options.leftKey) {
@@ -1014,8 +1020,17 @@ if (typeof Object.create !== 'function') {
 			}
 		},
 
+		animationCallForward: function (go) {
+			var self = this;
+			if (!self.dontCallback || go) {
+				self.options.callforwardFunction.call(this);
+			}
+		},
+
 		autoSlide: function () {
 			var self = this;
+
+			if (typeof self.options.callforwardFunction === 'function' && self.loaded) { self.animationCallForward(); }
 			// Can't set the autoslide slower than the easing ;-)
 			if (self.options.autoSlideInterval < self.options.slideEaseDuration) {
 				self.options.autoSlideInterval = (self.options.slideEaseDuration > self.options.autoHeightEaseDuration) ? self.options.slideEaseDuration : self.options.autoHeightEaseDuration;
@@ -1084,6 +1099,7 @@ if (typeof Object.create !== 'function') {
 
 		slideEaseDuration: 1500,
 		slideEaseFunction: "easeInOutExpo",
+		callforwardFunction: null,
 		callbackFunction: null,
 
 		autoSlide: false,
