@@ -1030,13 +1030,13 @@ if (typeof Object.create !== 'function') {
 		autoSlide: function () {
 			var self = this;
 
-			if (typeof self.options.callforwardFunction === 'function' && self.loaded) { self.animationCallForward(); }
 			// Can't set the autoslide slower than the easing ;-)
 			if (self.options.autoSlideInterval < self.options.slideEaseDuration) {
 				self.options.autoSlideInterval = (self.options.slideEaseDuration > self.options.autoHeightEaseDuration) ? self.options.slideEaseDuration : self.options.autoHeightEaseDuration;
 			}
 			//self.clickable = false;
 			self.autoslideTimeout = setTimeout(function () {
+			if (typeof self.options.callforwardFunction === 'function' && self.loaded) { self.animationCallForward(); }
 				// Slide left or right
 				self.setCurrent(self.options.autoSliderDirection);
 				self.autoSlide();
