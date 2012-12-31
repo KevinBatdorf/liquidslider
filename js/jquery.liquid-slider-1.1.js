@@ -610,7 +610,7 @@ if (typeof Object.create !== 'function') {
 			var self = this;
 			// CLick arrows
 			if (self.options.dynamicArrows) {
-				$((self.$sliderWrap).find('[class^=liquid-nav-]')).on('click', function (e) {
+				$((self.$sliderWrap).find('[class^=liquid-nav-]')).on('click', function () {
 
 					// These prevent clicking when in continuous mode, which would break it otherwise.
 					if (!self.clickable) { return false; }
@@ -629,24 +629,25 @@ if (typeof Object.create !== 'function') {
 			if (self.options.crossLinks) {
 				// Re calculate cross links (for applying current tabs)
 				self.$crosslinks = $('[data-liquidslider-ref*=' + (self.sliderId).split('#')[1] + ']');
-				(self.$crosslinks).on('click', function (e) {
+				(self.$crosslinks).on('click', function () {
 
 
 					if (!self.clickable) {return false; }
 					// Stop and Play controls
 					if (self.options.autoSlideControls) {
-						if ($(this).attr('name') === 'stop') {
-							$(this).html(self.options.autoSlideStartText).attr('name', 'start');
+						if ($(this).html() === self.options.autoSlideStopText) {
+							$(this).html(self.options.autoSlideStartText);
 							self.options.autoSlide = false;
 							self.checkAutoSlideStop();
 							return false;
 						}
-						if ($(this).attr('name') === 'start') {
-							$(this).html(self.options.autoSlideStopText).attr('name', 'stop');
+						if ($(this).html() === self.options.autoSlideStartText) {
+							$(this).html(self.options.autoSlideStopText);
 							self.autoSlideStopped = false;
 							self.options.autoSlide = true;
 							self.hover();
 							self.setCurrent(self.currentTab + 1);
+							self.checkAutoSlideStop();
 							self.autoSlide();
 							return false;
 						}
@@ -679,7 +680,7 @@ if (typeof Object.create !== 'function') {
 
 			// Click tabs
 			if (self.options.dynamicTabs) {
-				(self.$sliderWrap).find('[class^=liquid-nav] li').on('click', function (e) {
+				(self.$sliderWrap).find('[class^=liquid-nav] li').on('click', function () {
 
 					if (!self.clickable) {return false; }
 					if (typeof self.options.callforwardFunction === 'function') { self.animationCallForward(true); }
@@ -690,7 +691,7 @@ if (typeof Object.create !== 'function') {
 			}
 
 			// Click to stop autoslider
-			(self.$sliderWrap).find('*').on('click', function (e) {
+			(self.$sliderWrap).find('*').on('click', function () {
 				if (!self.options.autoSlidePauseOnHover || self.options.autoSlideStopWhenClicked) {
 					// AutoSlide controls.
 					self.checkAutoSlideStop();
