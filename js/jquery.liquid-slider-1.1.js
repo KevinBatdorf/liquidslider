@@ -634,21 +634,24 @@ if (typeof Object.create !== 'function') {
 
 					if (!self.clickable) {return false; }
 					// Stop and Play controls
+					// When the user presses stop
 					if (self.options.autoSlideControls) {
 						if ($(this).html() === self.options.autoSlideStopText) {
-							$(this).html(self.options.autoSlideStartText);
 							self.options.autoSlide = false;
-							self.checkAutoSlideStop();
+							clearTimeout(self.autoslideTimeout);
+							$(this).html(self.options.autoSlideStartText);
+							$(this).attr('name', 'start');
 							return false;
 						}
+						// When the user presses play
 						if ($(this).html() === self.options.autoSlideStartText) {
 							$(this).html(self.options.autoSlideStopText);
 							self.autoSlideStopped = false;
 							self.options.autoSlide = true;
 							self.hover();
 							self.setCurrent(self.currentTab + 1);
-							self.checkAutoSlideStop();
 							self.autoSlide();
+							$(this).attr('name', 'stop');
 							return false;
 						}
 					}
@@ -1055,11 +1058,12 @@ if (typeof Object.create !== 'function') {
 					self.autoSlideStopped = true;
 					if (self.options.autoSlideControls) {
 						$('body').find('[data-liquidslider-ref*=' + (self.sliderId).split('#')[1] + '][name=stop]').html(self.options.autoSlideStartText);
-						clearTimeout(self.autoslideTimeout);
 					}
+					
 				} else if (!self.options.hoverArrows && !self.options.autoSlidePauseOnHover) {
 					self.autoSlide(clearTimeout(self.autoslideTimeout));
 				}
+				
 			}
 		},
 
