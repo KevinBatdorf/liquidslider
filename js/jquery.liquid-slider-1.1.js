@@ -644,8 +644,6 @@ if (typeof Object.create !== 'function') {
 							return false;
 						}
 						// When the user presses play
-							console.log($(this).val());
-							console.log(self.options.autoSlideStartText);
 						if ($(this).attr('name') === 'start') {
 							$(this).html(self.options.autoSlideStopText);
 							self.autoSlideStopped = false;
