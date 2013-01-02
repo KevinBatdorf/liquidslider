@@ -636,7 +636,7 @@ if (typeof Object.create !== 'function') {
 					// Stop and Play controls
 					// When the user presses stop
 					if (self.options.autoSlideControls) {
-						if ($(this).html() === self.options.autoSlideStopText) {
+						if ($(this).attr('name') === 'stop') {
 							self.options.autoSlide = false;
 							clearTimeout(self.autoslideTimeout);
 							$(this).html(self.options.autoSlideStartText);
@@ -644,7 +644,9 @@ if (typeof Object.create !== 'function') {
 							return false;
 						}
 						// When the user presses play
-						if ($(this).html() === self.options.autoSlideStartText) {
+							console.log($(this).val());
+							console.log(self.options.autoSlideStartText);
+						if ($(this).attr('name') === 'start') {
 							$(this).html(self.options.autoSlideStopText);
 							self.autoSlideStopped = false;
 							self.options.autoSlide = true;
