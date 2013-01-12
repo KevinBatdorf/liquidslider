@@ -649,7 +649,7 @@ if (typeof Object.create !== 'function') {
 							self.autoSlideStopped = false;
 							self.options.autoSlide = true;
 							self.hover();
-							self.setCurrent(self.currentTab + 1);
+							self.setCurrent(self.options.autoSliderDirection);
 							self.autoSlide();
 							$(this).attr('name', 'stop');
 							return false;
