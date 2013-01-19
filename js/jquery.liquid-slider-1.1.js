@@ -662,9 +662,7 @@ if (typeof Object.create !== 'function') {
 						self.setCurrent(direction);
 					} else if (self.options.hashCrossLinks) {
 						self.getHashTags('#' + direction);
-						self.currentTab = self.hashValue - ~~(self.options.continuous);
-						self.setCurrent();
-
+						self.setCurrent(parseInt(self.hashValue - 1, 10));
 					} else {
 						self.setCurrent(parseInt(direction - 1, 10));
 					}
