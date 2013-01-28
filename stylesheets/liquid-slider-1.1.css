@@ -277,7 +277,6 @@
 }
 .liquid-slider-wrapper .liquid-nav-left-arrow:active {
   /* Left graphical arrows click */
-  margin-top: 55px;
 }
 .liquid-slider-wrapper .liquid-nav-right-arrow:hover {
   /* Right graphical arrows hover */
@@ -285,7 +284,6 @@
 }
 .liquid-slider-wrapper .liquid-nav-right-arrow:active {
   /* Right graphical arrows click */
-  margin-top: 55px;
 }
 .arrows .liquid-slider {
   /* Margin between slider and arrows */
