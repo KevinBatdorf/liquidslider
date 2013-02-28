@@ -199,7 +199,7 @@ if (typeof Object.create !== 'function') {
 
 		removePreloader: function () {
 			var self = this,
-				heightCandidate,
+				//heightCandidate,
 				height = 0;
 			// Remove most preloaders (ones without images, etc)
 			if (self.options.preloader) {
@@ -969,8 +969,8 @@ if (typeof Object.create !== 'function') {
 			if (self.options.slideEaseFunction === 'fade') {
 				if (self.loaded) {
 					$($(self.panelContainer).children()[self.currentTab])
-						.fadeTo(self.options.slideEaseDuration, 1.0)
-						.siblings().css('display', 'none');
+						.fadeTo(self.options.fadeInDuration, 1.0)
+						.siblings().fadeTo(self.options.fadeOutDuration, 0);
 					setTimeout(function () { self.continuousSlide(); }, self.options.slideEaseDuration + 50);
 				}
 			} else if (self.loaded || !self.useCSS) {
@@ -1057,11 +1057,11 @@ if (typeof Object.create !== 'function') {
 					if (self.options.autoSlideControls) {
 						$('body').find('[data-liquidslider-ref*=' + (self.sliderId).split('#')[1] + '][name=stop]').html(self.options.autoSlideStartText);
 					}
-					
+
 				} else if (!self.options.hoverArrows && !self.options.autoSlidePauseOnHover) {
 					self.autoSlide(clearTimeout(self.autoslideTimeout));
 				}
-				
+
 			}
 		},
 
@@ -1101,6 +1101,8 @@ if (typeof Object.create !== 'function') {
 		autoHeightRatio: null, // still in development
 
 		slideEaseDuration: 1500,
+		fadeInDuration:1000,
+		fadeOutDuration: 1000,
 		slideEaseFunction: "easeInOutExpo",
 		callforwardFunction: null,
 		callbackFunction: null,
