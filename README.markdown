@@ -80,6 +80,8 @@ Default Settings
       autoHeightEaseDuration: 1500,
       autoHeightEaseFunction: "easeInOutExpo",
            slideEaseDuration: 1500,
+              fadeInDuration:1000,
+             fadeOutDuration: 1000,
            slideEaseFunction: "easeInOutExpo",
          callforwardFunction: null,
             callbackFunction: null,
