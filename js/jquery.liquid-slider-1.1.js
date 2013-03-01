@@ -198,6 +198,7 @@ if (typeof Object.create !== 'function') {
 		},
 
 		removePreloader: function () {
+			// I think this is broken TODO ~~continuous
 			var self = this,
 				//heightCandidate,
 				height = 0;
@@ -233,9 +234,11 @@ if (typeof Object.create !== 'function') {
 							self.hashValue = self.hashValue.replace(self.options.hashTagSeparator, '');
 							self.hashValue = self.hashValue.replace(self.options.hashTLD, '');
 							if (($this).toLowerCase() === self.hashValue.toLowerCase()) {
-								self.hashValue = parseInt(n + 1, 10);
+								self.hashValue = parseInt(n + 1, 10) - ~~(self.options.continuous);
 								// Adjust if continuous
-								if (self.panelCount && self.options.continuous && self.hashValue === 1) { self.hashValue = self.panelCount - 1; }
+								if (self.options.continuous && self.hashValue === 0) {
+									self.hashValue = self.panelCount - 2;
+								}
 								return false;
 							}
 						}
