@@ -1,6 +1,6 @@
 /*!*********************************************************************
 *
-*  Liquid Slider 1.1
+*  Liquid Slider
 *  Kevin Batdorf
 *
 *  http://liquidslider.kevinbatdorf.com
@@ -8,6 +8,16 @@
 *  GPL license
 *
 ************************************************************************/
+
+/* Version 1.2.0
+ *
+ * - Adapts a new semantic versioning system
+ * - Adds touch functionality via touchSwipe (thanks @appzuka for recommending this plugin)
+ * - Removes jQuery and included only the link to the CDN
+ * - Replaces jQueryUI easing with the much lighter jQuery Easing plugin.
+ */
+
+
 
 /*jslint bitwise: true, browser: true */
 /*global $, jQuery */
@@ -712,7 +722,7 @@ if (typeof Object.create !== 'function') {
 			}
 
 			// Enable Touch Events
-			//if (self.options.swipe) {self.touch(); }
+			if (self.options.swipe) {self.touch(); }
 
 			// Enable Keyboard Events
 			if (self.options.keyboardNavigation) {self.keyboard(); }
@@ -771,41 +781,26 @@ if (typeof Object.create !== 'function') {
 
 		touch: function () {
 			// Touch Events
-			/* Disabled until I can do further device testing
-			
 			var self = this;
-				$(self.sliderId + ' .panel').on('touchstart', function (e) {
-					if (typeof self.options.callforwardFunction === 'function') { self.animationCallForward(true); }
-					
-					var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-					// Starting point
-					self.swipeStart = touch.pageX;
-					//e.preventDefault();
-				});
+			$(self.sliderId + ' .panel').swipe({allowPageScroll: "vertical", swipe: function (e, dir) {
 
-				$(self.sliderId + ' .panel').on('touchmove', function (e) {
-
-					var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-					if (Math.abs(self.swipeStart - touch.pageX) > self.options.swipeThreshold) {
-						e.preventDefault();
+				// Reverse the swipe direction
+				self.swipeDir = (dir === 'left') ? 'right' : 'left';
+				if (!self.options.continuous) {
+					// Check if on the first or last panel, and don't slide beyond
+					if ( (self.currentTab === 0 && dir === 'right') ||
+						(( self.currentTab === (self.panelCount - 1) ) && dir === 'left') ) {
+						return false;
 					}
-				});
+				}
+				self.setCurrent(self.swipeDir);
+				self.clickable = false;
+				$(this).trigger('click');
 
-				$(self.sliderId + ' .panel').on('touchend', function (e) {
-					var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-					if (Math.abs(self.swipeStart - touch.pageX) > self.options.swipeThreshold) {
-						//e.preventDefault();
-						// If they swipe left, you want the panels to go right, etc
-						self.swipeDir = (self.swipeStart > touch.pageX) ? 'right' : 'left';
-						self.setCurrent(self.swipeDir);
-						self.clickable = false;
-						$(this).trigger('click');
-					}
-					
-					self.checkAutoSlideStop();
-					if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
-				});
-			*/
+			self.checkAutoSlideStop();
+			if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
+
+			}});
 		},
 
 		keyboard: function () {
@@ -1166,10 +1161,9 @@ if (typeof Object.create !== 'function') {
 
 		preloader: true,
 		preloaderFadeOutDuration: 250,
-		preloaderElements: 'img,video,iframe,object'
+		preloaderElements: 'img,video,iframe,object',
 
-		//swipe: true,
-		//swipeThreshold: 100
+		swipe: true
 	};
 
 })(jQuery, window, document);

@@ -10,6 +10,8 @@ A Responsive jQuery HTML Content Slider
 Features
 --------
 
+New: Now with swipe support
+
 Fully Responsive to Screen Widths  
 Updates Height After Page Loads  
 Available Functions to Adjust Height After AJAX Load  
@@ -35,13 +37,14 @@ How to Use
 
 See [here](http://liquidslider.kevinbatdorf.com) for further details.
 
-Install the slider in the head after jQuery.
+Install the slider in the head after jQuery and other scripts.
 
 ```javascript
     <link rel="stylesheet" type="text/css" media="screen" href="./stylesheets/liquid-slider-1.1.css">
-    <script src="./js/jquery-1.8.2.min.js"></script>
-    <script src="./js/jquery-ui-1.8.20.custom.min.js"></script>  
-    <script src="./js/jquery.liquid-slider-1.1.min.js"></script>  
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="./js/jquery.easing.1.3.js"></script>
+    <script src="./js/jquery.touchSwipe.min.js"></script>
+    <script src="./js/jquery.liquid-slider.min.js"></script>  
     $(function(){
       $('#slider-id').liquidSlider();
     });
@@ -155,8 +158,19 @@ Default Settings
 Documentation
 -------------
 
-Documentation is [here](http://liquidslider.kevinbatdorf.com/#/documentation.html)
+Documentation is [here](http://liquidslider.kevinbatdorf.com)
 
 Submit bugs [here](https://github.com/kevinbatdorf/liquidslider/issues)
 
 Maintained by [Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
+
+
+
+Versions
+--------
+
+Version 1.2.0
+- Adapts a new semantic versioning system
+- Adds touch functionality via touchSwipe (thanks @appzuka for recommending this plugin)
+- Removes jQuery and included only the link to the CDN
+- Replaces jQueryUI easing with the much lighter jQuery Easing plugin.

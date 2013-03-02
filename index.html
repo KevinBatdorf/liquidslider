@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 
-  Liquid Slider 1.1
+  Liquid Slider
   Kevin Batdorf
 
   http://liquidslider.kevinbatdorf.com
@@ -21,26 +21,31 @@
       You may want to "minify" this after making edits
       http://www.refresh-sf.com/yui/ 
     -->
-    <link rel="stylesheet" type="text/css" media="screen" href="./stylesheets/liquid-slider-1.1.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="./stylesheets/liquid-slider.css">
 
     <!-- This is just styling for the demo to make it a little less crowded at the top -->
     <style>h1{margin:100px;}</style>
 
 
-    <!-- Definitely use these for development -->
-    <script src="./js/jquery-1.9.1.min.js"></script>
-    <script src="./js/jquery-ui-1.8.20.custom.min.js"></script>
+    <!-- Liquid Slider relies on jQuery and easing effects-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="./js/jquery.easing.1.3.js"></script>
 
-    <!-- This of course is required. The full version (not .min) is also included in the js directory -->
-    <script src="./js/jquery.liquid-slider-1.1.min.js"></script>
+    <!-- Optional code for enabling touch -->
+    <script src="./js/jquery.touchSwipe.min.js"></script>
 
-    <title>Liquid Slider 1.1</title>
+    <!-- This is Liquid Slider code. The full version (not .min) is also included in the js directory -->
+    <script src="./js/jquery.liquid-slider.min.js"></script>
+
+    <title>Liquid Slider</title>
 
     <script>
     $(function(){
 
       /* Here is the slider using default settings */
       $('#slider-id').liquidSlider();
+
+
       /* If you want to adjust the settings, you set an option
          as follows:
 
@@ -52,7 +57,7 @@
          Find more options at http://liquidslider.kevinbatdorf.com/
       */
 
-      /* If you need to access the internal property or methods, use this method.
+      /* If you need to access the internal property or methods, use this:
 
       var sliderObject = $.data( $('#slider-id')[0], 'liquidSlider');
       console.log(sliderObject);
@@ -64,7 +69,7 @@
     </script> 
   </head>
   <body class='no-js' style="margin:0">
-    <h1>Liquid Slider 1.1 </h1>
+    <h1>Liquid Slider</h1>
       <div class="liquid-slider"  id="slider-id">
         <div>
           <h2 class="title">Panel 1</h2>
