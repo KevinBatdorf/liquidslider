@@ -9,15 +9,19 @@
 *
 ************************************************************************/
 
+/* Version 1.2.1
+ *
+ * - Removes the depreciated $.browser() call
+ * - Fixes a bug when using hashNames that started the slider on the wrong panel.
+ */
+
 /* Version 1.2.0
  *
  * - Adapts a new semantic versioning system
  * - Adds touch functionality via touchSwipe (thanks @appzuka for recommending this plugin)
- * - Removes jQuery and included only the link to the CDN
+ * - Removes jQuery and includes only the link to the CDN
  * - Replaces jQueryUI easing with the much lighter jQuery Easing plugin.
  */
-
-
 
 /*jslint bitwise: true, browser: true */
 /*global $, jQuery */
@@ -244,7 +248,7 @@ if (typeof Object.create !== 'function') {
 							self.hashValue = self.hashValue.replace(self.options.hashTagSeparator, '');
 							self.hashValue = self.hashValue.replace(self.options.hashTLD, '');
 							if (($this).toLowerCase() === self.hashValue.toLowerCase()) {
-								self.hashValue = parseInt(n + 1, 10) - ~~(self.options.continuous);
+								self.hashValue = parseInt(n + 1, 10);
 								// Adjust if continuous
 								if (self.options.continuous && self.hashValue === 0) {
 									self.hashValue = self.panelCount - 2;
@@ -452,7 +456,6 @@ if (typeof Object.create !== 'function') {
 				// Get total width of the navigation tabs and center it
 				self.totalNavWidth = 0;
 				$((self.$sliderWrap)).find('.liquid-nav li a').each(function () { self.totalNavWidth += $(this).outerWidth(true); });
-				if ($.browser.msie) { self.totalNavWidth = self.totalNavWidth + (5); } // Simple IE fix
 				$((self.$sliderWrap)).find('.liquid-nav ul').css('width', self.totalNavWidth + 1);
 			}
 		},
@@ -675,7 +678,7 @@ if (typeof Object.create !== 'function') {
 						self.setCurrent(direction);
 					} else if (self.options.hashCrossLinks) {
 						self.getHashTags('#' + direction);
-						self.setCurrent(parseInt(self.hashValue - 1, 10));
+						self.setCurrent(parseInt(self.hashValue - 1, 10) - ~~(self.options.continuous));
 					} else {
 						self.setCurrent(parseInt(direction - 1, 10));
 					}
