@@ -168,6 +168,12 @@ Maintained by [Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
 
 Versions
 --------
+Version 1.2.2
+- Fixes a bug where keyboard navigation fails.
+
+Version 1.2.1
+- Removes the depreciated $.browser() call.
+- Fixes a bug when using hashNames that started the slider on the wrong panel.
 
 Version 1.2.0
 - Adapts a new semantic versioning system

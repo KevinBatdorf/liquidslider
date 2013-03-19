@@ -8,18 +8,22 @@
 *  GPL license
 *
 ************************************************************************/
+/* Version 1.2.2
+ *
+ * - Fixes a bug where keyboard navigation fails.
+ */
 
 /* Version 1.2.1
  *
- * - Removes the depreciated $.browser() call
+ * - Removes the depreciated $.browser() call.
  * - Fixes a bug when using hashNames that started the slider on the wrong panel.
  */
 
 /* Version 1.2.0
  *
- * - Adapts a new semantic versioning system
- * - Adds touch functionality via touchSwipe (thanks @appzuka for recommending this plugin)
- * - Removes jQuery and includes only the link to the CDN
+ * - Adapts a new semantic versioning system.
+ * - Adds touch functionality via touchSwipe (thanks @appzuka for recommending this plugin).
+ * - Removes jQuery and includes only the link to the CDN.
  * - Replaces jQueryUI easing with the much lighter jQuery Easing plugin.
  */
 
@@ -815,17 +819,19 @@ if (typeof Object.create !== 'function') {
 				if (event.target.type !== 'textarea' && event.target.type !== 'textbox') {
 					if (key === self.options.leftKey) {
 						self.setCurrent('right');
+							self.clickable = false;
 					}
 					if (key === self.options.rightKey) {
 						self.setCurrent('left');
+							self.clickable = false;
 					}
 					$.each(self.options.panelKeys, function (index, value) {
 						if (key === value) {
 							self.setCurrent(index - 1);
+							self.clickable = false;
 						}
 					});
 				}
-				self.clickable = false;
 				self.checkAutoSlideStop();
 				if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
 			});
