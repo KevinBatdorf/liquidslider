@@ -1,0 +1,26 @@
+{
+    "name": "liquidslider",
+    "title": "Liquid Slider",
+    "description": "A responsive html content slider that features CSS3 transitions, swipe navigation dynamic navigation, and more. Powerful, easy-to-use, and fast.",
+    "keywords": [
+        "content slider",
+        "responsive",
+        "swipe",
+        "mobile"
+    ],
+    "version": "1.2.2",
+    "author": {
+        "name": "Kevin Batdorf",
+        "url": "http://www.kevinbatdorf.com"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/jquery/jquery-color/blob/2.1.2/MIT-LICENSE.txt"
+        }
+    ],
+    "bugs": "https://github.com/KevinBatdorf/liquidslider/issues?state=open",
+    "homepage": "https://liquidslider.kevinbatdorf.com",
+    "docs": "https://github.com/KevinBatdorf/liquidslider/blob/master/README.markdown",
+    "download": "https://liquidslider.kevinbatdorf.com"
+}
