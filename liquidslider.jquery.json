@@ -15,8 +15,8 @@
     },
     "licenses": [
         {
-            "type": "MIT",
-            "url": "https://github.com/jquery/jquery-color/blob/2.1.2/MIT-LICENSE.txt"
+            "type": "GPLv3",
+            "url": "https://github.com/KevinBatdorf/liquidslider/blob/master/GPL%20-%20License.txt"
         }
     ],
     "bugs": "https://github.com/KevinBatdorf/liquidslider/issues?state=open",
