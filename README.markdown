@@ -82,6 +82,7 @@ Default Settings
                autoHeightMin: 0,
       autoHeightEaseDuration: 1500,
       autoHeightEaseFunction: "easeInOutExpo",
+
            slideEaseDuration: 1500,
               fadeInDuration:1000,
              fadeOutDuration: 1000,
@@ -140,16 +141,14 @@ Default Settings
         mobileNavDefaultText: 'Menu',
            mobileUIThreshold: 0,
         hideArrowsWhenMobile: true,
+         hideArrowsThreshold: 481,
               useCSSMaxWidth: 1030,
+                       swipe: true
 
                    preloader: true,
     preloaderFadeOutDuration: 250,
            preloaderElements: 'img,video,iframe,object'
 
-                topScrolling: false,
-        topScrollingDuration: 1500,
-          topScrollingOnLoad: false,
-     topScrollingExtraPixels: 0
 ```
     
     
@@ -168,6 +167,9 @@ Maintained by [Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
 
 Versions
 --------
+Version 1.2.3
+- Fixes a bug when using crosslinks on multible sliders wont apply the current class properly.
+
 Version 1.2.2
 - Fixes a bug where keyboard navigation fails.
 

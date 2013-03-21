@@ -8,6 +8,11 @@
 *  GPL license
 *
 ************************************************************************/
+/* Version 1.2.3
+ *
+ * - Fixes a bug when using crosslinks on multible sliders wont apply the current class properly.
+ */
+
 /* Version 1.2.2
  *
  * - Fixes a bug where keyboard navigation fails.
@@ -648,7 +653,7 @@ if (typeof Object.create !== 'function') {
 			// Click cross links
 			if (self.options.crossLinks) {
 				// Re calculate cross links (for applying current tabs)
-				self.$crosslinks = $('[data-liquidslider-ref*=' + (self.sliderId).split('#')[1] + ']');
+				self.$crosslinks = $('[data-liquidslider-ref=' + (self.sliderId).split('#')[1] + ']');
 				(self.$crosslinks).on('click', function () {
 
 
@@ -877,11 +882,11 @@ if (typeof Object.create !== 'function') {
 					(self.$crosslinks).each(function () {
 						if (self.options.hashCrossLinks) {
 							if ($(this).attr('href') === ('#' + $($(self.panelContainer).children()[(self.setTab + ~~(self.options.continuous))]).find(self.options.panelTitleSelector).text().replace(/(\s)/g, '-').toLowerCase())) {
-								$('.currentCrossLink').removeClass('currentCrossLink');
+								$('[data-liquidslider-ref=' + (self.sliderId).split('#')[1] + ']').removeClass('currentCrossLink');
 								$(this).addClass('currentCrossLink');
 							}
 						} else if ($(this).attr('href') === '#' + (self.setTab + 1)) {
-							$('.currentCrossLink').removeClass('currentCrossLink');
+							$('[data-liquidslider-ref=' + (self.sliderId).split('#')[1] + ']').removeClass('currentCrossLink');
 							$(this).addClass('currentCrossLink');
 						}
 					});
@@ -1134,7 +1139,6 @@ if (typeof Object.create !== 'function') {
 		hoverArrows: true,
 		hoverArrowDuration: 250,
 
-
 		dynamicTabs: true,
 		dynamicTabsAlign: "left",
 		dynamicTabsPosition: "top",
@@ -1167,12 +1171,12 @@ if (typeof Object.create !== 'function') {
 		hideArrowsWhenMobile: true,
 		hideArrowsThreshold: 481,
 		useCSSMaxWidth: 1030,
+		swipe: true,
 
 		preloader: true,
 		preloaderFadeOutDuration: 250,
-		preloaderElements: 'img,video,iframe,object',
+		preloaderElements: 'img,video,iframe,object'
 
-		swipe: true
 	};
 
 })(jQuery, window, document);
