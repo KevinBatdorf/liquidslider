@@ -19,6 +19,9 @@
             "url": "https://github.com/KevinBatdorf/liquidslider/blob/master/GPL%20-%20License.txt"
         }
     ],
+    "dependencies": {
+        "jquery": ">=1.5"
+    }
     "bugs": "https://github.com/KevinBatdorf/liquidslider/issues?state=open",
     "homepage": "https://liquidslider.kevinbatdorf.com",
     "docs": "https://github.com/KevinBatdorf/liquidslider/blob/master/README.markdown",
