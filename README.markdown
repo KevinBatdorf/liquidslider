@@ -167,6 +167,9 @@ Maintained by [Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
 
 Versions
 --------
+Version 1.2.4
+- Pushes new version # to jQuery repository.
+
 Version 1.2.3
 - Fixes a bug when using crosslinks on multible sliders wont apply the current class properly.
 
