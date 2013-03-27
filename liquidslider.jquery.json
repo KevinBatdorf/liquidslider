@@ -3,7 +3,8 @@
     "title": "Liquid Slider",
     "description": "A responsive html content slider that features CSS3 transitions, swipe navigation dynamic navigation, and more. Powerful, easy-to-use, and fast.",
     "keywords": [
-        "content slider",
+        "content",
+        "slider",
         "responsive",
         "swipe",
         "mobile"
@@ -21,7 +22,7 @@
     ],
     "dependencies": {
         "jquery": ">=1.5"
-    }
+    },
     "bugs": "https://github.com/KevinBatdorf/liquidslider/issues?state=open",
     "homepage": "https://liquidslider.kevinbatdorf.com",
     "docs": "https://github.com/KevinBatdorf/liquidslider/blob/master/README.markdown",
