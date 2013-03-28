@@ -8,7 +8,7 @@
 *  GPL license
 *
 ************************************************************************/
-/* Version 1.2.4
+/* Version 1.2.4 - 1.2.5
  *
  * - Pushes new version # to jQuery repository.
  */
