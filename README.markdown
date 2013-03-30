@@ -167,6 +167,10 @@ Maintained by [Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
 
 Versions
 --------
+Version 1.2.6
+- Fixes a few minor bugs.
+- Organizes code for upcoming custom build
+
 Version 1.2.4 - 1.2.5
 - Pushes new version # to jQuery repository.
 
