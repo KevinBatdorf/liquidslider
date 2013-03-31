@@ -167,6 +167,9 @@ Maintained by [Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
 
 Versions
 --------
+Version 1.2.7
+- Fixes some bugs
+
 Version 1.2.6
 - Fixes a few minor bugs.
 - Organizes code for upcoming custom build

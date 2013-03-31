@@ -8,6 +8,11 @@
 *  GPL license
 *
 ************************************************************************/
+/* Version 1.2.7
+ *
+ * - Mostly fixes bugs
+ */
+
 /* Version 1.2.6
  *
  * - Fixes a few minor bugs.
