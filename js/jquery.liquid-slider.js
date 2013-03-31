@@ -48,18 +48,18 @@
 
 // Utility for creating objects in older browsers
 if (typeof Object.create !== 'function') {
-	Object.create = function (obj) {
-		"use strict";
-		function F() {}
-		F.prototype = obj;
-		return new F();
-	};
+  Object.create = function (obj) {
+    "use strict";
+    function F() {}
+    F.prototype = obj;
+    return new F();
+  };
 }
 
 (function ($, window, document, undefined) {
-	"use strict";
-	var Slider = {
-		//initialize
+  "use strict";
+  var Slider = {
+    //initialize
     addPreloader: function () {
       var self = this;
       if (self.useCSS) {
@@ -410,6 +410,22 @@ if (typeof Object.create !== 'function') {
         if ((self.$rightArrow).css('visibility') === 'hidden') {
           (self.$rightArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDuration * 3);
         }
+      }
+    },
+    registerArrows: function () {
+      var self = this;
+      // CLick arrows
+      if (self.options.dynamicArrows) {
+        $((self.$sliderWrap).find('[class^=liquid-nav-]')).on('click', function () {
+
+          // These prevent clicking when in continuous mode, which would break it otherwise.
+          if (!self.clickable) { return false; }
+          if (typeof self.options.callforwardFunction === 'function') { self.animationCallForward(true); }
+          self.setCurrent($(this).attr('class').split('-')[2]);
+          if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
+          return false;
+        });
+        self.checkAutoSlideStop();
       }
     },
     registerCrossLinks: function () {
