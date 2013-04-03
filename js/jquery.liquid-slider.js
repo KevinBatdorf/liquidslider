@@ -8,6 +8,11 @@
 *  GPL license
 *
 ************************************************************************/
+/* Version 1.2.8
+ *
+ * - Fixes the way the preloader works when continuous is off
+ */
+
 /* Version 1.2.7
  *
  * - Mostly fixes bugs
@@ -50,6 +55,7 @@
 
 /*jslint bitwise: true, browser: true */
 /*global $, jQuery */
+/*jshint unused:false */
 
 // Utility for creating objects in older browsers
 if (typeof Object.create !== 'function') {
@@ -203,9 +209,9 @@ if (typeof Object.create !== 'function') {
       // Set the initial height
       if (!self.options.autoHeight) {
         (self.$sliderId).css('height', self.getHeighestPanel() + 'px');
-      } else {
+      } //else {
         //self.adjustHeightNoAnimation();
-      }
+      //}
 
       // Cache the padding for add/removing arrows
       if (self.options.hideArrowsWhenMobile) {
@@ -659,19 +665,16 @@ if (typeof Object.create !== 'function') {
     },
     continuousSlide: function () {
       var self = this;
-
-      if (self.options.continuous) {
-        // If on the last panel (the clone of panel 1), set the margin to the original.
-        if (self.currentTab === self.panelCount - 2 || self.marginLeft === -((self.slideWidth * self.panelCount) - self.slideWidth)) {
-          $(self.panelContainer).css('margin-left', -self.slideWidth + self.pSign);
-          self.currentTab = 0;
-        } else if (self.currentTab === -1 || self.marginLeft === 0) {
-        // If on the first panel the clone of the last panel), set the margin to the original.
-          $(self.panelContainer).css('margin-left', -(((self.slideWidth * self.panelCount) - (self.slideWidth * 2))) + self.pSign);
-          self.currentTab = (self.panelCount - 3);
-        }
-        self.clickable = true;
-      } else { self.clickable = true; }
+      // If on the last panel (the clone of panel 1), set the margin to the original.
+      if (self.currentTab === self.panelCount - 2 || self.marginLeft === -((self.slideWidth * self.panelCount) - self.slideWidth)) {
+        $(self.panelContainer).css('margin-left', -self.slideWidth + self.pSign);
+        self.currentTab = 0;
+      } else if (self.currentTab === -1 || self.marginLeft === 0) {
+      // If on the first panel the clone of the last panel), set the margin to the original.
+        $(self.panelContainer).css('margin-left', -(((self.slideWidth * self.panelCount) - (self.slideWidth * 2))) + self.pSign);
+        self.currentTab = (self.panelCount - 3);
+      }
+      self.clickable = true;
     },
     animationCallback: function (go) {
       var self = this;
@@ -1048,7 +1051,11 @@ if (typeof Object.create !== 'function') {
           $($(self.panelContainer).children()[self.currentTab])
             .fadeTo(self.options.fadeInDuration, 1.0)
             .siblings().fadeTo(self.options.fadeOutDuration, 0);
-          setTimeout(function () { self.continuousSlide(); }, self.options.slideEaseDuration + 50);
+          setTimeout(function () {
+            if (self.options.continuous) {
+              self.continuousSlide();
+              } else { self.clickable = true; }
+          }, self.options.slideEaseDuration + 50);
         }
       } else if (self.loaded || !self.useCSS) {
         // Adjust the margin for continuous sliding
@@ -1071,7 +1078,11 @@ if (typeof Object.create !== 'function') {
               'transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)'
             });
             // Timeout to replicate callback function
-            setTimeout(function () { self.continuousSlide(); }, self.options.slideEaseDuration + 50);
+            setTimeout(function () {
+              if (self.options.continuous) {
+                self.continuousSlide();
+                } else { self.clickable = true; }
+            }, self.options.slideEaseDuration + 50);
           } else {
             (self.panelContainer).animate({
               'margin-left': self.marginLeft + self.pSign
@@ -1080,7 +1091,8 @@ if (typeof Object.create !== 'function') {
               duration: self.options.slideEaseDuration,
               queue: false,
               complete: function () {
-                if (self.options.continuous) { self.continuousSlide(); }
+                if (self.options.continuous) { self.continuousSlide();
+                } else { self.clickable = true; }
               }
             });
           }

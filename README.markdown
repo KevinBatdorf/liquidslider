@@ -167,6 +167,9 @@ Maintained by [Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
 
 Versions
 --------
+Version 1.2.8
+- Fixes the way the preloader works when continuous is off
+
 Version 1.2.7
 - Fixes some bugs
 
