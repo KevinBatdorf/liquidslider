@@ -167,6 +167,9 @@ Maintained by [Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
 
 Versions
 --------
+Version 1.2.9
+- Fixes and updates the TouchSwipe settings and script
+
 Version 1.2.8
 - Fixes the way the preloader works when continuous is off
 
