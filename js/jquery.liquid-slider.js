@@ -8,6 +8,11 @@
 *  GPL license
 *
 ************************************************************************/
+/* Version 1.2.9
+ *
+ * - Fixes and updates the TouchSwipe settings and script
+ */
+
 /* Version 1.2.8
  *
  * - Fixes the way the preloader works when continuous is off
@@ -582,7 +587,7 @@ if (typeof Object.create !== 'function') {
     touch: function () {
       // Touch Events
       var self = this;
-      $(self.sliderId + ' .panel').swipe({allowPageScroll: "vertical", swipe: function (e, dir) {
+      $(self.sliderId + ' .panel').swipe({fallbackToMouseEvents:false, allowPageScroll: "vertical", swipe: function (e, dir) {
 
         // Reverse the swipe direction
         self.swipeDir = (dir === 'left') ? 'right' : 'left';
