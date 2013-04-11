@@ -167,6 +167,9 @@ Maintained by [Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
 
 Versions
 --------
+Version 1.3.0
+- Fixes how the current class is applied when nesting sliders
+
 Version 1.2.9
 - Fixes and updates the TouchSwipe settings and script
 

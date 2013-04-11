@@ -8,6 +8,11 @@
 *  GPL license
 *
 ************************************************************************/
+/* Version 1.3.0
+ *
+ * - Fixes how the current class is applied when nesting sliders
+ */
+
 /* Version 1.2.9
  *
  * - Fixes and updates the TouchSwipe settings and script
@@ -947,9 +952,11 @@ if (typeof Object.create !== 'function') {
           self.setTab = self.currentTab;
         }
         // Add and remove current class.
-        $((self.$sliderWrap)).find('.tab' + (self.setTab + 1) + ' a:first')
-          .addClass('current')
-          .parent().siblings().children().removeClass('current');
+        if (self.options.dynamicTabs) {
+          $((self.$sliderWrap)).find('.tab' + (self.setTab + 1) + ':first a')
+            .addClass('current')
+            .parent().siblings().children().removeClass('current');
+        }
 
         // Add current class to cross linked Tabs
         if (self.options.crossLinks) {
