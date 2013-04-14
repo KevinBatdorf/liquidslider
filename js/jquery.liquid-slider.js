@@ -446,7 +446,7 @@ if (typeof Object.create !== 'function') {
           if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
           return false;
         });
-        self.checkAutoSlideStop();
+        if (self.options.autoslide) { self.checkAutoSlideStop(); }
       }
     },
     registerCrossLinks: function () {
@@ -492,7 +492,7 @@ if (typeof Object.create !== 'function') {
           } else {
             self.setCurrent(parseInt(direction - 1, 10));
           }
-          self.checkAutoSlideStop();
+          if (self.options.autoslide) { self.checkAutoSlideStop(); }
           if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
           return false;
         });
@@ -607,7 +607,7 @@ if (typeof Object.create !== 'function') {
         self.clickable = false;
         $(this).trigger('click');
 
-      self.checkAutoSlideStop();
+      if (self.options.autoslide) { self.checkAutoSlideStop(); }
       if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
 
       }});
@@ -634,7 +634,7 @@ if (typeof Object.create !== 'function') {
             }
           });
         }
-        self.checkAutoSlideStop();
+        if (self.options.autoslide) { self.checkAutoSlideStop(); }
         if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
       });
     },
@@ -902,7 +902,7 @@ if (typeof Object.create !== 'function') {
       (self.$sliderWrap).find('*').on('click', function () {
         if (!self.options.autoSlidePauseOnHover || self.options.autoSlideStopWhenClicked) {
           // AutoSlide controls.
-          self.checkAutoSlideStop();
+          if (self.options.autoslide) { self.checkAutoSlideStop(); }
 
           // Stops from speedy clicking for continuous sliding.
           if (self.options.continuous) {clearTimeout(self.continuousTimeout); }
