@@ -812,8 +812,12 @@ if (typeof Object.create !== 'function') {
       // Build navigation tabs
       if (self.options.dynamicTabs) { self.addNavigation(); }
 
-      // Build navigation arrows
-      if (self.options.dynamicArrows) { self.addArrows(); }
+      // Build navigation arrows or disable features
+      if (self.options.dynamicArrows) { self.addArrows();
+      } else {
+        self.options.hoverArrows = false;
+        self.options.hideSideArrows = false;
+      }
 
       // Find cross links (for applying current tabs)
       if (self.options.crossLinks) {
