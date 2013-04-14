@@ -987,7 +987,7 @@ if (typeof Object.create !== 'function') {
         if (self.options.hideSideArrows) { self.hideArrows(); }
 
         // Show arrows if hoverArrows is disabled
-        if (!self.options.hoverArrows) {
+        if (!self.options.hoverArrows && self.options.dynamicArrows) {
           (self.$leftArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDuration * 3);
           (self.$rightArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDuration * 3);
         }
