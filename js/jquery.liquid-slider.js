@@ -8,6 +8,11 @@
 *  GPL license
 *
 ************************************************************************/
+/* Version 1.3.1
+ *
+ * - Fixes a bug when using fade and swipe
+ */
+
 /* Version 1.3.0
  *
  * - Fixes how the current class is applied when nesting sliders
@@ -597,9 +602,9 @@ if (typeof Object.create !== 'function') {
         // Reverse the swipe direction
         self.swipeDir = (dir === 'left') ? 'right' : 'left';
         if (!self.options.continuous) {
-          // Check if on the first or last panel, and don't slide beyond
-          if ( (self.currentTab === 0 && dir === 'right') ||
-            (( self.currentTab === (self.panelCount - 1) ) && dir === 'left') ) {
+          // Check if on the first or last panel, and don't slide beyond (always swipe on fade)
+          if ( ((self.currentTab === 0 && dir === 'right') || ( (self.currentTab === (self.panelCount - 1)) && dir === 'left')) &&
+            self.options.slideEaseFunction !== "fade") {
             return false;
           }
         }

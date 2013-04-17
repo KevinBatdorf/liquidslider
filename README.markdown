@@ -167,6 +167,9 @@ Maintained by [Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
 
 Versions
 --------
+Version 1.3.1
+- Fixes a bug when using fade and swipe
+
 Version 1.3.0
 - Fixes how the current class is applied when nesting sliders
 
