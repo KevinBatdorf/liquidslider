@@ -8,7 +8,12 @@
 *  GPL license
 *
 ************************************************************************/
-/* Version 1.3.1
+/* Version 1.3.2
+ *
+ * - Fixes a hashLinking bug
+ */
+
+ /* Version 1.3.1
  *
  * - Fixes a bug when using fade and swipe
  */
