@@ -549,6 +549,7 @@ if (typeof Object.create !== 'function') {
         } else { window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[tab]).text().replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : tab + 1; }
       }
     },
+
     hover: function () {
       var self = this;
       // Hover events
@@ -573,8 +574,6 @@ if (typeof Object.create !== 'function') {
             clearTimeout(self.autoslideTimeout);
           }
         },
-
-
 
         function () {
           // Hover Arrows
@@ -780,9 +779,14 @@ if (typeof Object.create !== 'function') {
     build: function () {
       var self = this,
         isAbsolute;
-
       // Grab the current hash tag
-      if (self.options.hashCrossLinks) { self.getHashTags(window.location.hash); }
+      if (self.options.hashLinking) {
+        self.getHashTags(window.location.hash);
+        // Default to panel 1 if mistyped
+        if (typeof(self.hashValue) !== 'number' ) {
+          self.hashValue = 1;
+        }
+      }
 
       // Store current tab
       self.currentTab = (self.hashValue) ? self.hashValue - 1 : self.options.firstPanelToLoad - 1;
@@ -991,7 +995,7 @@ if (typeof Object.create !== 'function') {
         if (self.options.responsive && self.options.mobileNavigation && self.loaded) { $(self.sliderId + '-nav-select').val('tab' + (self.setTab + 1)); }
 
         // Update hash tags
-        if (self.options.hashCrossLinks) { self.updateHashTags(self.currentTab); }
+        if (self.options.hashLinking) { self.updateHashTags(self.currentTab); }
 
         // Update arrows if side arrows enabled
         if (self.options.hideSideArrows) { self.hideArrows(); }
