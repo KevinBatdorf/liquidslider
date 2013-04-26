@@ -531,13 +531,15 @@ if (typeof Object.create !== 'function') {
             }
           );
         }
+        else {
+          self.hashValue = parseInt(self.hashValue, 10);
+        }
       }
     },
 
     updateHashTags: function (tab) {
       var self = this;
       if (self.options.hashLinking) {
-          //console.log( ((self.$elem).find(self.options.hashTitleSelector)[self.currentTab] ));
         if (self.options.continuous) {
           if (self.currentTab === self.panelCount - 2) {
             window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[1]).text().replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : 1;
@@ -955,7 +957,6 @@ if (typeof Object.create !== 'function') {
         }
         // This is so the height will match the current panel, ignoring the clones.
         // It also adjusts the count for the "currrent" class that's applied
-        //console.log(self.currentTab);
         if (self.options.continuous) {
           self.panelHeightCount = self.currentTab + 1;
           if (self.currentTab === self.panelCount - 2) {
