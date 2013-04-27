@@ -8,7 +8,12 @@
 *  GPL license
 *
 ************************************************************************/
-/* Version 1.3.2
+/* Version 1.3.3
+ *
+ * - Fixes an autoslide bug
+ */
+
+ /* Version 1.3.2
  *
  * - Fixes a hashLinking bug
  */
@@ -456,7 +461,7 @@ if (typeof Object.create !== 'function') {
           if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
           return false;
         });
-        if (self.options.autoslide) { self.checkAutoSlideStop(); }
+        if (self.options.autoSlide) { self.checkAutoSlideStop(); }
       }
     },
     registerCrossLinks: function () {
@@ -502,7 +507,7 @@ if (typeof Object.create !== 'function') {
           } else {
             self.setCurrent(parseInt(direction - 1, 10));
           }
-          if (self.options.autoslide) { self.checkAutoSlideStop(); }
+          if (self.options.autoSlide) { self.checkAutoSlideStop(); }
           if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
           return false;
         });
@@ -618,7 +623,7 @@ if (typeof Object.create !== 'function') {
         self.clickable = false;
         $(this).trigger('click');
 
-      if (self.options.autoslide) { self.checkAutoSlideStop(); }
+      if (self.options.autoSlide) { self.checkAutoSlideStop(); }
       if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
 
       }});
@@ -645,7 +650,7 @@ if (typeof Object.create !== 'function') {
             }
           });
         }
-        if (self.options.autoslide) { self.checkAutoSlideStop(); }
+        if (self.options.autoSlide) { self.checkAutoSlideStop(); }
         if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
       });
     },
@@ -922,7 +927,7 @@ if (typeof Object.create !== 'function') {
       (self.$sliderWrap).find('*').on('click', function () {
         if (!self.options.autoSlidePauseOnHover || self.options.autoSlideStopWhenClicked) {
           // AutoSlide controls.
-          if (self.options.autoslide) { self.checkAutoSlideStop(); }
+          if (self.options.autoSlide) { self.checkAutoSlideStop(); }
 
           // Stops from speedy clicking for continuous sliding.
           if (self.options.continuous) {clearTimeout(self.continuousTimeout); }

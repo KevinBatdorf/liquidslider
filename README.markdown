@@ -167,6 +167,9 @@ Maintained by [Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
 
 Versions
 --------
+Version 1.3.3
+- Fixes an autoslide bug
+
 Version 1.3.2
 - Fixes a hashLinking bug
 
