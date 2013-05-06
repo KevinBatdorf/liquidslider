@@ -294,7 +294,7 @@ if (typeof Object.create !== 'function') {
           if (self.options.hideArrowsWhenMobile && self.options.dynamicArrows) {
             (self.$leftArrow).remove();
             (self.$rightArrow).remove();
-          } else if (!self.options.dynamicArrowsGraphical) {
+          } else if (!self.options.dynamicArrowsGraphical && self.options.dynamicArrows) {
             (self.$leftArrow).css('margin-' + self.options.dynamicTabsPosition, '0');
             (self.$rightArrow).css('margin-' + self.options.dynamicTabsPosition, '0');
           }
