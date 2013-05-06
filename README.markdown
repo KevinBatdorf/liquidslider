@@ -167,6 +167,10 @@ Maintained by [Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
 
 Versions
 --------
+Version 1.3.4
+- Fixes a bug when using fade transitions
+- Allows crossLinks to control multiple sliders
+
 Version 1.3.3
 - Fixes an autoslide bug
 

@@ -8,7 +8,13 @@
 *  GPL license
 *
 ************************************************************************/
-/* Version 1.3.3
+/* Version 1.3.4
+ *
+ * - Fixes a bug when using fade transitions
+ * - Allows crossLinks to control multiple sliders
+ */
+
+ /* Version 1.3.3
  *
  * - Fixes an autoslide bug
  */
@@ -469,7 +475,7 @@ if (typeof Object.create !== 'function') {
       // Click cross links
       if (self.options.crossLinks) {
         // Re calculate cross links (for applying current tabs)
-        self.$crosslinks = $('[data-liquidslider-ref=' + (self.sliderId).split('#')[1] + ']');
+        self.$crosslinks = $('[data-liquidslider-ref*=' + (self.sliderId).split('#')[1] + ']');
         (self.$crosslinks).on('click', function () {
 
 
@@ -1085,8 +1091,8 @@ if (typeof Object.create !== 'function') {
       if (self.options.slideEaseFunction === 'fade') {
         if (self.loaded) {
           $($(self.panelContainer).children()[self.currentTab])
-            .fadeTo(self.options.fadeInDuration, 1.0)
-            .siblings().fadeTo(self.options.fadeOutDuration, 0);
+            .fadeTo(self.options.fadeInDuration, 1.0).css('z-index', 1)
+            .siblings().fadeTo(self.options.fadeOutDuration, 0).css('z-index', 0);
           setTimeout(function () {
             if (self.options.continuous) {
               self.continuousSlide();
