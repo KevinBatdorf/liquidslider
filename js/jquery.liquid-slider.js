@@ -1,88 +1,15 @@
 /*!*********************************************************************
 *
-*  Liquid Slider
+*  Liquid Slider v1.3.5
 *  Kevin Batdorf
 *
-*  http://liquidslider.kevinbatdorf.com
+*  http://liquidslider.com
 *
 *  GPL license
 *
 ************************************************************************/
-/* Version 1.3.4
- *
- * - Fixes a bug when using fade transitions
- * - Allows crossLinks to control multiple sliders
- */
 
- /* Version 1.3.3
- *
- * - Fixes an autoslide bug
- */
-
- /* Version 1.3.2
- *
- * - Fixes a hashLinking bug
- */
-
- /* Version 1.3.1
- *
- * - Fixes a bug when using fade and swipe
- */
-
-/* Version 1.3.0
- *
- * - Fixes how the current class is applied when nesting sliders
- */
-
-/* Version 1.2.9
- *
- * - Fixes and updates the TouchSwipe settings and script
- */
-
-/* Version 1.2.8
- *
- * - Fixes the way the preloader works when continuous is off
- */
-
-/* Version 1.2.7
- *
- * - Mostly fixes bugs
- */
-
-/* Version 1.2.6
- *
- * - Fixes a few minor bugs.
- * - Organizes code for upcoming custom build
- */
-
-/* Version 1.2.4 - 1.2.5
- *
- * - Pushes new version # to jQuery repository.
- */
-
-/* Version 1.2.3
- *
- * - Fixes a bug when using crosslinks on multible sliders wont apply the current class properly.
- */
-
-/* Version 1.2.2
- *
- * - Fixes a bug where keyboard navigation fails.
- */
-
-/* Version 1.2.1
- *
- * - Removes the depreciated $.browser() call.
- * - Fixes a bug when using hashNames that started the slider on the wrong panel.
- */
-
-/* Version 1.2.0
- *
- * - Adapts a new semantic versioning system.
- * - Adds touch functionality via touchSwipe (thanks @appzuka for recommending this plugin).
- * - Removes jQuery and includes only the link to the CDN.
- * - Replaces jQueryUI easing with the much lighter jQuery Easing plugin.
- */
+// See https://github.com/KevinBatdorf/liquidslider for version updates
 
 /*jslint bitwise: true, browser: true */
 /*global $, jQuery */
@@ -1013,11 +940,10 @@ if (typeof Object.create !== 'function') {
         if (self.options.hideSideArrows) { self.hideArrows(); }
 
         // Show arrows if hoverArrows is disabled
-        if (!self.options.hoverArrows && self.options.dynamicArrows) {
-          (self.$leftArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDuration * 3);
-          (self.$rightArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDuration * 3);
+        if (!self.options.hoverArrows && self.options.dynamicArrows && !self.options.hideSideArrows) {
+          (self.$leftArrow).css({opacity: 1, visibility: "visible"});
+          (self.$rightArrow).css({opacity: 1, visibility: "visible"});
         }
-
         this.transition();
       }
     },

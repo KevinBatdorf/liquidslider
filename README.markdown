@@ -1,10 +1,12 @@
-[Liquid Slider](http://liquidslider.kevinbatdorf.com)
+[Liquid Slider](http://liquidslider.com)
 ============
 A Responsive jQuery HTML Content Slider
 
 [Download](https://github.com/KevinBatdorf/liquidslider/zipball/master)
 
-[Demo Page](http://liquidslider.kevinbatdorf.com)
+[Custom Build](http://liquidslider.com/custom-build)
+
+[Demo Page](http://liquidslider.com)
 
 
 Features
@@ -35,12 +37,12 @@ Cross Linking
 How to Use
 -----------
 
-See [here](http://liquidslider.kevinbatdorf.com) for further details.
+See [here](http://liquidslider.com/examples/) for further details and examples.
 
 Install the slider in the head after jQuery and other scripts.
 
 ```javascript
-    <link rel="stylesheet" type="text/css" media="screen" href="./stylesheets/liquid-slider-1.1.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/liquid-slider.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="./js/jquery.easing.1.3.js"></script>
     <script src="./js/jquery.touchSwipe.min.js"></script>
@@ -55,28 +57,30 @@ Where the slider-id matches the id of the content, as follows:
 ```html
       <div class="liquid-slider"  id="slider-id">
           <section>
-            <h2 class="title">Panel 1</h2>
+            <h2 class="title">Slide 1</h2>
             <p>Content</p>
           </section>
           <section>
-            <h2 class="title">Panel 2</h2>
+            <h2 class="title">Slide 2</h2>
             <p>Content</p>
           </section>
       </div>
 ```
 
-Add as many panels as you like within the `<div class="liquid-slider id="slider-id"></div>`
+Add as many slides as you like within the `<div class="liquid-slider id="slider-id"></div>`
 
-One Panel:   
+One slide can be inside any element such as a section or a div:   
 ```html
     <section>
-      <h2 class="title">Panel</h2>
+      <h2 class="title">A Slide</h2>
       <p>Content</p>
     </section>
 ```
 
 Default Settings
 ----------------
+Default settings vary on custom builds
+
 ```javascript
                   autoHeight: true,
                autoHeightMin: 0,
@@ -157,7 +161,7 @@ Default Settings
 Documentation
 -------------
 
-Documentation is [here](http://liquidslider.kevinbatdorf.com)
+Documentation is [here](http://liquidslider.com/documentation)
 
 Submit bugs [here](https://github.com/kevinbatdorf/liquidslider/issues)
 
@@ -167,6 +171,10 @@ Maintained by [Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
 
 Versions
 --------
+Version 1.3.5
+- Prepares code for new site launch
+- Fixes a bug when hover arrows is disabled
+
 Version 1.3.4
 - Fixes a bug when using fade transitions
 - Allows crossLinks to control multiple sliders
