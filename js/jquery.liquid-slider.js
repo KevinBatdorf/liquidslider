@@ -638,14 +638,14 @@ if (typeof Object.create !== 'function') {
     animationCallback: function (go) {
       var self = this;
       if (!self.dontCallback || go) {
-        setTimeout(function () {self.options.callbackFunction.call(this); }, self.options.slideEaseDuration + 50);
+        setTimeout(function () {self.options.callbackFunction.call(self); }, self.options.slideEaseDuration + 50);
       }
     },
 
     animationCallForward: function (go) {
       var self = this;
       if (!self.dontCallback || go) {
-        self.options.callforwardFunction.call(this);
+        self.options.callforwardFunction.call(self);
       }
     },
     init: function (options, elem) {
