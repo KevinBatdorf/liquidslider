@@ -615,8 +615,7 @@ if (typeof Object.create !== 'function') {
           if (self.options.autoSlideControls) {
             $('body').find('[data-liquidslider-ref*=' + (self.sliderId).split('#')[1] + '][name=stop]').html(self.options.autoSlideStartText);
           }
-
-        } else if (!self.options.hoverArrows && !self.options.autoSlidePauseOnHover) {
+        } else if (!self.options.hoverArrows && !self.options.autoSlidePauseOnHover || !self.clickable) {
           self.autoSlide(clearTimeout(self.autoslideTimeout));
         }
 
