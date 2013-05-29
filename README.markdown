@@ -171,6 +171,10 @@ Maintained by [Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
 
 Versions
 --------
+Version 1.3.6
+- Fixes autoslide bug and callback functionality
+- Updates website on jquery repository
+
 Version 1.3.5
 - Prepares code for new site launch
 - Fixes a bug when hover arrows is disabled

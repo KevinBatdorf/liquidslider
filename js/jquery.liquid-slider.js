@@ -1,6 +1,6 @@
 /*!*********************************************************************
 *
-*  Liquid Slider v1.3.5
+*  Liquid Slider v1.3.6
 *  Kevin Batdorf
 *
 *  http://liquidslider.com
