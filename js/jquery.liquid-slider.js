@@ -939,7 +939,7 @@ if (typeof Object.create !== 'function') {
         if (self.options.hideSideArrows) { self.hideArrows(); }
 
         // Show arrows if hoverArrows is disabled
-        if (!self.options.hoverArrows && self.options.dynamicArrows && !self.options.hideSideArrows) {
+        if (self.$leftArrow && !self.options.hoverArrows && self.options.dynamicArrows && !self.options.hideSideArrows) {
           (self.$leftArrow).css({opacity: 1, visibility: "visible"});
           (self.$rightArrow).css({opacity: 1, visibility: "visible"});
         }
