@@ -744,7 +744,7 @@ if (typeof Object.create !== 'function') {
 
       // Wrap all panels in a div, and wrap inner content in a div (not backwards compatible)
       (self.$panelClass).wrapAll('<div class="panel-container"></div>');
-      (self.$panelClass).wrapInner('<div class="panel-wrapper"></div>');
+      (self.$panelClass).not(':empty').wrapInner('<div class="panel-wrapper"></div>');
       self.panelContainer = (self.$panelClass).parent();
       self.$panelContainer = self.panelContainer;
 
