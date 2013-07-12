@@ -451,15 +451,16 @@ if (typeof Object.create !== 'function') {
       if (hash && self.options.hashLinking) {
         //set the value as a variable, and remove the #
         self.hashValue = (hash).replace('#', '');
-        if (self.options.hashNames) {
+        var hashIsNumber = self.hashValue.match(/^\d+$/);
+        if (self.options.hashNames && !hashIsNumber) {
           $.each(
             (self.$elem).find(self.options.hashTitleSelector),
-            function (n) {
+            function (n) {              
               var $this = $(this).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-');
               self.hashValue = self.hashValue.replace(self.options.hashTagSeparator, '');
               self.hashValue = self.hashValue.replace(self.options.hashTLD, '');
               if (($this).toLowerCase() === self.hashValue.toLowerCase()) {
-                self.hashValue = parseInt(n + 1, 10);
+                self.hashValue = parseInt(n, 10)+1;
                 // Adjust if continuous
                 if (self.options.continuous && self.hashValue === 0) {
                   self.hashValue = self.panelCount - 2;
@@ -468,6 +469,9 @@ if (typeof Object.create !== 'function') {
               }
             }
           );
+        }
+        else if (self.options.hashNames && hashIsNumber) {
+          self.hashValue = parseInt(self.hashValue, 10)+1;
         }
         else {
           self.hashValue = parseInt(self.hashValue, 10);
