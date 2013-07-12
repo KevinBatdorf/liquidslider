@@ -438,7 +438,7 @@ if (typeof Object.create !== 'function') {
             self.getHashTags('#' + direction);
             self.setCurrent(parseInt(self.hashValue - 1, 10) - ~~(self.options.continuous));
           } else {
-            self.setCurrent(parseInt(direction - 1, 10));
+            self.setCurrent(parseInt(direction, 10)-1);
           }
           if (self.options.autoSlide) { self.checkAutoSlideStop(); }
           if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
