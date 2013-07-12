@@ -434,7 +434,7 @@ if (typeof Object.create !== 'function') {
           var direction = ($(this).attr('href').split('#')[1]);
           if (direction  === 'left' || direction === 'right') {
             self.setCurrent(direction);
-          } else if (self.options.hashCrossLinks) {
+          } else if (self.options.crossLinks && self.options.hashNames) {
             self.getHashTags('#' + direction);
             var current = self.hashValue ? parseInt(self.hashValue, 10) : parseInt(direction, 10);
             if (self.options.hashLinking) current--;
@@ -923,7 +923,7 @@ if (typeof Object.create !== 'function') {
         // Add current class to cross linked Tabs
         if (self.options.crossLinks) {
           (self.$crosslinks).each(function () {
-            if (self.options.hashCrossLinks) {
+            if (self.options.hashNames) {
               if ($(this).attr('href') === ('#' + $($(self.panelContainer).children()[(self.setTab + ~~(self.options.continuous))]).find(self.options.panelTitleSelector).text().replace(/(\s)/g, '-').toLowerCase())) {
                 $('[data-liquidslider-ref=' + (self.sliderId).split('#')[1] + ']').removeClass('currentCrossLink');
                 $(this).addClass('currentCrossLink');
@@ -1129,11 +1129,10 @@ if (typeof Object.create !== 'function') {
     firstPanelToLoad: 1,
     panelTitleSelector: "h2.title",
     navElementTag: "div",
+    
     crossLinks: false,
-
     hashLinking: false,
     hashNames: true,
-    hashCrossLinks: false,
     hashTitleSelector: "h2.title",
     hashTagSeparator: '', // suggestion '/'
     hashTLD: '',
