@@ -455,7 +455,7 @@ if (typeof Object.create !== 'function') {
           $.each(
             (self.$elem).find(self.options.hashTitleSelector),
             function (n) {
-              var $this = $(this).text().replace(/(\s)/g, '-');
+              var $this = $(this).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-');
               self.hashValue = self.hashValue.replace(self.options.hashTagSeparator, '');
               self.hashValue = self.hashValue.replace(self.options.hashTLD, '');
               if (($this).toLowerCase() === self.hashValue.toLowerCase()) {
@@ -480,13 +480,13 @@ if (typeof Object.create !== 'function') {
       if (self.options.hashLinking) {
         if (self.options.continuous) {
           if (self.currentTab === self.panelCount - 2) {
-            window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[1]).text().replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : 1;
+            window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[1]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : 1;
           } else if (self.currentTab === -1) {
-            window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[self.panelCount - 2]).text().replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : self.panelCount - 2;
+            window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[self.panelCount - 2]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : self.panelCount - 2;
           } else {
-            window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[tab + 1]).text().replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : tab + 1;
+            window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[tab + 1]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : tab + 1;
           }
-        } else { window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[tab]).text().replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : tab + 1; }
+        } else { window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[tab]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : tab + 1; }
       }
     },
 
