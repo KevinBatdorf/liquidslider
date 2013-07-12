@@ -1,11 +1,13 @@
 /*!*********************************************************************
 *
-*  Liquid Slider v1.3.6
+*  Liquid Slider v1.3.7
 *  Kevin Batdorf
 *
 *  http://liquidslider.com
 *
 *  GPL license
+*
+* v1.3.7 contains cross link fixes developed by Joe Workman (@joeworkman). The hashCrossLinks setting no longer is used.
 *
 ************************************************************************/
 
