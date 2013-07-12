@@ -450,7 +450,7 @@ if (typeof Object.create !== 'function') {
     },
     getHashTags: function (hash) {
       var self = this;
-      if (hash && self.options.hashLinking) {
+      if (hash && self.options.crossLinks) {
         //set the value as a variable, and remove the #
         self.hashValue = (hash).replace('#', '');
         var hashIsNumber = self.hashValue.match(/^\d+$/);
@@ -462,7 +462,7 @@ if (typeof Object.create !== 'function') {
               self.hashValue = self.hashValue.replace(self.options.hashTagSeparator, '');
               self.hashValue = self.hashValue.replace(self.options.hashTLD, '');
               if (($this).toLowerCase() === self.hashValue.toLowerCase()) {
-                self.hashValue = parseInt(n, 10)+1;
+                self.hashValue = self.options.hashLinking ? parseInt(n, 10)+1 : parseInt(n, 10);
                 // Adjust if continuous
                 if (self.options.continuous && self.hashValue === 0) {
                   self.hashValue = self.panelCount - 2;
@@ -473,7 +473,7 @@ if (typeof Object.create !== 'function') {
           );
         }
         else if (self.options.hashNames && hashIsNumber) {
-          self.hashValue = parseInt(self.hashValue, 10)+1;
+            self.hashValue = self.options.hashLinking ? parseInt(self.hashValue, 10)+1 : parseInt(self.hashValue, 10);
         }
         else {
           self.hashValue = parseInt(self.hashValue, 10);
