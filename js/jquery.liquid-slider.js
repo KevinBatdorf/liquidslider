@@ -1,13 +1,14 @@
 /*!*********************************************************************
 *
 *  Liquid Slider v1.3.7
-*  Kevin Batdorf
+*  Kevin Batdorf (@kevinbatdorf)
 *
 *  http://liquidslider.com
 *
 *  GPL license
 *
-* v1.3.7 contains cross link fixes developed by Joe Workman (@joeworkman). The hashCrossLinks setting no longer is used.
+*  Contributors:
+*  Joe Workman (@joeworkman) - v1.3.7
 *
 ************************************************************************/
 
@@ -459,7 +460,7 @@ if (typeof Object.create !== 'function') {
         if (self.options.hashNames && !hashIsNumber) {
           $.each(
             (self.$elem).find(self.options.hashTitleSelector),
-            function (n) {              
+            function (n) {
               var $this = $(this).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-');
               self.hashValue = self.hashValue.replace(self.options.hashTagSeparator, '');
               self.hashValue = self.hashValue.replace(self.options.hashTLD, '');
@@ -1124,14 +1125,13 @@ if (typeof Object.create !== 'function') {
     hoverArrows: true,
     hoverArrowDuration: 250,
 
-
     dynamicTabs: true,
     dynamicTabsAlign: "left",
     dynamicTabsPosition: "top",
     firstPanelToLoad: 1,
     panelTitleSelector: "h2.title",
     navElementTag: "div",
-    
+
     crossLinks: false,
     hashLinking: false,
     hashNames: true,

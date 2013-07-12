@@ -125,7 +125,6 @@ Default settings vary on custom builds
            
                  hashLinking: false,
                    hashNames: true,
-              hashCrossLinks: false,
            hashTitleSelector: "h2.title",
             hashTagSeparator: '/',
                      hashTLD: '.html',
@@ -171,6 +170,11 @@ Maintained by [Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
 
 Versions
 --------
+Version 1.3.7
+- Overhauls the cross linking functionality
+- Removes the hashCrossLinks setting.
+- Contributed by @joeworkman
+
 Version 1.3.6
 - Fixes autoslide bug and callback functionality
 - Updates website on jquery repository
