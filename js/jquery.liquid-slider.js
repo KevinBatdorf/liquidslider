@@ -1,11 +1,13 @@
 /*!*********************************************************************
 *
-*  Liquid Slider v1.3.6
+*  Liquid Slider v1.3.7
 *  Kevin Batdorf
 *
 *  http://liquidslider.com
 *
 *  GPL license
+*
+* v1.3.7 contains cross link fixes developed by Joe Workman (@joeworkman). The hashCrossLinks setting no longer is used.
 *
 ************************************************************************/
 
@@ -434,11 +436,13 @@ if (typeof Object.create !== 'function') {
           var direction = ($(this).attr('href').split('#')[1]);
           if (direction  === 'left' || direction === 'right') {
             self.setCurrent(direction);
-          } else if (self.options.hashCrossLinks) {
+          } else if (self.options.crossLinks && self.options.hashNames) {
             self.getHashTags('#' + direction);
-            self.setCurrent(parseInt(self.hashValue - 1, 10) - ~~(self.options.continuous));
+            var current = self.hashValue ? parseInt(self.hashValue, 10) : parseInt(direction, 10);
+            if (self.options.hashLinking) current--;
+            self.setCurrent(current - ~~(self.options.continuous));
           } else {
-            self.setCurrent(parseInt(direction - 1, 10));
+            self.setCurrent(parseInt(direction, 10)-1);
           }
           if (self.options.autoSlide) { self.checkAutoSlideStop(); }
           if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
@@ -448,18 +452,19 @@ if (typeof Object.create !== 'function') {
     },
     getHashTags: function (hash) {
       var self = this;
-      if (hash && self.options.hashLinking) {
+      if (hash && self.options.crossLinks) {
         //set the value as a variable, and remove the #
         self.hashValue = (hash).replace('#', '');
-        if (self.options.hashNames) {
+        var hashIsNumber = self.hashValue.match(/^\d+$/);
+        if (self.options.hashNames && !hashIsNumber) {
           $.each(
             (self.$elem).find(self.options.hashTitleSelector),
-            function (n) {
-              var $this = $(this).text().replace(/(\s)/g, '-');
+            function (n) {              
+              var $this = $(this).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-');
               self.hashValue = self.hashValue.replace(self.options.hashTagSeparator, '');
               self.hashValue = self.hashValue.replace(self.options.hashTLD, '');
               if (($this).toLowerCase() === self.hashValue.toLowerCase()) {
-                self.hashValue = parseInt(n + 1, 10);
+                self.hashValue = self.options.hashLinking ? parseInt(n, 10)+1 : parseInt(n, 10);
                 // Adjust if continuous
                 if (self.options.continuous && self.hashValue === 0) {
                   self.hashValue = self.panelCount - 2;
@@ -468,6 +473,9 @@ if (typeof Object.create !== 'function') {
               }
             }
           );
+        }
+        else if (self.options.hashNames && hashIsNumber) {
+            self.hashValue = self.options.hashLinking ? parseInt(self.hashValue, 10)+1 : parseInt(self.hashValue, 10);
         }
         else {
           self.hashValue = parseInt(self.hashValue, 10);
@@ -480,13 +488,13 @@ if (typeof Object.create !== 'function') {
       if (self.options.hashLinking) {
         if (self.options.continuous) {
           if (self.currentTab === self.panelCount - 2) {
-            window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[1]).text().replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : 1;
+            window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[1]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : 1;
           } else if (self.currentTab === -1) {
-            window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[self.panelCount - 2]).text().replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : self.panelCount - 2;
+            window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[self.panelCount - 2]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : self.panelCount - 2;
           } else {
-            window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[tab + 1]).text().replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : tab + 1;
+            window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[tab + 1]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : tab + 1;
           }
-        } else { window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[tab]).text().replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : tab + 1; }
+        } else { window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[tab]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : tab + 1; }
       }
     },
 
@@ -917,7 +925,7 @@ if (typeof Object.create !== 'function') {
         // Add current class to cross linked Tabs
         if (self.options.crossLinks) {
           (self.$crosslinks).each(function () {
-            if (self.options.hashCrossLinks) {
+            if (self.options.hashNames) {
               if ($(this).attr('href') === ('#' + $($(self.panelContainer).children()[(self.setTab + ~~(self.options.continuous))]).find(self.options.panelTitleSelector).text().replace(/(\s)/g, '-').toLowerCase())) {
                 $('[data-liquidslider-ref=' + (self.sliderId).split('#')[1] + ']').removeClass('currentCrossLink');
                 $(this).addClass('currentCrossLink');
@@ -1123,11 +1131,10 @@ if (typeof Object.create !== 'function') {
     firstPanelToLoad: 1,
     panelTitleSelector: "h2.title",
     navElementTag: "div",
+    
     crossLinks: false,
-
     hashLinking: false,
     hashNames: true,
-    hashCrossLinks: false,
     hashTitleSelector: "h2.title",
     hashTagSeparator: '', // suggestion '/'
     hashTLD: '',
