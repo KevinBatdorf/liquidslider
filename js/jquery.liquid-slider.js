@@ -436,7 +436,9 @@ if (typeof Object.create !== 'function') {
             self.setCurrent(direction);
           } else if (self.options.hashCrossLinks) {
             self.getHashTags('#' + direction);
-            self.setCurrent((parseInt(self.hashValue, 10)-1) - ~~(self.options.continuous));
+            var current = self.hashValue ? parseInt(self.hashValue, 10) : parseInt(direction, 10);
+            if (self.options.hashLinking) current--;
+            self.setCurrent(current - ~~(self.options.continuous));
           } else {
             self.setCurrent(parseInt(direction, 10)-1);
           }
