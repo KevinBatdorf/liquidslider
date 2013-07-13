@@ -437,17 +437,13 @@ if (typeof Object.create !== 'function') {
           var direction = ($(this).attr('href').split('#')[1]);
           if (direction  === 'left' || direction === 'right') {
             self.setCurrent(direction);
-          } else if (self.options.crossLinks && self.options.hashNames) {
+          } 
+          else if (self.options.crossLinks && self.options.hashNames) {
             self.getHashTags('#' + direction);
-            var current = self.hashValue ? parseInt(self.hashValue, 10) : parseInt(direction, 10);
-            if (self.options.hashLinking || !self.options.continuous) current--;
-            if (self.options.continuous) {
-              self.setCurrent(current - ~~(self.options.continuous));         
-            }
-            else {
-              self.setCurrent(current);
-            }
-          } else {
+            var current = typeof self.hashValue === 'number' ? self.hashValue : parseInt(direction, 10);
+            self.setCurrent(current);
+          } 
+          else {
             self.setCurrent(parseInt(direction, 10)-1);
           }
           if (self.options.autoSlide) { self.checkAutoSlideStop(); }
@@ -463,25 +459,20 @@ if (typeof Object.create !== 'function') {
         self.hashValue = (hash).replace('#', '');
         var hashIsNumber = self.hashValue.match(/^\d+$/);
         if (self.options.hashNames && !hashIsNumber) {
-          $.each(
-            (self.$elem).find(self.options.hashTitleSelector),
-            function (n) {              
+          $.each((self.$elem).find('.panel:not(.clone) '+self.options.hashTitleSelector), function(index) {
               var $this = $(this).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-');
               self.hashValue = self.hashValue.replace(self.options.hashTagSeparator, '');
               self.hashValue = self.hashValue.replace(self.options.hashTLD, '');
               if (($this).toLowerCase() === self.hashValue.toLowerCase()) {
-                self.hashValue = self.options.hashLinking ? parseInt(n, 10)+1 : parseInt(n, 10);
-                // Adjust if continuous
-                if (!self.options.continuous && !self.options.hashLinking) self.hashValue = self.hashValue + 1;
-                if (self.options.continuous && self.hashValue === 0) self.hashValue = self.panelCount - 2;
+                self.hashValue = index;
                 return false;
               }
             }
           );
         }
         else if (self.options.hashNames && hashIsNumber) {
-            self.hashValue = self.options.hashLinking ? parseInt(self.hashValue, 10)+1 : parseInt(self.hashValue, 10);
-            if (!self.options.continuous && self.options.hashLinking) self.hashValue = self.hashValue - 1;
+            // We need to subtract 1 becuase tab 1 needs to map to array 0.
+            self.hashValue = parseInt(self.hashValue, 10) - 1;
         }
         else {
           self.hashValue = parseInt(self.hashValue, 10);
@@ -804,8 +795,8 @@ if (typeof Object.create !== 'function') {
 
       // Clone panels if continuous is enabled
       if (self.options.continuous) {
-        (self.$panelContainer).prepend((self.$panelContainer).children().last().clone());
-        (self.$panelContainer).append((self.$panelContainer).children().eq(1).clone());
+        (self.$panelContainer).prepend((self.$panelContainer).children().last().clone().addClass('clone'));
+        (self.$panelContainer).append((self.$panelContainer).children().eq(1).clone().addClass('clone'));
       }
 
       // Allow the slider to be clicked
