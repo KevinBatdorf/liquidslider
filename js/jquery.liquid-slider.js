@@ -719,19 +719,6 @@ if (typeof Object.create !== 'function') {
     build: function () {
       var self = this,
         isAbsolute;
-      // Grab the current hash tag
-      if (self.options.hashLinking) {
-        self.getHashTags(window.location.hash);
-        // Default to panel 1 if mistyped
-        if (typeof(self.hashValue) !== 'number' ) {
-          self.hashValue = 1;
-        }
-      }
-
-      // Store current tab
-      self.currentTab = (self.hashValue) ? self.hashValue - 1 : self.options.firstPanelToLoad - 1;
-      // Store a temp var for callback functions
-      self.tabTemp = self.currentTab;
 
       // Wrap the entire slider (backwards compatible)
       if ((self.$sliderId).parent().attr('class') !== 'liquid-slider-wrapper') {(self.$sliderId).wrap('<div id="' + (self.$elem).attr('id') + '-wrapper" class="liquid-slider-wrapper"></div>'); }
@@ -748,6 +735,21 @@ if (typeof Object.create !== 'function') {
       (self.$panelClass).wrapInner('<div class="panel-wrapper"></div>');
       self.panelContainer = (self.$panelClass).parent();
       self.$panelContainer = self.panelContainer;
+
+      // Grab the current hash tag
+      if (self.options.hashLinking) {
+        self.getHashTags(window.location.hash);
+        // Default to panel 1 if mistyped
+        if (typeof(self.hashValue) !== 'number' ) {
+          self.hashValue = 1;
+        }
+      }
+
+      // Store current tab
+      self.currentTab = (self.hashValue) ? self.hashValue : self.options.firstPanelToLoad - 1;
+      // Store a temp var for callback functions
+      self.tabTemp = self.currentTab;
+
 
       // If using fade transition, add the class here and disable other options.
       if (self.options.slideEaseFunction === "fade") {
