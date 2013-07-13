@@ -1,6 +1,6 @@
 /*!*********************************************************************
 *
-*  Liquid Slider v1.3.7
+*  Liquid Slider v1.3.8
 *  Kevin Batdorf
 *
 *  http://liquidslider.com
@@ -8,6 +8,7 @@
 *  GPL license
 *
 * v1.3.7 contains cross link fixes developed by Joe Workman (@joeworkman). The hashCrossLinks setting no longer is used.
+* v1.3.8 contains more cross link fixes for when continuous is disabled. Developed by Joe Workman (@joeworkman).
 *
 ************************************************************************/
 
@@ -439,8 +440,13 @@ if (typeof Object.create !== 'function') {
           } else if (self.options.crossLinks && self.options.hashNames) {
             self.getHashTags('#' + direction);
             var current = self.hashValue ? parseInt(self.hashValue, 10) : parseInt(direction, 10);
-            if (self.options.hashLinking) current--;
-            self.setCurrent(current - ~~(self.options.continuous));
+            if (self.options.hashLinking || !self.options.continuous) current--;
+            if (self.options.continuous) {
+              self.setCurrent(current - ~~(self.options.continuous));         
+            }
+            else {
+              self.setCurrent(current);
+            }
           } else {
             self.setCurrent(parseInt(direction, 10)-1);
           }
@@ -466,9 +472,8 @@ if (typeof Object.create !== 'function') {
               if (($this).toLowerCase() === self.hashValue.toLowerCase()) {
                 self.hashValue = self.options.hashLinking ? parseInt(n, 10)+1 : parseInt(n, 10);
                 // Adjust if continuous
-                if (self.options.continuous && self.hashValue === 0) {
-                  self.hashValue = self.panelCount - 2;
-                }
+                if (!self.options.continuous && !self.options.hashLinking) self.hashValue = self.hashValue + 1;
+                if (self.options.continuous && self.hashValue === 0) self.hashValue = self.panelCount - 2;
                 return false;
               }
             }
@@ -476,6 +481,7 @@ if (typeof Object.create !== 'function') {
         }
         else if (self.options.hashNames && hashIsNumber) {
             self.hashValue = self.options.hashLinking ? parseInt(self.hashValue, 10)+1 : parseInt(self.hashValue, 10);
+            if (!self.options.continuous && self.options.hashLinking) self.hashValue = self.hashValue - 1;
         }
         else {
           self.hashValue = parseInt(self.hashValue, 10);
