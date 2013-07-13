@@ -438,7 +438,7 @@ if (typeof Object.create !== 'function') {
           if (direction  === 'left' || direction === 'right') {
             self.setCurrent(direction);
           } 
-          else if (self.options.crossLinks && self.options.hashNames) {
+          else if (self.options.crossLinks) {
             self.getHashTags('#' + direction);
             var current = typeof self.hashValue === 'number' ? self.hashValue : parseInt(direction, 10);
             self.setCurrent(current);
@@ -457,25 +457,21 @@ if (typeof Object.create !== 'function') {
       if (hash && self.options.crossLinks) {
         //set the value as a variable, and remove the #
         self.hashValue = (hash).replace('#', '');
-        var hashIsNumber = self.hashValue.match(/^\d+$/);
-        if (self.options.hashNames && !hashIsNumber) {
-          $.each((self.$elem).find('.panel:not(.clone) '+self.options.hashTitleSelector), function(index) {
-              var $this = $(this).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-');
-              self.hashValue = self.hashValue.replace(self.options.hashTagSeparator, '');
-              self.hashValue = self.hashValue.replace(self.options.hashTLD, '');
-              if (($this).toLowerCase() === self.hashValue.toLowerCase()) {
-                self.hashValue = index;
-                return false;
-              }
-            }
-          );
-        }
-        else if (self.options.hashNames && hashIsNumber) {
+        if (self.hashValue.match(/^\d+$/)) {
             // We need to subtract 1 becuase tab 1 needs to map to array 0.
             self.hashValue = parseInt(self.hashValue, 10) - 1;
         }
         else {
-          self.hashValue = parseInt(self.hashValue, 10);
+        $.each((self.$elem).find('.panel:not(.clone) '+self.options.hashTitleSelector), function(index) {
+            var $this = $(this).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-');
+            self.hashValue = self.hashValue.replace(self.options.hashTagSeparator, '');
+            self.hashValue = self.hashValue.replace(self.options.hashTLD, '');
+            if (($this).toLowerCase() === self.hashValue.toLowerCase()) {
+              self.hashValue = index;
+              return false;
+            }
+          }
+        );
         }
       }
     },
@@ -485,13 +481,13 @@ if (typeof Object.create !== 'function') {
       if (self.options.hashLinking) {
         if (self.options.continuous) {
           if (self.currentTab === self.panelCount - 2) {
-            window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[1]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : 1;
+            window.location.hash = self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[1]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD;
           } else if (self.currentTab === -1) {
-            window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[self.panelCount - 2]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : self.panelCount - 2;
+            window.location.hash = self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[self.panelCount - 2]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD;
           } else {
-            window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[tab + 1]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : tab + 1;
+            window.location.hash = self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[tab + 1]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD;
           }
-        } else { window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[tab]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : tab + 1; }
+        } else { window.location.hash = self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[tab]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD; }
       }
     },
 
@@ -922,15 +918,10 @@ if (typeof Object.create !== 'function') {
         // Add current class to cross linked Tabs
         if (self.options.crossLinks) {
           (self.$crosslinks).each(function () {
-            if (self.options.hashNames) {
               if ($(this).attr('href') === ('#' + $($(self.panelContainer).children()[(self.setTab + ~~(self.options.continuous))]).find(self.options.panelTitleSelector).text().replace(/(\s)/g, '-').toLowerCase())) {
                 $('[data-liquidslider-ref=' + (self.sliderId).split('#')[1] + ']').removeClass('currentCrossLink');
                 $(this).addClass('currentCrossLink');
               }
-            } else if ($(this).attr('href') === '#' + (self.setTab + 1)) {
-              $('[data-liquidslider-ref=' + (self.sliderId).split('#')[1] + ']').removeClass('currentCrossLink');
-              $(this).addClass('currentCrossLink');
-            }
           });
         }
 
@@ -1131,7 +1122,6 @@ if (typeof Object.create !== 'function') {
     
     crossLinks: false,
     hashLinking: false,
-    hashNames: true,
     hashTitleSelector: "h2.title",
     hashTagSeparator: '', // suggestion '/'
     hashTLD: '',
