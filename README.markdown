@@ -12,26 +12,7 @@ A Responsive jQuery HTML Content Slider
 Features
 --------
 
-New: Now with swipe support
 
-Fully Responsive to Screen Widths  
-Updates Height After Page Loads  
-Available Functions to Adjust Height After AJAX Load  
-CSS3 Transitions for Mobile Devices  
-Dynamic Mobile Style Navigation (Select Box)  
-Hide Arrows on Mobile  
-
-Dynamic Tabs & Arrows  
-Callback Functions After Panel Slide  
-Dynamic Preloader Per Panel (per panel not available when mobile)  
-Pause on Hover  
-Hide First and Last Arrows Conditionally  
-
-Auto Play Controls  
-Keyboard Navigation  
-
-Continuous Sliding (not on mobile)  
-Cross Linking  
 
 
 How to Use
@@ -39,7 +20,12 @@ How to Use
 
 See [here](http://liquidslider.com/examples/) for further details and examples.
 
-Install the slider in the head after jQuery and other scripts.
+Add the CSS to the `<head>`
+
+```markup
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/liquid-slider.css">
+```
+Install the javascripts in the head or footer after jQuery and other scripts. Note that if you install in the footer, you can omit the `$(function() {});` wrap.
 
 ```javascript
     <link rel="stylesheet" type="text/css" media="screen" href="./css/liquid-slider.css">
@@ -52,7 +38,7 @@ Install the slider in the head after jQuery and other scripts.
     });
 ```
 
-Where the slider-id matches the id of the content, as follows:
+The id (slider-id) should matche the id of the content, as follows:
 
 ```html
       <div class="liquid-slider"  id="slider-id">
@@ -83,27 +69,24 @@ Default settings vary on custom builds
 
 ```javascript
                   autoHeight: true,
-               autoHeightMin: 0,
-      autoHeightEaseDuration: 1500,
-      autoHeightEaseFunction: "easeInOutExpo",
+                   minHeight: 0,
+          heightEaseDuration: 1500,
+          heightEaseFunction: "easeInOutExpo",
 
            slideEaseDuration: 1500,
-              fadeInDuration:1000,
-             fadeOutDuration: 1000,
            slideEaseFunction: "easeInOutExpo",
-         callforwardFunction: null,
-            callbackFunction: null,
+                  continuous: true,
+              fadeInDuration: 500,
+             fadeOutDuration: 500,
 
                    autoSlide: false,
-         autoSliderDirection: 'right',
+         autoSlideDirection: 'right',
            autoSlideInterval: 7000,
            autoSlideControls: false,
           autoSlideStartText: 'Start',
            autoSlideStopText: 'Stop',
-    autoSlideStopWhenClicked: true,
-       autoSlidePauseOnHover: true,
-
-                  continuous: true,
+              forceAutoSlide: true,
+                pauseOnHover: true,
 
                dynamicArrows: true,
       dynamicArrowsGraphical: false,
@@ -114,20 +97,16 @@ Default settings vary on custom builds
                  hoverArrows: true,
           hoverArrowDuration: 250,
 
-
                  dynamicTabs: true,
             dynamicTabsAlign: "left",
          dynamicTabsPosition: "top",
             firstPanelToLoad: 1,
           panelTitleSelector: "h2.title",
                navElementTag: "div",
+
                   crossLinks: false,
-           
                  hashLinking: false,
-                   hashNames: true,
            hashTitleSelector: "h2.title",
-            hashTagSeparator: '/',
-                     hashTLD: '.html',
                      
           keyboardNavigation: false,
                      leftKey: 39,
@@ -145,12 +124,13 @@ Default settings vary on custom builds
            mobileUIThreshold: 0,
         hideArrowsWhenMobile: true,
          hideArrowsThreshold: 481,
-              useCSSMaxWidth: 1030,
+              useCSSMaxWidth: 2200,
                        swipe: true
 
+               pretransition: function() {},
+                    callback: function() {},
+                      onload: function () {},
                    preloader: true,
-    preloaderFadeOutDuration: 250,
-           preloaderElements: 'img,video,iframe,object'
 
 ```
     

@@ -1,22 +1,14 @@
-/*!*********************************************************************
-*
-*  Liquid Slider v1.3.7
-*  Kevin Batdorf (@kevinbatdorf)
-*
+/*!
+*  Liquid Slider v1.3.8
 *  http://liquidslider.com
-*
 *  GPL license
-*
-*  Contributors:
-*  Joe Workman (@joeworkman) - v1.3.7
-*
-************************************************************************/
+*/
 
 // See https://github.com/KevinBatdorf/liquidslider for version updates
 
 /*jslint bitwise: true, browser: true */
 /*global $, jQuery */
-/*jshint unused:false */
+/*jshint unused:false, curly:false */
 
 // Utility for creating objects in older browsers
 if (typeof Object.create !== 'function') {
@@ -27,45 +19,23 @@ if (typeof Object.create !== 'function') {
     return new F();
   };
 }
-
 (function ($, window, document, undefined) {
   "use strict";
   var Slider = {
     //initialize
+
     addPreloader: function () {
       var self = this;
-      if (self.useCSS) {
-        $(self.sliderId).append('<div class="liquid-slider-preloader"></div>');
-      } else {
-        $(self.sliderId + ' .panel-container').children().each(function () {
-          $(this).children().append('<div class="liquid-slider-preloader"></div>');
-        });
-      }
+      $(self.sliderId + '-wrapper').append('<div class="ls-preloader"></div>');
     },
 
     removePreloader: function () {
-      // I think this is broken TODO ~~continuous
-      var self = this,
-        //heightCandidate,
-        height = 0;
-      // Remove most preloaders (ones without images, etc)
-      if (self.options.preloader) {
-        $(self.sliderId + ' .panel').children().each(function () {
-          // If it has images, get the highest panel and use that until the page is fully loaded
-          // Otherwise, the panels with images may be too short.
-          if ($(this).find(self.options.preloaderElements).not('.liquid-slider-preloader').length) {
-            height = self.getHeighestPanel();
-          } else {
-            var $this = $(this);
-            $this.find('.liquid-slider-preloader').remove();
-            if ($this.parent()[0] === $((self.$panelContainer).children()[self.currentTab + ~~self.options.continuous])[0] && self.options.autoHeight) {
-              $(self.sliderId).css('height', $((self.$panelContainer).children()[self.currentTab + ~~self.options.continuous]).css('height'));
-            }
-          }
-          return height;
-        });
-      }
+      var self = this;
+      $(self.sliderId + '-wrapper .ls-preloader').fadeTo('slow', 0, function () {
+        $(this).remove();
+      });
     },
+
     determineAnimationType: function () {
       var self = this,
         animationstring = 'animation',
@@ -76,9 +46,7 @@ if (typeof Object.create !== 'function') {
       // Decide whether or not to use CSS transitions or jQuery
       // https://developer.mozilla.org/en-US/docs/CSS/CSS_animations/Detecting_CSS_animation_support
       self.useCSS = false;
-
       if (self.elem.style.animationName) { self.useCSS = true; }
-
       if (self.useCSS === false) {
         for (i = 0; i < domPrefixes.length; i++) {
           if (self.elem.style[domPrefixes[i] + 'AnimationName'] !== undefined) {
@@ -90,19 +58,14 @@ if (typeof Object.create !== 'function') {
           }
         }
       }
-      // Disable CSS transitions if the width is wider than the max
-      // Some features are disabled or different when using CSS transitions
       if (document.documentElement.clientWidth > self.options.useCSSMaxWidth) {self.useCSS = false; }
 
-      // Disable some buggy settings for css transitions(for now)
-      // Preloader also works differently
-      if (self.useCSS) { self.options.continuous = false; }
     },
-    configureCSSTransitions: function () {
-      var self = this,
-        slideEasing,
-        heightEasing;
 
+    configureCSSTransitions: function (slide, height) {
+      var self = this,
+        slideTransition,
+        heightTransition;
       self.easing = {
         // Penner equations
         easeOutCubic: 'cubic-bezier(.215,.61,.355,1)',
@@ -129,167 +92,149 @@ if (typeof Object.create !== 'function') {
         easeOutBack:  'cubic-bezier(.175,.885,.32,1.275)',
         easeInOutBack:  'cubic-bezier(.68,-.55,.265,1.55)'
       };
-
       // Build a CSS class depending on the type of transition
       if (self.useCSS) {
-        slideEasing = 'all ' + self.options.slideEaseDuration + 'ms ' + self.easing[self.options.slideEaseFunction];
-        heightEasing = 'all ' + self.options.autoHeightEaseDuration + 'ms ' + self.easing[self.options.autoHeightEaseFunction];
-
+        slideTransition = 'all ' + (slide || self.options.slideEaseDuration) + 'ms ' +
+          self.easing[self.options.slideEaseFunction];
+        heightTransition = 'all ' + (height || self.options.heightEaseDuration) + 'ms ' +
+          self.easing[self.options.heightEaseFunction];
         // Build the width transition rules
         $(self.panelContainer).css({
-          '-webkit-transition': slideEasing,
-          '-moz-transition': slideEasing,
-          '-ms-transition': slideEasing,
-          '-o-transition': slideEasing,
-          'transition': slideEasing
+          '-webkit-transition': slideTransition,
+          '-moz-transition': slideTransition,
+          '-ms-transition': slideTransition,
+          '-o-transition': slideTransition,
+          'transition': slideTransition
         });
-
         // Build the height transition rules
         if (self.options.autoHeight) {
           (self.$sliderId).css({
-            '-webkit-transition': heightEasing,
-            '-moz-transition': heightEasing,
-            '-ms-transition': heightEasing,
-            '-o-transition': heightEasing,
-            'transition': heightEasing
+            '-webkit-transition': heightTransition,
+            '-moz-transition': heightTransition,
+            '-ms-transition': heightTransition,
+            '-o-transition': heightTransition,
+            'transition': heightTransition
           });
         }
       }
     },
     makeResponsive: function () {
       var self = this;
-
       // Adjust widths and add classes to make responsive
-      $(self.sliderId + '-wrapper').addClass('liquid-responsive').css({
-        'max-width': $(self.sliderId + ' .panel').width(),
+      $(self.sliderId + '-wrapper').addClass('ls-responsive').css({
+        'max-width': $(self.sliderId + ' .panel:first-child').width(),
         'width': '100%'
       });
-      $(self.sliderId + ' .panel-container').css('width', 100 * self.panelCount + self.pSign);
-      $(self.sliderId + ' .panel').css('width', 100 / self.panelCount + self.pSign);
-
-      // Set the initial height
-      if (!self.options.autoHeight) {
-        (self.$sliderId).css('height', self.getHeighestPanel() + 'px');
-      } //else {
-        //self.adjustHeightNoAnimation();
-      //}
+      // Update widths
+      $(self.sliderId + ' .panel-container').css('width', 100 * self.panelCountTotal + self.pSign);
+      $(self.sliderId + ' .panel').css('width', 100 / self.panelCountTotal + self.pSign);
 
       // Cache the padding for add/removing arrows
       if (self.options.hideArrowsWhenMobile) {
         self.leftWrapperPadding = $(self.sliderId + '-wrapper').css('padding-left');
         self.rightWrapperPadding = (self.$sliderWrap).css('padding-right');
       }
+      // Set events and fire on browser resize
+      self.responsiveEvents();
+      $(window).bind('resize', function () {
+        self.responsiveEvents();
 
-      if (self.options.dynamicArrows || self.options.dynamicArrowsGraphical) {
-        // Add padding to the top equal to the height of the arrows to make room for arrows, if enabled..
-        (self.$sliderId).css('padding-top', $(self.sliderId + '-wrapper .liquid-nav-right').css('height'));
-      }
-      // Set the width to slide
-      self.slideWidth = (self.$sliderId).width();
-      self.pSign = 'px';
-
-      // Change navigation when the screen size is too small.
-      if (self.options.responsive) {self.responsiveEvents(); }
-
-      // Do something when an item is selected from the select box
-      $(self.sliderId + '-nav-select').change(function () { self.setCurrent(parseInt($(this).val().split('tab')[1], 10) - 1); });
-
-      // Match the slider margin with the width of the slider (better height transitions)
-      $(self.sliderId + '-wrapper').css('width', (self.$sliderId).width());
-
-      // Change navigation if the user resizes the screen.
-      if (self.options.responsive) {
-        $(window).bind('resize', function () {
-          self.responsiveEvents();
-
-          clearTimeout(self.resizingTimeout);
-          self.resizingTimeout = setTimeout(function () {
-          // Send to adjust the height after resizing completes
-            self.adjustHeight();
-            self.transition();
-          }, 500);
-        });
-      }
+        clearTimeout(self.resizingTimeout);
+        self.resizingTimeout = setTimeout(function () {
+          if (self.options.autoHeight) self.adjustHeight();
+        }, 500);
+      });
     },
 
     responsiveEvents: function () {
       var self = this,
-        mobileNavChangeOver;
-
-      if (self.options.responsive) {
-        mobileNavChangeOver = (self.options.mobileUIThreshold || (self.totalNavWidth + 10 || self.options.hideArrowsThreshold));
+          mobileNavChangeOver = (self.options.hideArrowsThreshold ||
+            self.options.mobileUIThreshold ||
+            (self.totalNavWidth + 10));
+        // Since we are resizing, let's simply test the width
         if ((self.$sliderId).outerWidth() < mobileNavChangeOver) {
-          if (self.options.mobileNavigation && self.totalNavWidth) {
-            (self.$sliderNavUl).css('display', 'none');
-            $(self.sliderId + '-wrapper .liquid-slider-select-box').css('display', 'block');
-            $(self.sliderId + '-nav-select').css('display', 'block');
+          if (self.options.mobileNavigation) {
+            (self.navigation).css('display', 'none');
+            (self.dropdown).css('display', 'block');
+            (self.dropdownSelect).css('display', 'block');
             // Update the navigation
-            if (self.loaded) {$(self.sliderId + '-nav-select').val(self.options.mobileNavDefaultText); }
-
+            $(self.sliderId + '-nav-select').val(self.options.mobileNavDefaultText);
           }
-          if (self.options.hideArrowsWhenMobile && self.options.dynamicArrows) {
-            (self.$leftArrow).remove();
-            (self.$rightArrow).remove();
-          } else if (!self.options.dynamicArrowsGraphical && self.options.dynamicArrows) {
-            (self.$leftArrow).css('margin-' + self.options.dynamicTabsPosition, '0');
-            (self.$rightArrow).css('margin-' + self.options.dynamicTabsPosition, '0');
+          if (self.options.dynamicArrows) {
+            if (self.options.hideArrowsWhenMobile) {
+              (self.leftArrow).remove().length = 0;
+              (self.rightArrow).remove().length = 0;
+            } else if (!self.options.dynamicArrowsGraphical) {
+              // If using text arrows, let's move them to the top
+              (self.leftArrow).css('margin-' + self.options.dynamicTabsPosition, '0');
+              (self.rightArrow).css('margin-' + self.options.dynamicTabsPosition, '0');
+            }
           }
         } else {
           if (self.options.mobileNavigation && self.options.dynamicTabs) {
-            (self.$sliderNavUl).css('display', 'block');
-            $(self.sliderId + '-wrapper .liquid-slider-select-box').css('display', 'none');
-            $(self.sliderId + '-nav-select').css('display', 'none');
+            (self.navigation).css('display', 'block');
+            (self.dropdown).css('display', 'none');
+            (self.dropdownSelect).css('display', 'none');
           }
-          if (self.options.hideArrowsWhenMobile && self.options.dynamicArrows && !($(self.leftArrow).length || $(self.rightArrow).length)) {
-            self.addArrows();
-            self.registerArrows();
-          } else if (!self.options.dynamicArrowsGraphical && self.options.dynamicArrows) {
-            (self.$leftArrow).css('margin-' + self.options.dynamicTabsPosition, (self.$sliderNavUl).css('height'));
-            (self.$rightArrow).css('margin-' + self.options.dynamicTabsPosition, (self.$sliderNavUl).css('height'));
+          if (self.options.dynamicArrows) {
+            if (self.options.hideArrowsWhenMobile &&
+              (!(self.leftArrow).length || !(self.rightArrow).length) ) {
+              self.addArrows();
+              self.registerArrows();
+            }
+          } else if (!self.options.dynamicArrowsGraphical) {
+            // Reposition the text arrows
+            (self.leftArrow).css('margin-' +
+              self.options.dynamicTabsPosition, (self.navigation).css('height'));
+            (self.rightArrow).css('margin-' +
+              self.options.dynamicTabsPosition, (self.navigation).css('height'));
           }
-        }
         // While resizing, set the width to 100%
         $(self.sliderId + '-wrapper').css('width', '100%');
-
-        // Set the width to slide
-        self.slideWidth = $(self.sliderId).outerWidth(true);
+      }
+      // Update when the select box changes
+    if (self.options.mobileNavigation) {
+      (self.dropdownSelect).change(function () {
+        self.setNextPanel(parseInt($(this).val().split('tab')[1], 10) - 1); });
       }
     },
+
     addNavigation: function () {
       var self = this,
-      // The id is assigned here to allow for responsive
-        dropDownList,
-        dynamicTabsElm = '<' + self.options.navElementTag + ' class="liquid-nav"><ul id="' + (self.$elem).attr('id') + '-nav-ul"></ul></' + self.options.navElementTag + '>',
-        selectBoxDefault = (self.options.mobileNavDefaultText) ? '<option disabled="disabled" selected="selected">' + self.options.mobileNavDefaultText + '</option>' : null;
-      if (self.options.responsive && self.options.mobileNavigation) {
-        dropDownList = '<div class="liquid-slider-select-box"><select id="' + (self.$elem).attr('id') + '-nav-select" name="navigation">' + selectBoxDefault + '</select></div>';
-      }
-
+        dynamicTabsElm = '<' + self.options.navElementTag + ' class="ls-nav"><ul id="' +
+         (self.$elem).attr('id') + '-nav-ul"></ul></' + self.options.navElementTag + '>';
       // Add basic frame
       if (self.options.dynamicTabsPosition === 'bottom') {
         (self.$sliderId).after(dynamicTabsElm);
       } else { (self.$sliderId).before(dynamicTabsElm); }
-
-      // Add responsive navigation
-      if (self.options.responsive) {
-        self.$sliderNavUl = $(self.sliderId + '-nav-ul');
-        (self.$sliderNavUl).before(dropDownList);
-      }
-
       // Add labels
       $.each(
         (self.$elem).find(self.options.panelTitleSelector),
         function (n) {
-          $((self.$sliderWrap)).find('.liquid-nav ul').append('<li class="tab' + (n + 1) + '"><a href="#' + (n + 1) + '" title="' + $(this).text() + '">' + $(this).text() + '</a></li>');
+          $((self.$sliderWrap)).find('.ls-nav ul').append('<li class="tab' +
+            (n + 1) + '"><a href="#' + (n + 1) + '" title="' + $(this).text() +
+            '">' + $(this).text() + '</a></li>');
         }
       );
+      // Add responsive navigation
+      if (self.options.mobileNavigation) {
+        var selectBoxDefault = (self.options.mobileNavDefaultText) ?
+          '<option disabled="disabled" selected="selected">' +
+          self.options.mobileNavDefaultText + '</option>' :
+          null,
+        dropDownList = '<div class="ls-select-box"><select id="' +
+          (self.$elem).attr('id') + '-nav-select" name="navigation">' +
+          selectBoxDefault + '</select></div>';
+        // cache elements
+        self.navigation = $(self.sliderId + '-nav-ul').before(dropDownList);
+        self.dropdown = $(self.sliderId + '-wrapper .ls-select-box');
+        self.dropdownSelect = $(self.sliderId + '-nav-select');
 
-      // Adds dropdown navigation for smaller screens if responsive
-      if (self.options.responsive && self.options.mobileNavigation) {
         $.each(
           (self.$elem).find(self.options.panelTitleSelector),
           function (n) {
-            $((self.$sliderWrap)).find('.liquid-slider-select-box select').append('<option value="tab' + (n + 1) + '">' + $(this).text() + '</option>');
+            $((self.$sliderWrap)).find('.ls-select-box select')
+              .append('<option value="tab' + (n + 1) + '">' + $(this).text() + '</option>');
           }
         );
       }
@@ -298,367 +243,191 @@ if (typeof Object.create !== 'function') {
     alignNavigation: function () {
       var self = this,
         arrow = (self.options.dynamicArrowsGraphical) ? '-arrow' : '';
-
       // Set the alignment, adjusting for margins
       if (self.options.dynamicTabsAlign !== 'center') {
         if (!self.options.responsive) {
-          $((self.$sliderWrap)).find('.liquid-nav ul').css(
+          $((self.$sliderWrap)).find('.ls-nav ul').css(
             'margin-' + self.options.dynamicTabsAlign,
             // Finds the width of the aarows and the margin
             $((self.$sliderWrap)).find(
-              '.liquid-nav-' +
+              '.ls-nav-' +
                 self.options.dynamicTabsAlign +
                 arrow
-            ).outerWidth(true) + parseInt((self.$sliderId).css('margin-' + self.options.dynamicTabsAlign), 10)
+            ).outerWidth(true) + parseInt((self.$sliderId)
+             .css('margin-' + self.options.dynamicTabsAlign), 10)
           );
         }
-        $((self.$sliderWrap)).find('.liquid-nav ul').css('float', self.options.dynamicTabsAlign);
+        $((self.$sliderWrap)).find('.ls-nav ul').css('float', self.options.dynamicTabsAlign);
       }
-      self.totalNavWidth = $((self.$sliderWrap)).find('.liquid-nav ul').outerWidth(true);
-
+      self.totalNavWidth = $((self.$sliderWrap)).find('.ls-nav ul').outerWidth(true);
       if (self.options.dynamicTabsAlign === 'center') {
         // Get total width of the navigation tabs and center it
         self.totalNavWidth = 0;
-        $((self.$sliderWrap)).find('.liquid-nav li a').each(function () { self.totalNavWidth += $(this).outerWidth(true); });
-        $((self.$sliderWrap)).find('.liquid-nav ul').css('width', self.totalNavWidth + 1);
+        $((self.$sliderWrap)).find('.ls-nav li a').each(function () {
+          self.totalNavWidth += $(this).outerWidth(true);
+        });
+        $((self.$sliderWrap)).find('.ls-nav ul').css('width', self.totalNavWidth + 1);
       }
     },
+
     addArrows: function () {
-      var self = this;
-      if (self.options.dynamicArrows) {
-        (self.$sliderWrap).addClass("arrows");
-        if (self.options.dynamicArrowsGraphical) {
-          (self.$sliderId).before('<div class="liquid-nav-left-arrow" data-liquidslider-dir="prev" title="Slide left"><a href="#"></a></div>');
-          (self.$sliderId).after('<div class="liquid-nav-right-arrow" data-liquidslider-dir="next" title="Slide right"><a href="#"></a></div>');
-        } else {
-          (self.$sliderId).before('<div class="liquid-nav-left" data-liquidslider-dir="prev" title="Slide left"><a href="#">' + self.options.dynamicArrowLeftText + '</a></div>');
-          (self.$sliderId).after('<div class="liquid-nav-right" data-liquidslider-dir="next" title="Slide right"><a href="#">' + self.options.dynamicArrowRightText + '</a></div>');
-        }
-        // Will hide the arrows on load if on the first or last panel
-        if (self.options.hideSideArrows || self.options.hoverArrows || self.options.hideArrowsWhenMobile) {
-          self.leftArrow  = self.sliderId + '-wrapper [class^=liquid-nav-left]';
-          self.rightArrow = self.sliderId + '-wrapper [class^=liquid-nav-right]';
-          self.$leftArrow  = $(self.leftArrow);
-          self.$rightArrow = $(self.rightArrow);
-          (self.$leftArrow).css({visibility: "hidden", opacity: 0});
-          (self.$rightArrow).css({visibility: "hidden", opacity: 0});
-        }
-        // Add a margin to the top of responsive arrows
-        if (self.options.responsive && self.options.dynamicArrows && !self.options.dynamicArrowsGraphical && (self.options.dynamicTabsAlign !== 'center')) {
-          (self.$leftArrow).css('margin-' + self.options.dynamicTabsPosition, (self.$sliderNavUl).css('height'));
-          (self.$rightArrow).css('margin-' + self.options.dynamicTabsPosition, (self.$sliderNavUl).css('height'));
-        }
-        // If using the hover arrows, then adjust the transition speed.
-        self.options.hideSideArrowsDuration = (self.options.hoverArrows) ? self.options.hoverArrowDuration : self.options.hideSideArrowsDuration;
+      var self = this,
+      arrow = (self.options.dynamicArrowsGraphical) ? "-arrow" : '';
+      (self.$sliderWrap).addClass("arrows");
+
+      if (self.options.dynamicArrowsGraphical) {
+        self.options.dynamicArrowLeftText = '';
+        self.options.dynamicArrowRightText = '';
       }
+      // Build the arrows
+      (self.$sliderId).before('<div class="ls-nav-left' + arrow +
+        '" title="Slide left"><a href="#">' +
+        self.options.dynamicArrowLeftText + '</a></div>');
+      (self.$sliderId).after('<div class="ls-nav-right' + arrow +
+        '" title="Slide right"><a href="#">' +
+        self.options.dynamicArrowRightText + '</a></div>');
+
+      self.leftArrow  = $(self.sliderId + '-wrapper [class^=ls-nav-left]')
+        .css('visibility', "hidden").addClass('ls-hidden');
+      self.rightArrow = $(self.sliderId + '-wrapper [class^=ls-nav-right]')
+        .css('visibility', "hidden").addClass('ls-hidden');
+      if (!self.options.hideSideArrows) self.hideShowArrows(undefined, true, true, false);
     },
 
-    hideArrows: function () {
-      var self = this;
+    hideShowArrows: function (speed, forceVisibility, showBoth, hideBoth) {
+      var self = this,
+          fadeOut     = (typeof speed !== 'undefined') ? speed : self.options.fadeOutDuration,
+          fadeIn      = (typeof speed !== 'undefined') ? speed : self.options.fadeInDuration,
+          visibility  = forceVisibility ? "visible" : "hidden";
 
-      // If the tab is 0 or panelCount minus the two continuous clones
-      if (self.currentTab === 0 || self.currentTab === (self.panelCount - 2) * ~~(self.options.continuous)) {
-        // Fade out the left and make sure the right is faded in (used for on load)
-        (self.$leftArrow).fadeOut(self.options.hideSideArrowsDuration, function () {
-          $(this).show().css({visibility: "hidden"});
+      if ( !showBoth && ( hideBoth || (self.sanatizeNumber(self.nextPanel) === 1) )) {
+        self.leftArrow.stop().fadeTo(fadeOut, 0, function () {
+          $(this).css('visibility', visibility).addClass('ls-hidden');
         });
-        if ((self.$rightArrow).css('visibility') === 'hidden' && (!self.options.hoverArrows || self.hoverOn)) {
-          (self.$rightArrow).css({opacity: 1, visibility: "visible"});
-        }
-      } else if (self.currentTab === (self.panelCount - (~~(self.options.continuous) * 2) - 1) || self.currentTab === -1) {
-        // Fade out the right and make sure the left is faded in (used for on load)
-        (self.$rightArrow).fadeOut(self.options.hideSideArrowsDuration, function () {
-          $(this).show().css({visibility: "hidden"});
-        });
-        if ((self.$leftArrow).css('visibility') === 'hidden' && (!self.options.hoverArrows || self.hoverOn)) {
-          (self.$leftArrow).css({opacity: 1, visibility: "visible"});
-        }
-      } else if (!self.options.hoverArrows || self.hoverOn) {
-        // Fade in on all other tabs
-        if ((self.$leftArrow).css('visibility') === 'hidden') {
-          // Duration * 3 because we're using different fade methods (looks similar this way)
-          (self.$leftArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDuration * 3);
-        }
-        if ((self.$rightArrow).css('visibility') === 'hidden') {
-          (self.$rightArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDuration * 3);
-        }
+      } else if (showBoth || self.leftArrow.hasClass('ls-hidden') ) {
+        self.leftArrow.stop().css('visibility', "visible").fadeTo(fadeIn, 1);
       }
-    },
-    registerArrows: function () {
-      var self = this;
-      // CLick arrows
-      if (self.options.dynamicArrows) {
-        $((self.$sliderWrap).find('[class^=liquid-nav-]')).on('click', function () {
-
-          // These prevent clicking when in continuous mode, which would break it otherwise.
-          if (!self.clickable) { return false; }
-          if (typeof self.options.callforwardFunction === 'function') { self.animationCallForward(true); }
-          self.setCurrent($(this).attr('class').split('-')[2]);
-          if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
-          return false;
-        });
-        if (self.options.autoSlide) { self.checkAutoSlideStop(); }
-      }
-    },
-    registerCrossLinks: function () {
-      var self = this;
-      // Click cross links
-      if (self.options.crossLinks) {
-        // Re calculate cross links (for applying current tabs)
-        self.$crosslinks = $('[data-liquidslider-ref*=' + (self.sliderId).split('#')[1] + ']');
-        (self.$crosslinks).on('click', function () {
-
-
-          if (!self.clickable) {return false; }
-          // Stop and Play controls
-          // When the user presses stop
-          if (self.options.autoSlideControls) {
-            if ($(this).attr('name') === 'stop') {
-              self.options.autoSlide = false;
-              clearTimeout(self.autoslideTimeout);
-              $(this).html(self.options.autoSlideStartText);
-              $(this).attr('name', 'start');
-              return false;
-            }
-            // When the user presses play
-            if ($(this).attr('name') === 'start') {
-              $(this).html(self.options.autoSlideStopText);
-              self.autoSlideStopped = false;
-              self.options.autoSlide = true;
-              self.hover();
-              self.setCurrent(self.options.autoSliderDirection);
-              self.autoSlide();
-              $(this).attr('name', 'stop');
-              return false;
-            }
-          }
-          if (typeof self.options.callforwardFunction === 'function') { self.animationCallForward(true); }
-          // Stores the clicked data-liquidslider-ref and checks if it is a # or left or right
-          var direction = ($(this).attr('href').split('#')[1]);
-          if (direction  === 'left' || direction === 'right') {
-            self.setCurrent(direction);
-          } else if (self.options.crossLinks && self.options.hashNames) {
-            self.getHashTags('#' + direction);
-            var current = self.hashValue ? parseInt(self.hashValue, 10) : parseInt(direction, 10);
-            if (self.options.hashLinking) current--;
-            self.setCurrent(current - ~~(self.options.continuous));
-          } else {
-            self.setCurrent(parseInt(direction, 10)-1);
-          }
-          if (self.options.autoSlide) { self.checkAutoSlideStop(); }
-          if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
-          return false;
-        });
-      }
-    },
-    getHashTags: function (hash) {
-      var self = this;
-      if (hash && self.options.crossLinks) {
-        //set the value as a variable, and remove the #
-        self.hashValue = (hash).replace('#', '');
-        var hashIsNumber = self.hashValue.match(/^\d+$/);
-        if (self.options.hashNames && !hashIsNumber) {
-          $.each(
-            (self.$elem).find(self.options.hashTitleSelector),
-            function (n) {
-              var $this = $(this).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-');
-              self.hashValue = self.hashValue.replace(self.options.hashTagSeparator, '');
-              self.hashValue = self.hashValue.replace(self.options.hashTLD, '');
-              if (($this).toLowerCase() === self.hashValue.toLowerCase()) {
-                self.hashValue = self.options.hashLinking ? parseInt(n, 10)+1 : parseInt(n, 10);
-                // Adjust if continuous
-                if (self.options.continuous && self.hashValue === 0) {
-                  self.hashValue = self.panelCount - 2;
-                }
-                return false;
-              }
-            }
-          );
-        }
-        else if (self.options.hashNames && hashIsNumber) {
-            self.hashValue = self.options.hashLinking ? parseInt(self.hashValue, 10)+1 : parseInt(self.hashValue, 10);
-        }
-        else {
-          self.hashValue = parseInt(self.hashValue, 10);
-        }
-      }
-    },
-
-    updateHashTags: function (tab) {
-      var self = this;
-      if (self.options.hashLinking) {
-        if (self.options.continuous) {
-          if (self.currentTab === self.panelCount - 2) {
-            window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[1]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : 1;
-          } else if (self.currentTab === -1) {
-            window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[self.panelCount - 2]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : self.panelCount - 2;
-          } else {
-            window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[tab + 1]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : tab + 1;
-          }
-        } else { window.location.hash = (self.options.hashNames) ? self.options.hashTagSeparator + $($(self.$elem).find(self.options.hashTitleSelector)[tab]).text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-').toLowerCase() + self.options.hashTLD : tab + 1; }
+      if ( !showBoth && ( hideBoth || (self.sanatizeNumber(self.nextPanel) === self.panelCount) )) {
+        self.rightArrow.stop().fadeTo(fadeOut, 0, function () {
+          $(this).css('visibility', visibility).addClass('ls-hidden');
+          });
+      } else if ( showBoth || self.rightArrow.hasClass('ls-hidden') ) {
+        self.rightArrow.stop().css('visibility', "visible").fadeTo(fadeIn, 1);
       }
     },
 
     hover: function () {
       var self = this;
-      // Hover events
 
       (self.$sliderWrap).hover(
         function () {
-          // Hover Arrows
-          if (self.options.hoverArrows && self.options.dynamicArrows) {
-            self.hoverOn = true;
-            (self.$leftArrow).stop(true);
-            (self.$rightArrow).stop(true);
-            if (self.options.hideSideArrows) {
-              self.hideArrows();
-            } else {
-              (self.$leftArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDurations);
-              (self.$rightArrow).css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, self.options.hideSideArrowsDurations);
-            }
-          }
-          // Pause on Hover
-          if (self.options.autoSlidePauseOnHover && self.options.autoSlide) {
-            self.dontCallback = true;
-            clearTimeout(self.autoslideTimeout);
-          }
+          if (self.options.hoverArrows)
+            self.hideShowArrows(self.options.fadeInDuration, true, true, false);
+
+          if (self.options.pauseOnHover)
+            clearTimeout(self.autoSlideTimeout);
         },
-
         function () {
-          // Hover Arrows
-          if (self.options.hoverArrows && self.options.dynamicArrows) {
-            self.hoverOn = false;
-            (self.$leftArrow).fadeOut(self.options.hideSideArrowsDuration, function () {
-              $(this).show().css({visibility: "hidden"});
-            });
-            (self.$rightArrow).fadeOut(self.options.hideSideArrowsDuration, function () {
-              $(this).show().css({visibility: "hidden"});
-            });
-          }
+          if (self.options.hoverArrows)
+            self.hideShowArrows(self.options.fadeOutnDuration, true, false, true);
 
-          // Pause on Hover
-          if (self.options.autoSlidePauseOnHover && self.options.autoSlide && self.clickable) {
-            self.dontCallback = false;
-            var isAnimating = $('.panel-container:animated');
-            if (!self.autoSlideStopped && !~~isAnimating) {
-              self.autoSlide(clearTimeout(self.autoslideTimeout));
-            }
-          }
+          if (self.options.pauseOnHover && self.options.autoSlide)
+            self.start();
         }
       );
     },
+
+    registerArrows: function () {
+      var self = this;
+      $((self.$sliderWrap).find('[class^=ls-nav-]')).on('click', function () {
+        self.setNextPanel($(this).attr('class').split(' ')[0].split('-')[2]);
+      });
+    },
+
+    registerTabs: function () {
+      var self = this;
+      (self.$sliderWrap).find('[class^=ls-nav] li').on('click', function () {
+        self.setNextPanel(parseInt($(this).attr('class').split('tab')[1], 10) - 1);
+        return false;
+      });
+    },
+
+    registerCrossLinks: function () {
+      var self = this;
+      // Find cross links
+      self.$crosslinks = $('[data-liquidslider-ref*=' + (self.sliderId).split('#')[1] + ']');
+      (self.$crosslinks).on('click', function () {
+        if (self.options.autoSlide === true)
+          self.start(true);
+        self.setNextPanel(self.getPanelNumber(($(this).attr('href').split('#')[1]), self.options.panelTitleSelector));
+      });
+    },
+
+    stop: function () {
+      var self = this;
+      self.options.autoSlide = false;
+      clearTimeout(self.autoSlideTimeout);
+    },
+
+    start: function (reset) {
+      var self = this;
+      self.options.autoSlide = true;
+      if (!reset) self.setNextPanel(self.options.autoSlideDirection);
+      self.autoSlide(clearTimeout(self.autoSlideTimeout));
+    },
+
     touch: function () {
       // Touch Events
       var self = this;
-      $(self.sliderId + ' .panel').swipe({fallbackToMouseEvents:false, allowPageScroll: "vertical", swipe: function (e, dir) {
-
+      $(self.sliderId + ' .panel').swipe({
+        fallbackToMouseEvents:false,
+        allowPageScroll: "vertical",
+        swipe: function (e, dir) {
         // Reverse the swipe direction
         self.swipeDir = (dir === 'left') ? 'right' : 'left';
-        if (!self.options.continuous) {
-          // Check if on the first or last panel, and don't slide beyond (always swipe on fade)
-          if ( ((self.currentTab === 0 && dir === 'right') || ( (self.currentTab === (self.panelCount - 1)) && dir === 'left')) &&
-            self.options.slideEaseFunction !== "fade") {
-            return false;
-          }
-        }
-        self.setCurrent(self.swipeDir);
-        self.clickable = false;
-        $(this).trigger('click');
-
-      if (self.options.autoSlide) { self.checkAutoSlideStop(); }
-      if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
-
+        self.setNextPanel(self.swipeDir);
       }});
     },
+
     keyboard: function () {
       // Keyboard Events
       var self = this;
       $(document).keydown(function (event) {
-        if (typeof self.options.callforwardFunction === 'function') { self.animationCallForward(true); }
         var key = event.keyCode || event.which;
         if (event.target.type !== 'textarea' && event.target.type !== 'textbox') {
-          if (key === self.options.leftKey) {
-            self.setCurrent('right');
-              self.clickable = false;
-          }
-          if (key === self.options.rightKey) {
-            self.setCurrent('left');
-              self.clickable = false;
-          }
+          // Off the autoSlider
+          if (!self.options.forceAutoSlide)
+            $(this).trigger('click');
+          if (key === self.options.leftKey)
+            self.setNextPanel('right');
+          if (key === self.options.rightKey)
+            self.setNextPanel('left');
           $.each(self.options.panelKeys, function (index, value) {
             if (key === value) {
-              self.setCurrent(index - 1);
-              self.clickable = false;
+              self.setNextPanel(index - 1);
             }
           });
         }
-        if (self.options.autoSlide) { self.checkAutoSlideStop(); }
-        if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
       });
     },
+
     autoSlide: function () {
       var self = this;
-
-      // Can't set the autoslide slower than the easing ;-)
+      // Can't set the autoSlide slower than the easing ;-)
       if (self.options.autoSlideInterval < self.options.slideEaseDuration) {
-        self.options.autoSlideInterval = (self.options.slideEaseDuration > self.options.autoHeightEaseDuration) ? self.options.slideEaseDuration : self.options.autoHeightEaseDuration;
+        self.options.autoSlideInterval =
+          (self.options.slideEaseDuration > self.options.heightEaseDuration) ?
+            self.options.slideEaseDuration : self.options.heightEaseDuration;
       }
-      //self.clickable = false;
-      self.autoslideTimeout = setTimeout(function () {
-      if (typeof self.options.callforwardFunction === 'function' && self.loaded) { self.animationCallForward(); }
+      self.autoSlideTimeout = setTimeout(function () {
         // Slide left or right
-        self.setCurrent(self.options.autoSliderDirection);
+        self.setNextPanel(self.options.autoSlideDirection);
         self.autoSlide();
-
       }, self.options.autoSlideInterval);
-      if (typeof self.options.callbackFunction === 'function' && self.loaded) { self.animationCallback(); }
     },
 
-    checkAutoSlideStop: function () {
-      var self = this;
-      // If the slider has not stopped, check whether it should stop
-      if (!self.autoSlideStopped && self.loaded) {
-        if (self.options.autoSlideStopWhenClicked) {
-          clearTimeout(self.autoslideTimeout);
-          self.autoSlideStopped = true;
-          if (self.options.autoSlideControls) {
-            $('body').find('[data-liquidslider-ref*=' + (self.sliderId).split('#')[1] + '][name=stop]').html(self.options.autoSlideStartText);
-          }
-        } else if (!self.options.hoverArrows && !self.options.autoSlidePauseOnHover || !self.clickable) {
-          self.autoSlide(clearTimeout(self.autoslideTimeout));
-        }
-
-      }
-    },
-    continuousSlide: function () {
-      var self = this;
-      // If on the last panel (the clone of panel 1), set the margin to the original.
-      if (self.currentTab === self.panelCount - 2 || self.marginLeft === -((self.slideWidth * self.panelCount) - self.slideWidth)) {
-        $(self.panelContainer).css('margin-left', -self.slideWidth + self.pSign);
-        self.currentTab = 0;
-      } else if (self.currentTab === -1 || self.marginLeft === 0) {
-      // If on the first panel the clone of the last panel), set the margin to the original.
-        $(self.panelContainer).css('margin-left', -(((self.slideWidth * self.panelCount) - (self.slideWidth * 2))) + self.pSign);
-        self.currentTab = (self.panelCount - 3);
-      }
-      self.clickable = true;
-    },
-    animationCallback: function (go) {
-      var self = this;
-      if (!self.dontCallback || go) {
-        setTimeout(function () {self.options.callbackFunction.call(self); }, self.options.slideEaseDuration + 50);
-      }
-    },
-
-    animationCallForward: function (go) {
-      var self = this;
-      if (!self.dontCallback || go) {
-        self.options.callforwardFunction.call(self);
-      }
-    },
     init: function (options, elem) {
       var self = this;
-
       // Cache the element
       self.elem = elem;
       self.$elem = $(elem);
@@ -676,79 +445,58 @@ if (typeof Object.create !== 'function') {
       self.pSign =  (self.options.responsive) ? '%' : 'px';
 
       // Slide animations bad in ie7, so don't animate height
-      if (((navigator.appVersion.indexOf("MSIE 7.") !== -1) || navigator.appVersion.indexOf("MSIE 8.") !== -1)) {
-        //self.options.slideEaseFunction = "fade";
+      if (navigator.appVersion.indexOf("MSIE 7.") !== -1 ||
+        navigator.appVersion.indexOf("MSIE 8.") !== -1)
         self.dontAnimateHeight = true;
+
+      if (self.options.responsive) {
+        // jQuery or CSS3 ?
+        self.determineAnimationType();
+      } else {
+        // Disable some stuff
+        self.options.mobileNavigation = false;
+        self.options.hideArrowsWhenMobile = false;
       }
-
-      if (self.options.responsive) { self.determineAnimationType(); }
-
       // Build the tabs and navigation
       self.build();
 
-      // Add preloader
-      if (self.options.preloader) { self.addPreloader(); }
-
-      // Start auto slider
-      if (self.options.autoSlide) { self.autoSlide(); }
-
+      // Register events
       self.events();
-
-
-      if (self.options.preloader & !self.useCSS) { self.removePreloader(); }
-
-      // Disable clicking until fully loaded. Otherwise buggy with css transitions
-      if (self.useCSS) { self.clickable = false; }
+      // Fix width
+      if (!self.options.responsive && self.options.dynamicArrows)
+        self.$sliderWrap.width( self.$sliderId.outerWidth(true) +
+          self.leftArrow.outerWidth(true) +
+          self.rightArrow.outerWidth(true) );
 
       $(window).bind("load", function () {
-        // Remove preloader from remaining elements
-        if (self.options.preloader) {
-          $('.liquid-slider-preloader').each(function () {
-            $(this).fadeOut(self.options.preloaderFadeOutDuration);
-          });
-        }
-        // Page fully loaded
         self.loaded = true;
-        self.clickable = true;
-        // This will adjust the slider's height in case of images, etc.
-        self.adjustHeightNoAnimation();
-        // Adjust the width after load (IE won't otherwise).
-        if (self.options.responsive) {self.responsiveEvents(self.loaded); }
 
-        if (self.options.responsive) { self.configureCSSTransitions(); }
-
-        self.readyToSlide = true;
-
-        // Adjust the height again (Chrome seems to like this)
-        self.adjustHeightNoAnimation();
-        self.transition();
+        // Adjust the height again in case of images, etc.
+        self.adjustHeight(true);
+        if (self.options.preloader) self.removePreloader();
+        if (self.options.autoSlide) self.autoSlide();
+        if (self.options.onload) self.onload();
       });
     },
+
     build: function () {
       var self = this,
         isAbsolute;
-      // Grab the current hash tag
-      if (self.options.hashLinking) {
-        self.getHashTags(window.location.hash);
-        // Default to panel 1 if mistyped
-        if (typeof(self.hashValue) !== 'number' ) {
-          self.hashValue = 1;
-        }
+      // Wrap the entire slider unless manually there
+      if ((self.$sliderId).parent().attr('class') !== 'ls-wrapper') {
+        (self.$sliderId).wrap('<div id="' +
+          (self.$elem).attr('id') +
+          '-wrapper" class="ls-wrapper"></div>');
       }
-
-      // Store current tab
-      self.currentTab = (self.hashValue) ? self.hashValue - 1 : self.options.firstPanelToLoad - 1;
-      // Store a temp var for callback functions
-      self.tabTemp = self.currentTab;
-
-      // Wrap the entire slider (backwards compatible)
-      if ((self.$sliderId).parent().attr('class') !== 'liquid-slider-wrapper') {(self.$sliderId).wrap('<div id="' + (self.$elem).attr('id') + '-wrapper" class="liquid-slider-wrapper"></div>'); }
       // Cache the wrapper
       self.$sliderWrap = $(self.sliderId + '-wrapper');
 
+      // Add preloader
+      if (self.options.preloader) self.addPreloader();
+
       // Add the .panel class to the individual panels
       $(self.sliderId).children().addClass((self.$elem).attr('id') + '-panel panel');
-      self.panelClass = self.sliderId + ' .' + (self.$elem).attr('id') + '-panel';
+      self.panelClass = self.sliderId + ' .' + (self.$elem).attr('id') + '-panel:not(.clone)';
       self.$panelClass = $(self.panelClass);
 
       // Wrap all panels in a div, and wrap inner content in a div (not backwards compatible)
@@ -759,362 +507,358 @@ if (typeof Object.create !== 'function') {
 
       // If using fade transition, add the class here and disable other options.
       if (self.options.slideEaseFunction === "fade") {
-        (self.$panelClass).addClass('fadeClass');
+        (self.$panelClass).addClass('fade');
         self.options.continuous = false;
-        $((self.$panelContainer).children()[self.currentTab]).css('display', 'block');
+        $((self.$panelContainer).children()).css('display', 'block');
+        self.fade = true;
       }
-
-      // Apply starting height to the container
-      if (self.options.autoHeight && !self.options.responsive) {
-        self.adjustHeightNoAnimation($($(self.panelContainer).children()[self.currentTab]).height() + ~~($(self.sliderId + '-wrapper .liquid-nav-right').height()) + self.pSign);
-      } else if (!self.options.preloader) {
-        self.adjustHeightNoAnimation($($(self.panelContainer).children()[self.currentTab]).height());
-      }
-
       // Build navigation tabs
-      if (self.options.dynamicTabs) { self.addNavigation(); }
+      if (self.options.dynamicTabs) self.addNavigation();
 
       // Build navigation arrows or disable features
       if (self.options.dynamicArrows) { self.addArrows();
       } else {
         self.options.hoverArrows = false;
         self.options.hideSideArrows = false;
+        self.options.hideArrowsWhenMobile = false;
       }
-
-      // Find cross links (for applying current tabs)
-      if (self.options.crossLinks) {
-        self.$crosslinks = $('[data-liquidslider-ref*=' + (self.sliderId).split('#')[1] + ']');
-      }
-
       // Create a container width to allow for a smooth float right. Won't calculate arrows if absolute
       isAbsolute = ((self.$leftArrow) && (self.$leftArrow).css('position') === 'absolute') ? 0 : 1;
 
+      // Set slider width
       self.totalSliderWidth = (self.$sliderId).outerWidth(true) +
-        ~~($(self.$leftArrow).outerWidth(true)) * isAbsolute +
-        ~~($(self.$rightArrow).outerWidth(true)) * isAbsolute;
-
+        ($(self.$leftArrow).outerWidth(true)) * isAbsolute +
+        ($(self.$rightArrow).outerWidth(true)) * isAbsolute;
       $((self.$sliderWrap)).css('width', self.totalSliderWidth);
+
       // Align navigation tabs
-      if (self.options.dynamicTabs) { self.alignNavigation(); }
+      if (self.options.dynamicTabs) self.alignNavigation();
+
+      if (self.options.hideSideArrows) self.options.continuous = false;
 
       // Clone panels if continuous is enabled
       if (self.options.continuous) {
-        (self.$panelContainer).prepend((self.$panelContainer).children().last().clone());
-        (self.$panelContainer).append((self.$panelContainer).children().eq(1).clone());
+        (self.$panelContainer).prepend((self.$panelContainer).children().last().clone().addClass('clone'));
+        (self.$panelContainer).append((self.$panelContainer).children().eq(1).clone().addClass('clone'));
       }
-
-      // Allow the slider to be clicked
-      self.clickable = true;
+      var clonedCount = (self.options.continuous) ? 2 : 0;
 
       // Count the number of panels and get the combined width
-      self.panelCount = (self.options.slideEaseFunction === 'fade') ? 1 : $(self.panelClass).length;
+      self.panelCount = (self.fade) ? 1 : $(self.panelClass).length;
+      self.panelCountTotal = self.panelCount + clonedCount;
       self.panelWidth = $(self.panelClass).outerWidth();
-      self.totalWidth = self.panelCount * self.panelWidth;
-
-
-      // Create a variable for responsive setting
-      if (self.options.responsive && !self.useCSS) {
-        self.slideWidth = 100;
-      } else { self.slideWidth = (self.$sliderId).width(); }
-
-      // Puts the margin at the starting point with no animation. Made for both continuous and firstPanelToLoad features.
-      // ~~(self.options.continuous) will equal 1 if true, otherwise 0
-      if (self.options.slideEaseFunction !== 'fade' && !self.useCSS) {
-        $(self.panelContainer).css('margin-left', (-self.slideWidth * ~~(self.options.continuous)) + (-self.slideWidth * self.currentTab) + self.pSign);
-      }
-
-      // Configure the current tab
-      self.setCurrent(self.currentTab);
+      self.totalWidth = self.panelCountTotal * self.panelWidth;
 
       // Apply the width to the panel container
       $(self.sliderId + ' .panel-container').css('width', self.totalWidth);
 
-      // Make responsive (beta)
-      if (self.options.responsive) { self.makeResponsive(); }
-
-      // Apply margin for css3 transitions
+      //How far should we slide?
+      self.slideDistance = (self.options.responsive) ? 100 : $(self.sliderId).outerWidth();
       if (self.useCSS) {
-        self.panelWidth = $(self.panelClass).outerWidth();
-        (self.panelContainer).css({
-          'margin-left': '0%'
-        });
-        $(self.panelContainer).css({
-          'transform': 'translate3d(' + ((-self.panelWidth * ~~(self.options.continuous)) + (-self.panelWidth * self.currentTab) + 'px') + ', 0, 0)',
-          '-webkit-transform': 'translate3d(' + ((-self.panelWidth * ~~(self.options.continuous)) + (-self.panelWidth * self.currentTab) + 'px') + ', 0, 0)',
-          '-moz-transform': 'translate3d(' + ((-self.panelWidth * ~~(self.options.continuous)) + (-self.panelWidth * self.currentTab) + 'px') + ', 0, 0)'
-
-        });
+        self.totalWidth = 100 * self.panelCountTotal;
+        self.slideDistance = 100 / self.panelCountTotal;
       }
+      // Make responsive
+      if (self.options.responsive) self.makeResponsive();
+
+      // Apply starting position
+      self.transition(self.getFirstPanel(), true);
+
+      // Update the class
+      self.updateClass();
     },
+
+    getFirstPanel: function() {
+      var self = this, output;
+      // is there a hash tag?
+      if (self.options.hashLinking) {
+        output = self.getPanelNumber(window.location.hash, self.options.hashTitleSelector);
+        // Default to panel 1 if mistyped
+        if (typeof(output) !== 'number' ) {
+          output = 0;
+        }
+      }
+      return (output) ? output : self.options.firstPanelToLoad - 1;
+    },
+
     events: function () {
       var self = this;
 
-      if (self.options.dynamicArrows) { self.registerArrows(); }
-      if (self.options.crossLinks) { self.registerCrossLinks(); }
+      if (self.options.dynamicArrows) self.registerArrows();
+      if (self.options.crossLinks) self.registerCrossLinks();
+      if (self.options.dynamicTabs) self.registerTabs();
 
-      // Click tabs
-      if (self.options.dynamicTabs) {
-        (self.$sliderWrap).find('[class^=liquid-nav] li').on('click', function () {
-
-          if (!self.clickable) {return false; }
-          if (typeof self.options.callforwardFunction === 'function') { self.animationCallForward(true); }
-          self.setCurrent(parseInt($(this).attr('class').split('tab')[1], 10) - 1);
-          if (typeof self.options.callbackFunction === 'function') { self.animationCallback(true); }
-          return false;
-        });
-      }
-
-      // Click to stop autoslider
+      // Click to stop autoSlider
       (self.$sliderWrap).find('*').on('click', function () {
-        if (!self.options.autoSlidePauseOnHover || self.options.autoSlideStopWhenClicked) {
-          // AutoSlide controls.
-          if (self.options.autoSlide) { self.checkAutoSlideStop(); }
-
-          // Stops from speedy clicking for continuous sliding.
-          if (self.options.continuous) {clearTimeout(self.continuousTimeout); }
-        }
+        if (self.options.forceAutoSlide)
+          self.start(true);
+        else
+          self.stop();
       });
-
-      // Enable Hover Events
-      if (self.options.autoSlidePauseOnHover || (self.options.hoverArrows && self.options.dynamicArrows)) {
-        self.hoverable = true;
-        self.hover();
-      }
+      self.hover();
 
       // Enable Touch Events
-      if (self.options.swipe) {self.touch(); }
+      if (self.options.swipe) self.touch();
 
       // Enable Keyboard Events
-      if (self.options.keyboardNavigation) {self.keyboard(); }
+      if (self.options.keyboardNavigation) self.keyboard();
     },
-    setCurrent: function (direction) {
+
+    setNextPanel: function (direction) {
       var self = this;
-      if (self.clickable) {
-        self.clickable = false;
+      if (self.loaded) {
         if (typeof direction === 'number') {
-          self.currentTab = direction;
+          self.nextPanel = direction;
         } else {
           // "left" = -1; "right" = 1;
-          self.currentTab += (~~(direction === 'right') || -1);
+          self.nextPanel += (~~(direction === 'right') || -1);
           // If not continuous, slide back at the last or first panel
-          if (!self.options.continuous) {
-            self.currentTab = (self.currentTab < 0) ? $(self.panelClass).length - 1 : (self.currentTab % $(self.panelClass).length);
-          }
+          if (!self.options.continuous)
+            self.nextPanel = (self.nextPanel < 0) ? self.panelCount - 1 : (self.nextPanel % self.panelCount);
         }
-        // This is so the height will match the current panel, ignoring the clones.
-        // It also adjusts the count for the "currrent" class that's applied
-        if (self.options.continuous) {
-          self.panelHeightCount = self.currentTab + 1;
-          if (self.currentTab === self.panelCount - 2) {
-            self.setTab = 0;
-          } else if (self.currentTab === -1) {
-            self.setTab = self.panelCount - 3;
-          } else {
-            self.setTab = self.currentTab;
-          }
-        } else {
-          self.panelHeightCount = self.currentTab;
-          self.setTab = self.currentTab;
+      self.verifyPanel();
+      }
+    },
+
+    getPanelNumber: function (input, searchTerm) {
+      var self = this, title,
+      output = input.replace('#', '').toLowerCase();
+      // Return the num that matches the panel, or return whats given.
+      (self.$panelClass).each(function (i) {
+        title = $(this).find(searchTerm).text()
+          .toLowerCase().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-');
+        if (title === output){
+          output = i + 1;
         }
-        // Add and remove current class.
-        if (self.options.dynamicTabs) {
-          $((self.$sliderWrap)).find('.tab' + (self.setTab + 1) + ':first a')
+      });
+      return (parseInt(output, 10) ? parseInt(output, 10) - 1 : output);
+    },
+
+    updateHashTags: function () {
+      var self = this,
+          filtered = (self.nextPanel === self.panelCount) ? 0 : self.nextPanel;    
+      window.location.hash = self.$panelClass.find(self.options.hashTitleSelector).eq(filtered)
+          .text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-')
+          .toLowerCase();
+    },
+
+    updateClass: function () {
+      var self = this;
+      if (self.options.dynamicTabs) {
+          $((self.$sliderWrap)).find('.tab' + self.sanatizeNumber(self.nextPanel) + ':first a')
             .addClass('current')
             .parent().siblings().children().removeClass('current');
-        }
-
-        // Add current class to cross linked Tabs
-        if (self.options.crossLinks) {
-          (self.$crosslinks).each(function () {
-            if (self.options.hashNames) {
-              if ($(this).attr('href') === ('#' + $($(self.panelContainer).children()[(self.setTab + ~~(self.options.continuous))]).find(self.options.panelTitleSelector).text().replace(/(\s)/g, '-').toLowerCase())) {
-                $('[data-liquidslider-ref=' + (self.sliderId).split('#')[1] + ']').removeClass('currentCrossLink');
-                $(this).addClass('currentCrossLink');
-              }
-            } else if ($(this).attr('href') === '#' + (self.setTab + 1)) {
-              $('[data-liquidslider-ref=' + (self.sliderId).split('#')[1] + ']').removeClass('currentCrossLink');
+      }
+      // Add current class to cross linked Tabs
+      if (self.options.crossLinks && self.$crossLinks) {
+        (self.$crosslinks).each(function () {
+            if ($(this).attr('href') === ('#' + $($(self.panelContainer).children()[(self.nextPanel +
+            ~~(self.options.continuous))]).find(self.options.panelTitleSelector)
+            .text().replace(/(\s)/g, '-').toLowerCase())) {
+              $('[data-liquidslider-ref=' + (self.sliderId).split('#')[1] + ']')
+                .removeClass('currentCrossLink');
               $(this).addClass('currentCrossLink');
             }
-          });
-        }
-
-        // Update the dropdown menu when small.
-        if (self.options.responsive && self.options.mobileNavigation && self.loaded) { $(self.sliderId + '-nav-select').val('tab' + (self.setTab + 1)); }
-
-        // Update hash tags
-        if (self.options.hashLinking) { self.updateHashTags(self.currentTab); }
-
-        // Update arrows if side arrows enabled
-        if (self.options.hideSideArrows) { self.hideArrows(); }
-
-        // Show arrows if hoverArrows is disabled
-        if (self.$leftArrow && !self.options.hoverArrows && self.options.dynamicArrows && !self.options.hideSideArrows) {
-          (self.$leftArrow).css({opacity: 1, visibility: "visible"});
-          (self.$rightArrow).css({opacity: 1, visibility: "visible"});
-        }
-        this.transition();
-      }
-    },
-
-    getHeight: function (height) {
-      var self = this,
-          currentPanelHeight;
-      // Cache the original height of the current panel
-      currentPanelHeight = height || $($(self.panelContainer).children()[self.panelHeightCount]).css('height').split('px')[0];
-      // Create a new height based on the user settings (Beta)
-      self.setHeight = (self.options.autoHeightRatio) ?
-          (((self.$sliderWrap).outerWidth(true) / (self.options.autoHeightRatio).split(':')[1] * (self.options.autoHeightRatio).split(':')[0])) :
-          currentPanelHeight;
-      // If the user settings indicate a height too high, use the smaller value
-      self.setHeight = (self.setHeight < currentPanelHeight) ? self.setHeight : currentPanelHeight;
-
-      self.setHeight = (self.setHeight < self.options.autoHeightMin) ? self.options.autoHeightMin : self.setHeight;
-      if (!self.removePre && self.options.preloader) {
-        // Only run once
-        self.removePre = true;
-        return self.removePreloader();
-
-      }
-      return self.setHeight;
-    },
-
-    getHeighestPanel: function () {
-      var self = this,
-        height = 0,
-        heightCandidate;
-      $(self.sliderId + ' .panel').each(function () {
-        heightCandidate = $(this).height();
-        height = (heightCandidate > height) ? heightCandidate : height;
-      });
-      return height;
-    },
-
-    adjustHeight: function (easing, duration, height) {
-      var self = this;
-
-      // Adjust the height
-      if (self.options.autoHeight && (self.useCSS || self.dontAnimateHeight)) {
-        // CSS transitions or IE
-        self.adjustHeightNoAnimation(height);
-      } else if (self.options.autoHeight) {
-        // jQuery animations
-        (self.$sliderId).animate({
-          'height': self.getHeight(height) + 'px'
-        }, {
-          easing: easing || self.options.autoHeightEaseFunction,
-          duration: duration || self.options.autoHeightEaseDuration,
-          queue: false
         });
       }
     },
 
-    adjustHeightNoAnimation: function (height) {
+    sanatizeNumber: function(panel) {
       var self = this;
-      (self.$sliderId).css({
-        'height': self.getHeight(height) + 'px'
-      });
+      // spits out real numbers, 1-based
+      if (panel >= self.panelCount) {
+        return 1;
+      } else if (panel <= -1) {
+        return self.panelCount;
+      } else {
+        return panel + 1;
+      }
     },
 
-    transition: function () {
-      var self = this;
+    pretransition: function(callFrontFn) {
+      var self = this, marginLeft;
+      if (callFrontFn && self.loaded) callFrontFn.call(self);
+      if (self.options.hashLinking) self.updateHashTags();
+      if (self.options.mobileNavigation) self.dropdownSelect.val('tab' + (self.nextPanel + 1));
+      if (self.options.hideSideArrows) self.hideShowArrows();
+      self.updateClass();
+    },
 
-      // Adjust the height
-      if (self.options.autoHeight) { self.adjustHeight(); }
+    callback: function (callbackFn) {
+      var self = this;
+      if (callbackFn && self.loaded) {
+        if (self.useCSS) {
+          $('.panel-container').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend',
+            function(e) { callbackFn.call(self); });
+        } else {
+          setTimeout(function () { callbackFn.call(self); }, self.options.slideEaseDuration + 50);
+        }
+      }
+    },
+
+    onload: function () {
+      var self = this;
+      self.options.onload.call(self);
+    },
+
+    transition: function (nextPanel, noAnimation, noPretransition, noPosttransition) {
+      var self = this;
+      // Override panel
+      self.nextPanel = nextPanel || 0;
+
+      // Option to only transition
+      if (!noPretransition) self.pretransition(self.options.pretransition);
+      // Get margin
+      var marginLeft = -(self.nextPanel * self.slideDistance) - (self.slideDistance * ~~(self.options.continuous));
 
       // Transition for fade option
       if (self.options.slideEaseFunction === 'fade') {
-        if (self.loaded) {
-          $($(self.panelContainer).children()[self.currentTab])
+          $($(self.panelContainer).children()[self.nextPanel])
             .fadeTo(self.options.fadeInDuration, 1.0).css('z-index', 1)
             .siblings().fadeTo(self.options.fadeOutDuration, 0).css('z-index', 0);
-          setTimeout(function () {
-            if (self.options.continuous) {
-              self.continuousSlide();
-              } else { self.clickable = true; }
-          }, self.options.slideEaseDuration + 50);
-        }
-      } else if (self.loaded || !self.useCSS) {
-        // Adjust the margin for continuous sliding
-        if (self.options.continuous) {
-          self.marginLeft = -(self.currentTab * self.slideWidth) - self.slideWidth;
-        } else {
-          // Otherwise adjust as normal
-          self.marginLeft = -(self.currentTab * self.slideWidth);
-        }
-        // Don't transition on load if the slider has the same margin. This messes up when the
-        // user clicks before fully loaded
-        if ((self.marginLeft + self.pSign) !== (self.panelContainer).css('margin-left') || (self.marginLeft !== -100)) {
-          // Animate the slider
-          if (self.useCSS && self.loaded) {
-            (self.panelContainer).css({
-              '-webkit-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
-              '-moz-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
-              '-ms-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
-              '-o-transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)',
-              'transform': 'translate3d(' + self.marginLeft + self.pSign + ', 0, 0)'
-            });
-            // Timeout to replicate callback function
-            setTimeout(function () {
-              if (self.options.continuous) {
-                self.continuousSlide();
-                } else { self.clickable = true; }
-            }, self.options.slideEaseDuration + 50);
-          } else {
-            (self.panelContainer).animate({
-              'margin-left': self.marginLeft + self.pSign
-            }, {
-              easing: self.options.slideEaseFunction,
-              duration: self.options.slideEaseDuration,
-              queue: false,
-              complete: function () {
-                if (self.options.continuous) { self.continuousSlide();
-                } else { self.clickable = true; }
-              }
-            });
-          }
-        }
+      } else if ( (marginLeft + self.pSign) !== (self.panelContainer).css('margin-left') || (marginLeft !== -100) ) {
+          if (self.options.autoHeight)
+            self.adjustHeight();
+          // SLIDE!
+          if (self.useCSS)
+            self.transitionCSS(marginLeft, noAnimation);
+          else
+            self.transitionjQuery(marginLeft, noAnimation);
       }
-      if (self.options.responsive) {
-        // Match the slider margin with the width of the slider (better height transitions)
-        $(self.sliderId + '-wrapper').css('width', (self.$sliderId).outerWidth(true));
+      if (!noPosttransition) self.callback(self.options.callback);
+    },
+
+    transitionCSS: function (marginLeft, noAnimation) {
+      var self = this;
+      if (noAnimation) self.configureCSSTransitions('0','0');
+      (self.panelContainer).css({
+        '-webkit-transform': 'translate3d(' + marginLeft + self.pSign + ', 0, 0)',
+        '-moz-transform': 'translate3d(' + marginLeft + self.pSign + ', 0, 0)',
+        '-ms-transform': 'translate3d(' + marginLeft + self.pSign + ', 0, 0)',
+        '-o-transform': 'translate3d(' + marginLeft + self.pSign + ', 0, 0)',
+        'transform': 'translate3d(' + marginLeft + self.pSign + ', 0, 0)'
+      });
+      // Reset transitions
+      if (noAnimation)
+        self.callback(function() { self.configureCSSTransitions(); });
+      else
+        self.configureCSSTransitions();
+    },
+
+    transitionjQuery: function (marginLeft, noAnimation) {
+      var self = this;
+      if (noAnimation) {
+        (self.panelContainer).css('margin-left', marginLeft + self.pSign);
+      } else {
+        (self.panelContainer).animate({
+          'margin-left': marginLeft + self.pSign
+        }, {
+          easing: self.options.slideEaseFunction,
+          duration: self.options.slideEaseDuration,
+          queue: false//,
+          //complete: function () {
+
+          //}
+        });
+      }
+    },
+
+    adjustHeight: function (noAnimation, height, easing, duration) {
+      var self = this;
+      if (noAnimation || self.useCSS) {
+        if (self.useCSS) self.configureCSSTransitions('0','0');
+        (self.$sliderId).height(self.getHeight(height));
+        if (self.useCSS) self.configureCSSTransitions();
+        return;
+      }
+      (self.$sliderId).animate({
+        'height': self.getHeight(height) + 'px'
+      }, {
+        easing: easing || self.options.heightEaseFunction,
+        duration: duration || self.options.heightEaseDuration,
+        queue: false
+      });
+    },
+
+    getHeight: function (height) {
+      var self = this;
+      height = height || self.$panelClass.eq(self.sanatizeNumber(self.nextPanel) - 1).outerHeight(true);
+      // If the height in the settings be higher, honor thy
+      height = (height < self.options.minHeight) ? self.options.minHeight : height;
+
+      return height;
+    },
+
+    verifyPanel: function () {
+      // Basically checks if we need to jump panels
+      var self = this, clickable = false;
+
+      // Continuous slide required careful clicking
+      if (self.options.continuous) {
+        // If they click beyond, run it through again.
+        if (self.nextPanel > self.panelCount) {
+          self.nextPanel = self.panelCount - 1;
+          self.setNextPanel(self.panelCount);
+        } else if (self.nextPanel < -1) {
+          self.nextPanel = -1;
+          self.setNextPanel(-1);
+        } else if ( (!clickable) && ((self.nextPanel === self.panelCount) || (self.nextPanel === -1))) {
+          // If on the edge, transport them across
+          self.transition(self.nextPanel);
+          self.updateClass();
+          clearTimeout(cloneJumper);
+          var cloneJumper = setTimeout(function () {
+            // But wait first until all is rested
+            if (self.nextPanel === self.panelCount) {
+              self.transition(0, true);
+            } else if (self.nextPanel === -1) {
+              self.transition(self.panelCount - 1, true);
+            }
+          }, self.options.slideEaseDuration + 50);
+        } else {
+          clickable = true;
+          self.transition(self.nextPanel);
+          }
+      } else {
+        // Non-continuous just needs to stay in bounds
+        if (self.nextPanel === self.panelCount) {
+          self.nextPanel = 0;
+        } else if (self.nextPanel === -1) {
+          self.nextPanel = (self.panelCount - 1);
+        }
+        self.transition(self.nextPanel);
       }
     }
-
   };
+
   $.fn.liquidSlider = function (options) {
     return this.each(function () {
-
       var slider = Object.create(Slider);
       slider.init(options, this);
-
       $.data(this, 'liquidSlider', slider);
     });
   };
 
   $.fn.liquidSlider.options = {
     autoHeight: true,
-    autoHeightMin: 0,
-    autoHeightEaseDuration: 1500,
-    autoHeightEaseFunction: "easeInOutExpo",
-    autoHeightRatio: null, // still in development
+    minHeight: 0,
+    heightEaseDuration: 1500,
+    heightEaseFunction: "easeInOutExpo",
 
     slideEaseDuration: 1500,
-    fadeInDuration:1000,
-    fadeOutDuration: 1000,
     slideEaseFunction: "easeInOutExpo",
-    callforwardFunction: null,
-    callbackFunction: null,
+    continuous: true,
+    fadeInDuration:500,
+    fadeOutDuration: 500,
 
     autoSlide: false,
-    autoSliderDirection: 'right',
-    autoSlideInterval: 7000,
+    autoSlideDirection: 'right',
+    autoSlideInterval: 6000,
     autoSlideControls: false,
     autoSlideStartText: 'Start',
     autoSlideStopText: 'Stop',
-    autoSlideStopWhenClicked: true,
-    autoSlidePauseOnHover: true,
-
-    continuous: true,
+    forceAutoSlide: false,
+    pauseOnHover: false,
 
     dynamicArrows: true,
     dynamicArrowsGraphical: true,
@@ -1134,10 +878,7 @@ if (typeof Object.create !== 'function') {
 
     crossLinks: false,
     hashLinking: false,
-    hashNames: true,
     hashTitleSelector: "h2.title",
-    hashTagSeparator: '', // suggestion '/'
-    hashTLD: '',
 
     keyboardNavigation: false,
     leftKey: 39,
@@ -1154,13 +895,13 @@ if (typeof Object.create !== 'function') {
     mobileNavDefaultText: 'Menu',
     mobileUIThreshold: 0,
     hideArrowsWhenMobile: true,
-    hideArrowsThreshold: 481,
-    useCSSMaxWidth: 1030,
+    hideArrowsThreshold: 0,
+    useCSSMaxWidth: 2200,
 
-    preloader: false,
-    preloaderFadeOutDuration: 250,
-    preloaderElements: 'img,video,iframe,object',
-
+    pretransition: function() {},
+    callback: function() {},
+    onload: function () {},
+    preloader: true,
     swipe: true
   };
 
