@@ -469,13 +469,7 @@ if (typeof Object.create !== 'function') {
           self.rightArrow.outerWidth(true) );
 
       $(window).bind("load", function () {
-        self.loaded = true;
-
-        // Adjust the height again in case of images, etc.
-        self.adjustHeight(true);
-        if (self.options.preloader) self.removePreloader();
-        if (self.options.autoSlide) self.autoSlide();
-        if (self.options.onload) self.onload();
+        self.options.preload.call(self);
       });
     },
 
@@ -491,7 +485,6 @@ if (typeof Object.create !== 'function') {
       // Cache the wrapper
       self.$sliderWrap = $(self.sliderId + '-wrapper');
 
-      // Add preloader
       if (self.options.preloader) self.addPreloader();
 
       // Add the .panel class to the individual panels
@@ -637,11 +630,18 @@ if (typeof Object.create !== 'function') {
     updateHashTags: function () {
       var self = this,
           filtered = (self.nextPanel === self.panelCount) ? 0 : self.nextPanel;    
-      window.location.hash = self.$panelClass.find(self.options.hashTitleSelector).eq(filtered)
+      window.location.hash = self.getFromPanel(self.options.hashTitleSelector, filtered);
+    },
+
+    getFromPanel: function(searchTerm, panelNumber) {
+      var self = this;
+      // Return string that matches selector.
+      return self.$panelClass.find(searchTerm).eq(panelNumber)
           .text().replace(/(^\s+|\s+$)/g,'').replace(/(\s)/g, '-', '-')
           .toLowerCase();
     },
 
+// TODO: apply class to all cross links
     updateClass: function () {
       var self = this;
       if (self.options.dynamicTabs) {
@@ -694,6 +694,16 @@ if (typeof Object.create !== 'function') {
           setTimeout(function () { callbackFn.call(self); }, self.options.slideEaseDuration + 50);
         }
       }
+    },
+
+    finalize: function () {
+      var self = this;
+      self.loaded = true;
+      // Adjust the height again in case of images, etc.
+      self.adjustHeight(true);
+      if (self.options.autoSlide) self.autoSlide();
+      if (self.options.preloader) self.removePreloader();
+      self.onload();     
     },
 
     onload: function () {
@@ -898,9 +908,10 @@ if (typeof Object.create !== 'function') {
     hideArrowsThreshold: 0,
     useCSSMaxWidth: 2200,
 
+    preload: function () { this.finalize(); },
+    onload: function () {},
     pretransition: function() {},
     callback: function() {},
-    onload: function () {},
     preloader: true,
     swipe: true
   };
