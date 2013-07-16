@@ -687,7 +687,6 @@ if (typeof Object.create !== 'function') {
     pretransition: function(callFrontFn) {
       var self = this,
         marginLeft;
-      console.log('lb', 'bv');
       if (callFrontFn && self.loaded) callFrontFn.call(self);
       if (self.options.hashLinking) self.updateHashTags();
       if (self.options.mobileNavigation) self.dropdownSelect.val('tab' + (self.nextPanel + 1));
@@ -698,14 +697,12 @@ if (typeof Object.create !== 'function') {
     callback: function(callbackFn) {
       var self = this;
       if (callbackFn && self.loaded) {
-        if (self.useCSS) {
-          console.log('css', 'value');
+        if (self.useCSS) {    
           $('.panel-container').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend',
             function(e) {
               callbackFn.call(self);
             });
-        } else {
-          console.log('jquery', 'value');
+        } else {    
           setTimeout(function() {
             callbackFn.call(self);
           }, self.options.slideEaseDuration + 50);
