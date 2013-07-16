@@ -307,18 +307,18 @@ if (typeof Object.create !== 'function') {
         visibility = forceVisibility ? "visible" : "hidden";
 
       if (!showBoth && (hideBoth || (self.sanatizeNumber(self.nextPanel) === 1))) {
-        self.leftArrow.stopAutoSlide().fadeTo(fadeOut, 0, function() {
+        self.leftArrow.stop().fadeTo(fadeOut, 0, function() {
           $(this).css('visibility', visibility).addClass('ls-hidden');
         });
       } else if (showBoth || self.leftArrow.hasClass('ls-hidden')) {
-        self.leftArrow.stopAutoSlide().css('visibility', "visible").fadeTo(fadeIn, 1);
+        self.leftArrow.stop().css('visibility', "visible").fadeTo(fadeIn, 1);
       }
       if (!showBoth && (hideBoth || (self.sanatizeNumber(self.nextPanel) === self.panelCount))) {
-        self.rightArrow.stopAutoSlide().fadeTo(fadeOut, 0, function() {
+        self.rightArrow.stop().fadeTo(fadeOut, 0, function() {
           $(this).css('visibility', visibility).addClass('ls-hidden');
         });
       } else if (showBoth || self.rightArrow.hasClass('ls-hidden')) {
-        self.rightArrow.stopAutoSlide().css('visibility', "visible").fadeTo(fadeIn, 1);
+        self.rightArrow.stop().css('visibility', "visible").fadeTo(fadeIn, 1);
       }
     },
 
@@ -608,6 +608,8 @@ if (typeof Object.create !== 'function') {
 
     setNextPanel: function(direction) {
       var self = this;
+      if (direction === self.nextPanel)
+        return;
       if (self.loaded) {
         if (typeof direction === 'number') {
           self.nextPanel = direction;

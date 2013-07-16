@@ -45,7 +45,7 @@
     .top-bar {
       position: fixed;
       left: 0;
-      top: -65px;
+      top: -100px;
       background: #0AC0FB;
       width: 100%;
       padding: 15px 0 10px;
@@ -276,7 +276,34 @@ $('.btn-hover').on('mouseover', function() {
   </div>
   <p>preload just runs right before removing the preloader. You must run <code class="line-numbers language-javascript">finalize();</code> in your code if you edit this.</p>
   <button class="btn-load pure-button">Complete Loading</button>
-  <div class="top-bar"><span>Sliding...</span></div> 
+  <div class="top-bar"><span>Sliding...</span></div>
+  <p>First, I created a button that hooks into the preload function.</p>
+  <pre class="line-numbers language-javascript"><code>&lt;button class="btn-load"&gt;Complete Loading&lt;/button&gt;</code></pre>
+  <p>The preload function will execute after the user clicks the button. The onload function executes only after the slider is completely loaded. The pretransition function fires as soon as a transition begins. in this case I set a top bar to slide down. Then finally the callback function executes after a transition is complete. This one slides up the top bar and sets random colors to the navigation tabs.</p>
+  <pre class="line-numbers language-javascript"><code>$('#slider-5').liquidSlider({
+  preload: function() {
+    var self = this;
+    $('.btn-load').on('click', function () {
+      self.finalize();
+    });
+  },
+  onload: function () {
+    $('.btn-load').after('&lt;button&gt;onload complete!&lt;/button&gt;').fadeOut();
+  },
+  pretransition: function() {
+    var self = this;
+    $('.top-bar span').text(self.getFromPanel(self.options.panelTitleSelector, self.nextPanel));
+    $('.top-bar').css('top', '0');
+  },
+  callback: function() {
+     $('.top-bar').css('top', '-100px');
+     $('#slider-5-nav-ul a').each(function() {
+      // http://www.paulirish.com/2009/random-hex-color-code-snippets/
+      $(this).css('background', '#'+Math.floor(Math.random()*16777215).toString(16));
+      $(this).css('color', '#'+Math.floor(Math.random()*16777215).toString(16));
+     })
+  },
+})</code></pre>
 <hr>
 More to come!
 
@@ -330,8 +357,12 @@ More to come!
       $('.top-bar').css('top', '0');
     },
     callback: function() {
-       $('.top-bar').css('top', '-65px');
-       $()
+       $('.top-bar').css('top', '-100px');
+       $('#slider-5-nav-ul a').each(function() {
+        // http://www.paulirish.com/2009/random-hex-color-code-snippets/
+        $(this).css('background', '#'+Math.floor(Math.random()*16777215).toString(16));
+        $(this).css('color', '#'+Math.floor(Math.random()*16777215).toString(16));
+       })
     },
   });
 
