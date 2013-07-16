@@ -307,18 +307,18 @@ if (typeof Object.create !== 'function') {
         visibility = forceVisibility ? "visible" : "hidden";
 
       if (!showBoth && (hideBoth || (self.sanatizeNumber(self.nextPanel) === 1))) {
-        self.leftArrow.stop().fadeTo(fadeOut, 0, function() {
+        self.leftArrow.stopAutoSlide().fadeTo(fadeOut, 0, function() {
           $(this).css('visibility', visibility).addClass('ls-hidden');
         });
       } else if (showBoth || self.leftArrow.hasClass('ls-hidden')) {
-        self.leftArrow.stop().css('visibility', "visible").fadeTo(fadeIn, 1);
+        self.leftArrow.stopAutoSlide().css('visibility', "visible").fadeTo(fadeIn, 1);
       }
       if (!showBoth && (hideBoth || (self.sanatizeNumber(self.nextPanel) === self.panelCount))) {
-        self.rightArrow.stop().fadeTo(fadeOut, 0, function() {
+        self.rightArrow.stopAutoSlide().fadeTo(fadeOut, 0, function() {
           $(this).css('visibility', visibility).addClass('ls-hidden');
         });
       } else if (showBoth || self.rightArrow.hasClass('ls-hidden')) {
-        self.rightArrow.stop().css('visibility', "visible").fadeTo(fadeIn, 1);
+        self.rightArrow.stopAutoSlide().css('visibility', "visible").fadeTo(fadeIn, 1);
       }
     },
 
@@ -338,7 +338,7 @@ if (typeof Object.create !== 'function') {
             self.hideShowArrows(self.options.fadeOutnDuration, true, false, true);
 
           if (self.options.pauseOnHover && self.options.autoSlide)
-            self.start();
+            self.startAutoSlide();
         }
       );
     },
@@ -364,18 +364,18 @@ if (typeof Object.create !== 'function') {
       self.$crosslinks = $('[data-liquidslider-ref*=' + (self.sliderId).split('#')[1] + ']');
       (self.$crosslinks).on('click', function() {
         if (self.options.autoSlide === true)
-          self.start(true);
+          self.startAutoSlide(true);
         self.setNextPanel(self.getPanelNumber(($(this).attr('href').split('#')[1]), self.options.panelTitleSelector));
       });
     },
 
-    stop: function() {
+    stopAutoSlide: function() {
       var self = this;
       self.options.autoSlide = false;
       clearTimeout(self.autoSlideTimeout);
     },
 
-    start: function(reset) {
+    startAutoSlide: function(reset) {
       var self = this;
       self.options.autoSlide = true;
       if (!reset) self.setNextPanel(self.options.autoSlideDirection);
@@ -593,9 +593,9 @@ if (typeof Object.create !== 'function') {
       // Click to stop autoSlider
       (self.$sliderWrap).find('*').on('click', function() {
         if (self.options.forceAutoSlide)
-          self.start(true);
+          self.startAutoSlide(true);
         else
-          self.stop();
+          self.stopAutoSlide();
       });
       self.hover();
 

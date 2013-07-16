@@ -186,9 +186,9 @@ $('.btn').on('click', function() {
   var api = $.data( $('#slider-3')[0], 'liquidSlider'),
       text = $(this).text() === 'Start' ? 'Stop' : 'Start';
   if (text === 'Stop')
-    api.start();
+    api.startAutoSlide();
   else
-    api.stop();    
+    api.stopAutoSlide();    
   $(this).text(text);
 });
 $('#range-speed').change(function() {
@@ -294,9 +294,9 @@ More to come!
   $('.btn').on('click', function() {
       var text = $(this).text() === 'Start' ? 'Stop' : 'Start';
       if (text === 'Start')
-        api.start();
+        api.startAutoSlide();
       else
-        api.stop();    
+        api.stopAutoSlide();
       $(this).text(text);
   });
   $('#range-speed').change(function() {
@@ -331,6 +331,7 @@ More to come!
     },
     callback: function() {
        $('.top-bar').css('top', '-65px');
+       $()
     },
   });
 
