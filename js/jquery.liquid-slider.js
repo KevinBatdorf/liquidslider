@@ -360,16 +360,15 @@ if (typeof Object.create !== 'function') {
       });
     },
 
-// TODO avoid applying hash tags
     registerCrossLinks: function() {
       var self = this;
       // Find cross links
-      self.$crosslinks = $('[data-liquidslider-ref*=' + (self.sliderId).split('#')[1] + ']');
-      (self.$crosslinks).on('click', function() {
+      self.crosslinks = $('[data-liquidslider-ref*=' + (self.sliderId).split('#')[1] + ']');
+      (self.crosslinks).on('click', function(e) {
         if (self.options.autoSlide === true)
           self.startAutoSlide(true);
         self.setNextPanel(self.getPanelNumber(($(this).attr('href').split('#')[1]), self.options.panelTitleSelector));
-        return false;
+        e.preventDefault();
       });
     },
 
@@ -490,7 +489,6 @@ if (typeof Object.create !== 'function') {
           self.rightArrow.outerWidth(true));
 
       $(window).bind("load", function() {
-// TODO can this be done earlier?
         self.options.preload.call(self);
       });
     },
@@ -675,7 +673,6 @@ if (typeof Object.create !== 'function') {
         .toLowerCase();
     },
 
-    // TODO: apply class to all cross links
     updateClass: function() {
       var self = this;
       if (self.options.dynamicTabs) {
@@ -684,15 +681,16 @@ if (typeof Object.create !== 'function') {
           .parent().siblings().children().removeClass('current');
       }
       // Add current class to cross linked Tabs
-      if (self.options.crossLinks && self.$crossLinks) {
-        (self.$crosslinks).each(function() {
-          if ($(this).attr('href') === ('#' + $($(self.panelContainer).children()[(self.nextPanel + ~~(self.options.continuous))]).find(self.options.panelTitleSelector)
-            .text().replace(/(\s)/g, '-').toLowerCase())) {
-            $('[data-liquidslider-ref=' + (self.sliderId).split('#')[1] + ']')
-              .removeClass('currentCrossLink');
-            $(this).addClass('currentCrossLink');
+      if (self.options.crossLinks && self.crosslinks) {
+        console.log(self.crosslinks);
+        (self.crosslinks).each(function() {
+          if ($(this).attr('href') === ('#' +
+            self.getFromPanel(self.options.panelTitleSelector, self.nextPanel))) {
+              $('[data-liquidslider-ref=' + (self.sliderId).split('#')[1] + ']')
+                .removeClass('currentCrossLink');
+              $(this).addClass('currentCrossLink');
           }
-        });
+       });
       }
     },
 
