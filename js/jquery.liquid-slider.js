@@ -768,9 +768,9 @@ if (typeof Object.create !== 'function') {
         else if (self.animateCSS)
           self.transitionAnimateCSS(marginLeft);
         else if (self.useCSS)
-          self.transitionCSS(marginLeft, true);
+          self.transitionCSS(marginLeft, noAnimation);
         else
-          self.transitionjQuery(marginLeft, true);
+          self.transitionjQuery(marginLeft, noAnimation);
       }
       if (!noPosttransition) self.callback(self.options.callback);
     },
