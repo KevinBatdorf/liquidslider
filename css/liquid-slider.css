@@ -84,7 +84,7 @@
   position: absolute;
   top: 0; 
   left: 0;
-  display: none;
+  display: block;
 }
 
 /******************************************************
@@ -310,7 +310,7 @@
   /* Do not edit below this line */
   position: absolute;
   left: 0;
-  z-index: 1;
+  z-index: 2;
 }
 .ls-responsive .ls-nav-left a {
   /* Left non-graphical arrows */
@@ -326,7 +326,7 @@
   /* Do not edit below this line */
   position: absolute;
   right: 0;
-  z-index: 1;
+  z-index: 2;
 }
 .ls-responsive .ls-nav-right a {
   /* Right non-graphical arrows */
@@ -341,13 +341,13 @@
   /* Do not edit below this line */
   position: absolute;
   left: 0;
-  z-index: 1;
+  z-index: 2;
 }
 .ls-responsive .ls-nav-right-arrow {
   /* Do not edit below this line */
   position: absolute;
   right: 0;
-  z-index: 1;
+  z-index: 2;
 }
 
 /******************************************************************

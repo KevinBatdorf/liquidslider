@@ -6,6 +6,7 @@
   <meta name="description" content="Liquid Slider : A JQuery Slider Plugin">
   <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.0/pure-min.css">
   <link rel="stylesheet" href="./css/liquid-slider.css">
+  <link rel="stylesheet" href="./css/animate.css">
   <style type="text/css">
   code[class*="language-"],pre[class*="language-"]{color:#f8f8f2;text-shadow:0 1px rgba(0,0,0,0.3);font-family:Consolas,Monaco,'Andale Mono',monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*="language-"]{padding:1em;margin:.5em 0;overflow:auto;border-radius:.3em}:not(pre)>code[class*="language-"],pre[class*="language-"]{background:#272822}:not(pre)>code[class*="language-"]{padding:.1em .3em;border-radius:.3em}.token.comment,.token.prolog,.token.doctype,.token.cdata{color:slategray}.token.punctuation{color:#f8f8f2}.namespace{opacity:.7}.token.property,.token.tag{color:#f92672}.token.boolean,.token.number{color:#ae81ff}.token.selector,.token.attr-name,.token.string{color:#a6e22e}.token.operator,.token.entity,.token.url,.language-css .token.string,.style .token.string{color:#f8f8f2}.token.atrule,.token.attr-value{color:#e6db74}.token.keyword{color:#66d9ef}.token.regex,.token.important{color:#fd971f}.token.important{font-weight:bold}.token.entity{cursor:help}pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}pre.line-numbers>code{position:relative}.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:0;font-size:100%;left:-3.8em;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}
   </style>
@@ -40,7 +41,7 @@
       margin-top:1.5em;
     }
     button {
-      margin-right:10px;
+      margin:0 10px 10px 0;
     }
     .top-bar {
       position: fixed;
@@ -51,11 +52,11 @@
       padding: 15px 0 10px;
       border-bottom: 2px solid #fff;
       box-shadow: 0 0 4px 0px #aaa;
-      -webkit-transition: top 0.2s ease;
-      -moz-transition: top 0.2s ease;
-      -ms-transition: top 0.2s ease;
-      -o-transition: top 0.2s ease;
-      transition: top 0.2s ease;
+      -webkit-transition: top 0.4s ease;
+      -moz-transition: top 0.4s ease;
+      -ms-transition: top 0.4s ease;
+      -o-transition: top 0.4s ease;
+      transition: top 0.4s ease;
     }
     .top-bar span {
       display: block;
@@ -105,6 +106,8 @@ $(function(){
      &lt;/div&gt;
 &lt;/div&gt;</code></pre>
   <hr>
+<div id="default-settings">
+  <!-- Slider 1 -->
   <h2>Default Settings</h2>
   <p>These are the default settings</p>
 
@@ -129,7 +132,9 @@ $(function(){
   </div>
   <pre class="line-numbers language-javascript"><code>$('#slider-id').liquidSlider();</code></pre>
   <hr>
-<!-- Slider 2 -->
+</div>
+<div id="continuous-slide-disabled">
+  <!-- Slider 2 -->
   <h2>Continuous Slide Disabled</h2>
   <p>With continuous disabled, the slider wont continue in one direction forever. Try sliding left.</p>
   <div class="liquid-slider" id="slider-2">
@@ -153,6 +158,8 @@ $(function(){
   </div>
   <pre class="line-numbers language-javascript"><code>$('#slider-2').liquidSlider({continuous:false});</code></pre>
   <hr>
+</div>
+<div id="Autoplay-and-Transition-Controls">
   <!-- Slider 3 -->
   <h2>Autoplay & Transition Controls</h2>
   <p>The play button will dynamically update to stop when clicked. The controls use the internal API to control speed and delay. Note that these HTML5 sliders will not work in all browsers (specifically Firefox and IE), but can be functional using a polyfill. See <a href="http://html5please.com/#range">here</a> for the latest info about that.</p>
@@ -198,6 +205,8 @@ $('#range-delay').change(function() {
   api.options.autoSlideInterval = -$(this).val()
 });</code></pre>
   <hr>
+</div>
+<div id="hash-linking-cross-linking-and-api-control">
   <!-- Slider 4 -->
   <h2>Hash Linking, Cross Links, And API Control.</h2>
   <p>Hash linking allows you to link to the slider from an external page, and have a specific panel appear (Look in the URL). Perfect for selective marketting, and more. Cross links control the slider from anywhere on the page, even from within the slider itself. You can also use the API to control the slider, which is useful when using other javascript functions or plugins.</p>
@@ -245,17 +254,20 @@ $('#range-delay').change(function() {
 &lt;a href="#left" data-liquidslider-ref="slider-4"&gt;#left&lt;/a&gt;
 &lt;a href="#right" data-liquidslider-ref="slider-4"&gt;#right&lt;/a&gt;</code></pre>
 
-<p>Then to use the api, use the following javacript. Note that the API is 0-based, so 3 will go to panel 4.</p>
-<pre class="line-numbers language-javascript"><code>var api2 = $.data( $('#slider-4')[0], 'liquidSlider');
-$('.btn-hover').on('mouseover', function() {
-  api2.setNextPanel(3);
-});</code></pre>
-<p>In this example, I set up the button as follows.</p>
-<pre class="language-markup"><code>&lt;button class="btn-hover"&gt;Hover&lt;/button&gt;</code></pre>
-<hr>
-<h2>Callback functions</h2>
-<p>There are four functions that you can hook into. Once right before the slider removes the preloader (preload), once the slider fully loads (onload), at the start of a transition (pretransition), and once a transition completes (callback).</p>
-<div class="liquid-slider" id="slider-5">
+  <p>Then to use the api, use the following javacript. Note that the API is 0-based, so 3 will go to panel 4.</p>
+  <pre class="line-numbers language-javascript"><code>var api2 = $.data( $('#slider-4')[0], 'liquidSlider');
+  $('.btn-hover').on('mouseover', function() {
+    api2.setNextPanel(3);
+  });</code></pre>
+  <p>In this example, I set up the button as follows.</p>
+  <pre class="language-markup"><code>&lt;button class="btn-hover"&gt;Hover&lt;/button&gt;</code></pre>
+  <hr>
+</div>
+<div id="hooks">
+  <!-- Slider 5 -->
+  <h2>Hooks</h2>
+  <p>There are four functions that you can hook into. Once right before the slider removes the preloader (preload), once the slider fully loads (onload), at the start of a transition (pretransition), and once a transition completes (callback).</p>
+  <div class="liquid-slider" id="slider-5">
     <div>
       <h2 class="title">Slide 1</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
@@ -291,8 +303,7 @@ $('.btn-hover').on('mouseover', function() {
     $('.btn-load').after('&lt;button&gt;onload complete!&lt;/button&gt;').fadeOut();
   },
   pretransition: function() {
-    var self = this;
-    $('.top-bar span').text(self.getFromPanel(self.options.panelTitleSelector, self.nextPanel));
+    $('.top-bar span').text(this.getFromPanel(this.options.panelTitleSelector, this.nextPanel));
     $('.top-bar').css('top', '0');
   },
   callback: function() {
@@ -304,7 +315,55 @@ $('.btn-hover').on('mouseover', function() {
      })
   },
 })</code></pre>
-<hr>
+  <hr>
+</div>
+<div id="animate-css">
+  <!-- Slider-6 -->
+  <h2>Animate.css</h2>
+  <p>Slide in with the popular animate.css</p>
+  <div class="liquid-slider" id="slider-6">
+    <div>
+      <h2 class="title">Slide 1</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 2</h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+    </div>          
+    <div>
+      <h2 class="title">Slide 3</h2>
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 4</h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+    </div>
+  </div>
+  <p>The following are supported entrances. Click to activate, then use the navigation above to continue testing.</p>
+  <div class="animations">
+    <h3>Attention seekers</h3>
+    <button class="pure-button">flash</button><button class="pure-button">bounce</button><button class="pure-button">shake</button><button class="pure-button">tada</button><button class="pure-button">swing</button><button class="pure-button">wobble</button><button class="pure-button">wiggle</button><button class="pure-button">pulse</button>
+    <h3>Flippers (currently Webkit, Firefox, & IE10 only):</h3>
+    <button class="pure-button">flip</button><button class="pure-button">flipInX</button><button class="pure-button">flipInY</button>
+    <h3>Fading entrances:</h3>
+    <button class="pure-button">fadeIn</button><button class="pure-button">fadeInUp</button><button class="pure-button">fadeInDown</button><button class="pure-button">fadeInLeft</button><button class="pure-button">fadeInRight</button><button class="pure-button">fadeInUpBig</button><button class="pure-button">fadeInDownBig</button><button class="pure-button">fadeInLeftBig</button><button class="pure-button">fadeInRightBig</button>
+    <h3>Bouncing entrances:</h3>
+    <button class="pure-button">bounceIn</button><button class="pure-button">bounceInDown</button><button class="pure-button">bounceInUp</button><button class="pure-button">bounceInLeft</button><button class="pure-button">bounceInRight</button>
+    <h3>Rotating entrances:</h3>
+    <button class="pure-button">rotateIn</button><button class="pure-button">rotateInDownLeft</button><button class="pure-button">rotateInDownRight</button><button class="pure-button">rotateInUpLeft</button><button class="pure-button">rotateInUpRight</button>
+    <h3>Lightspeed:</h3>
+    <button class="pure-button">lightSpeedIn</button>
+    <h3>Specials:</h3>
+    <button class="pure-button">hinge</button><button class="pure-button">rollIn</button>
+  </div>
+  <p>This one is easy to set up.</p>
+  <pre class="line-numbers language-javascript"><code>$('#slider-6').liquidSlider({
+  slideEaseFunction:'animate.css',
+  animateIn:"wobble"
+})</code></pre>
+  <hr>
+</div>
 More to come!
 
 </div>
@@ -352,8 +411,7 @@ More to come!
       $('.btn-load').after('<button class="pure-button pure-button-disabled">onload complete!</button>').fadeOut();
     },
     pretransition: function() {
-      var self = this;
-      $('.top-bar span').text(self.getFromPanel(self.options.panelTitleSelector, self.nextPanel));
+      $('.top-bar span').text(this.getFromPanel(this.options.panelTitleSelector, this.nextPanel));
       $('.top-bar').css('top', '0');
     },
     callback: function() {
@@ -363,9 +421,20 @@ More to come!
         $(this).css('background', '#'+Math.floor(Math.random()*16777215).toString(16));
         $(this).css('color', '#'+Math.floor(Math.random()*16777215).toString(16));
        })
-    },
+    }
   });
-
+  $('#slider-6').liquidSlider({
+    slideEaseFunction:'animate.css',
+    animateIn:"wobble"
+  })
+  $('.animations button').on('click', function() {
+    var api3 = $.data( $('#slider-6')[0], 'liquidSlider');
+    $('.slider-6-panel').each(function() {
+      $(this).removeClass(api3.options.animateIn);
+    });
+    api3.options.animateIn = $(this).text();
+    api3.setNextPanel('right');
+  })
   </script>
   <script>
   /**

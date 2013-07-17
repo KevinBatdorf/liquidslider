@@ -174,7 +174,7 @@ if (typeof Object.create !== 'function') {
           }
         }
       } else {
-        if (self.options.mobileNavigation && self.options.dynamicTabs) {
+        if (self.options.mobileNavigation) {
           (self.navigation).css('display', 'block');
           (self.dropdown).css('display', 'none');
           (self.dropdownSelect).css('display', 'none');
@@ -203,7 +203,8 @@ if (typeof Object.create !== 'function') {
       }
     },
 
-    addNavigation: function() {
+// TODO can we allow html in navigation?
+    addNavigation: function(navClass) {
       var self = this,
         dynamicTabsElm = '<' + self.options.navElementTag + ' class="ls-nav"><ul id="' +
           (self.$elem).attr('id') + '-nav-ul"></ul></' + self.options.navElementTag + '>';
@@ -218,7 +219,7 @@ if (typeof Object.create !== 'function') {
         (self.$elem).find(self.options.panelTitleSelector),
         function(n) {
           $((self.$sliderWrap)).find('.ls-nav ul').append('<li class="tab' +
-            (n + 1) + '"><a href="#' + (n + 1) + '" title="' + $(this).text() +
+            (n + 1) + '"><a class="' + ( navClass || '') + '" href="#' + (n + 1) + '" title="' + $(this).text() +
             '">' + $(this).text() + '</a></li>');
         }
       );
@@ -254,7 +255,7 @@ if (typeof Object.create !== 'function') {
         if (!self.options.responsive) {
           $((self.$sliderWrap)).find('.ls-nav ul').css(
             'margin-' + self.options.dynamicTabsAlign,
-            // Finds the width of the aarows and the margin
+            // Finds the width of the arrows and the margin
             $((self.$sliderWrap)).find(
               '.ls-nav-' +
               self.options.dynamicTabsAlign +
@@ -276,9 +277,9 @@ if (typeof Object.create !== 'function') {
       }
     },
 
-    addArrows: function() {
+    addArrows: function(arrowClass) {
       var self = this,
-        arrow = (self.options.dynamicArrowsGraphical) ? "-arrow" : '';
+        arrow = (self.options.dynamicArrowsGraphical) ? "-arrow " : ' ';
       (self.$sliderWrap).addClass("arrows");
 
       if (self.options.dynamicArrowsGraphical) {
@@ -286,10 +287,10 @@ if (typeof Object.create !== 'function') {
         self.options.dynamicArrowRightText = '';
       }
       // Build the arrows
-      (self.$sliderId).before('<div class="ls-nav-left' + arrow +
+      (self.$sliderId).before('<div class="ls-nav-left' + arrow + (arrowClass || '') +
         '" title="Slide left"><a href="#">' +
         self.options.dynamicArrowLeftText + '</a></div>');
-      (self.$sliderId).after('<div class="ls-nav-right' + arrow +
+      (self.$sliderId).after('<div class="ls-nav-right' + arrow + (arrowClass || '') +
         '" title="Slide right"><a href="#">' +
         self.options.dynamicArrowRightText + '</a></div>');
 
@@ -300,6 +301,7 @@ if (typeof Object.create !== 'function') {
       if (!self.options.hideSideArrows) self.hideShowArrows(undefined, true, true, false);
     },
 
+//TODO remove class ls-hidden?
     hideShowArrows: function(speed, forceVisibility, showBoth, hideBoth) {
       var self = this,
         fadeOut = (typeof speed !== 'undefined') ? speed : self.options.fadeOutDuration,
@@ -358,6 +360,7 @@ if (typeof Object.create !== 'function') {
       });
     },
 
+// TODO avoid applying hash tags
     registerCrossLinks: function() {
       var self = this;
       // Find cross links
@@ -366,6 +369,7 @@ if (typeof Object.create !== 'function') {
         if (self.options.autoSlide === true)
           self.startAutoSlide(true);
         self.setNextPanel(self.getPanelNumber(($(this).attr('href').split('#')[1]), self.options.panelTitleSelector));
+        return false;
       });
     },
 
@@ -464,6 +468,16 @@ if (typeof Object.create !== 'function') {
         self.options.mobileNavigation = false;
         self.options.hideArrowsWhenMobile = false;
       }
+
+      // If using animate.css, add the class here and disable other options.
+      if (self.options.slideEaseFunction === "animate.css") {
+        if (!self.useCSS) {
+          self.options.slideEaseFunction = "fade";
+        } else {
+          self.options.continuous = false;
+          self.animateCSS = true;
+        }
+      }
       // Build the tabs and navigation
       self.build();
 
@@ -476,6 +490,7 @@ if (typeof Object.create !== 'function') {
           self.rightArrow.outerWidth(true));
 
       $(window).bind("load", function() {
+// TODO can this be done earlier?
         self.options.preload.call(self);
       });
     },
@@ -509,11 +524,14 @@ if (typeof Object.create !== 'function') {
       if (self.options.slideEaseFunction === "fade") {
         (self.$panelClass).addClass('fade');
         self.options.continuous = false;
-        $((self.$panelContainer).children()).css('display', 'block');
         self.fade = true;
       }
+
       // Build navigation tabs
-      if (self.options.dynamicTabs) self.addNavigation();
+      if (self.options.dynamicTabs)
+        self.addNavigation();
+      else
+        self.options.mobileNavigation = false;
 
       // Build navigation arrows or disable features
       if (self.options.dynamicArrows) {
@@ -545,7 +563,7 @@ if (typeof Object.create !== 'function') {
       var clonedCount = (self.options.continuous) ? 2 : 0;
 
       // Count the number of panels and get the combined width
-      self.panelCount = (self.fade) ? 1 : $(self.panelClass).length;
+      self.panelCount = $(self.panelClass).length;
       self.panelCountTotal = self.panelCount + clonedCount;
       self.panelWidth = $(self.panelClass).outerWidth();
       self.totalWidth = self.panelCountTotal * self.panelWidth;
@@ -610,6 +628,7 @@ if (typeof Object.create !== 'function') {
       var self = this;
       if (direction === self.nextPanel)
         return;
+      self.prevPanel = self.nextPanel;
       if (self.loaded) {
         if (typeof direction === 'number') {
           self.nextPanel = direction;
@@ -620,6 +639,9 @@ if (typeof Object.create !== 'function') {
           if (!self.options.continuous)
             self.nextPanel = (self.nextPanel < 0) ? self.panelCount - 1 : (self.nextPanel % self.panelCount);
         }
+      if (self.fade || self.animateCSS)
+        self.transition(self.nextPanel);
+      else
         self.verifyPanel();
       }
     },
@@ -696,15 +718,15 @@ if (typeof Object.create !== 'function') {
       self.updateClass();
     },
 
-    callback: function(callbackFn) {
+    callback: function(callbackFn, isFade) {
       var self = this;
       if (callbackFn && self.loaded) {
-        if (self.useCSS) {    
+        if (self.useCSS && typeof isFade !== 'undefined') {
           $('.panel-container').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend',
             function(e) {
               callbackFn.call(self);
             });
-        } else {    
+        } else {
           setTimeout(function() {
             callbackFn.call(self);
           }, self.options.slideEaseDuration + 50);
@@ -737,21 +759,39 @@ if (typeof Object.create !== 'function') {
       // Get margin
       var marginLeft = -(self.nextPanel * self.slideDistance) - (self.slideDistance * ~~(self.options.continuous));
 
-      // Transition for fade option
-      if (self.options.slideEaseFunction === 'fade') {
-        $($(self.panelContainer).children()[self.nextPanel])
-          .fadeTo(self.options.fadeInDuration, 1.0).css('z-index', 1)
-          .siblings().fadeTo(self.options.fadeOutDuration, 0).css('z-index', 0);
-      } else if ((marginLeft + self.pSign) !== (self.panelContainer).css('margin-left') || (marginLeft !== -100)) {
+      if ((marginLeft + self.pSign) !== (self.panelContainer).css('margin-left') || (marginLeft !== -100)) {
         if (self.options.autoHeight)
           self.adjustHeight();
         // SLIDE!
-        if (self.useCSS)
-          self.transitionCSS(marginLeft, noAnimation);
+        if (self.fade)
+          self.transitionFade();
+        else if (self.animateCSS)
+          self.transitionAnimateCSS(marginLeft);
+        else if (self.useCSS)
+          self.transitionCSS(marginLeft, true);
         else
-          self.transitionjQuery(marginLeft, noAnimation);
+          self.transitionjQuery(marginLeft, true);
       }
       if (!noPosttransition) self.callback(self.options.callback);
+    },
+
+    transitionFade: function() {
+      var self = this;
+      $(self.panelClass).eq(self.nextPanel)
+        .fadeTo(self.options.fadeInDuration, 1.0).css('z-index', 1);
+      $(self.panelClass).eq(self.prevPanel)
+        .fadeTo(self.options.fadeOutDuration, 0).css('z-index', 0);
+      self.callback(self.options.callback, true);
+    },
+
+    transitionAnimateCSS: function(marginLeft) {
+      var self = this;
+
+      $(self.panelClass).eq(self.nextPanel).addClass('animated ' + self.options.animateIn);
+      self.transitionCSS(marginLeft, !self.loaded);
+
+      $(self.panelClass).eq(self.prevPanel).removeClass('animated ' + self.options.animateIn);
+      self.callback(self.options.callback, true);
     },
 
     transitionCSS: function(marginLeft, noAnimation) {
@@ -794,9 +834,9 @@ if (typeof Object.create !== 'function') {
     adjustHeight: function(noAnimation, height, easing, duration) {
       var self = this;
       if (noAnimation || self.useCSS) {
-        if (self.useCSS) self.configureCSSTransitions('0', '0');
+        if (noAnimation) self.configureCSSTransitions('0', '0');
         (self.$sliderId).height(self.getHeight(height));
-        if (self.useCSS) self.configureCSSTransitions();
+        if (noAnimation) self.configureCSSTransitions();
         return;
       }
       (self.$sliderId).animate({
@@ -876,6 +916,7 @@ if (typeof Object.create !== 'function') {
 
     slideEaseDuration: 1500,
     slideEaseFunction: "easeInOutExpo",
+    animateIn: "bounceInRight",
     continuous: true,
     fadeInDuration: 500,
     fadeOutDuration: 500,
