@@ -4,77 +4,69 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
   <meta name="description" content="Liquid Slider : A JQuery Slider Plugin">
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans|Montserrat|Lobster' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.0/pure-min.css">
-  <link rel="stylesheet" href="./css/liquid-slider.css">
-  <link rel="stylesheet" href="./css/animate.css">
-  <style type="text/css">
-  code[class*="language-"],pre[class*="language-"]{color:#f8f8f2;text-shadow:0 1px rgba(0,0,0,0.3);font-family:Consolas,Monaco,'Andale Mono',monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*="language-"]{padding:1em;margin:.5em 0;overflow:auto;border-radius:.3em}:not(pre)>code[class*="language-"],pre[class*="language-"]{background:#272822}:not(pre)>code[class*="language-"]{padding:.1em .3em;border-radius:.3em}.token.comment,.token.prolog,.token.doctype,.token.cdata{color:slategray}.token.punctuation{color:#f8f8f2}.namespace{opacity:.7}.token.property,.token.tag{color:#f92672}.token.boolean,.token.number{color:#ae81ff}.token.selector,.token.attr-name,.token.string{color:#a6e22e}.token.operator,.token.entity,.token.url,.language-css .token.string,.style .token.string{color:#f8f8f2}.token.atrule,.token.attr-value{color:#e6db74}.token.keyword{color:#66d9ef}.token.regex,.token.important{color:#fd971f}.token.important{font-weight:bold}.token.entity{cursor:help}pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}pre.line-numbers>code{position:relative}.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:0;font-size:100%;left:-3.8em;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}
-  </style>
-  <style type="text/css">
-    body {
-      counter-reset: paniki-counter;
-    }
-    .container {
-      width:75%;
-      max-width:1030px;
-      margin:0 auto;
-      padding:20px;
-    }
-    .ls-wrapper {
-      margin:50px auto;
-    }
-    h2:not(.title) {
-      background: #eee;
-      border-left: 10px solid #0AC0FB;
-      padding: 20px;
-    }
-    h2:not(.title):not(.install) {
-      counter-increment: paniki-counter;      
-    }
-    h2:not(.title):not(.install):before {
-      content: counter(paniki-counter) '. ';
-    }    
-    hr {
-      margin: 50px 0 25px;
-    }
-    p {
-      margin-top:1.5em;
-    }
-    button {
-      margin:0 10px 10px 0;
-    }
-    .top-bar {
-      position: fixed;
-      left: 0;
-      top: -100px;
-      background: #0AC0FB;
-      width: 100%;
-      padding: 15px 0 10px;
-      border-bottom: 2px solid #fff;
-      box-shadow: 0 0 4px 0px #aaa;
-      -webkit-transition: top 0.4s ease;
-      -moz-transition: top 0.4s ease;
-      -ms-transition: top 0.4s ease;
-      -o-transition: top 0.4s ease;
-      transition: top 0.4s ease;
-    }
-    .top-bar span {
-      display: block;
-      text-align: center;
-      font-size: 2em;
-      color: #fff;
-      text-transform: uppercase;
-    }
-  </style>
+  <link rel="stylesheet" href="../css/liquid-slider.css">
+  <link rel="stylesheet" href="../css/animate.css">
+  <link rel="stylesheet" href="./assets/prism.css">
+  <link rel="stylesheet" href="./assets/styles.css">
+
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <title>Liquid Slider Examples</title>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40983504-1', 'liquidslider.com');
+    ga('send', 'pageview');
+  </script>
 </head>
 <body class='no-js'>
+  <h1 class="gradient"><a href="http://liquidslider.com">Liquid Slider Examples</a></h1>
 <div class="container">
-  <h1>Liquid Slider Examples</h1>
-  <a href="http://liquidslider.com">Back to Home Page</a>
-  <p>Below is a collection of demos mainly used for visual testing. I've included the code for your convenience. To view the responsivness, simply resize your browser.</p>
-  <h2 class="install">How to install</h2>
+  <a class="link" href="http://liquidslider.com">Download Page</a>
+  <div class="message">
+  <p>Below is a collection of demos mainly used for visual testing. I've included the code for your convenience. I'll try to add more over time, but feel free to <a class="link" href="http://www.liquidslider.com/support">contact me</a> if you have a clever idea you want to see included. To view the responsivness, simply resize your browser.</p>
+  </div>
+  <div class="nav-area">
+    <div class="pure-menu pure-menu-open">
+      <a class="pure-menu-heading">Page 1</a>
+      <ul>
+          <li><a href="#how-to-install">How To Install</a></li>
+          <li><a href="#default-settings">Default Settings</a></li>
+          <li><a href="#autoplay-and-transition-controls">Autoplay & Transition Controls</a></li>
+          <li><a href="#continuous-slide-disabled">Continuous Slide Disabled</a></li>
+          <li><a href="#advanced-controls">Advanced Controls</a></li>
+          <li><a href="#hooks">Hooks</a></li>
+      </ul>
+    </div> 
+    <div class="pure-menu pure-menu-open">
+      <a class="pure-menu-heading">Page 2</a>
+      <ul>
+          <li><a href="page2.html#animate-css">Animate.css</a></li>
+<!--           <li><a href="#"></a></li>
+          <li><a href="#"></a></li>
+          <li><a href="#"></a></li>
+          <li><a href="#"></a></li>
+          <li><a href="#"></a></li> -->
+      </ul>
+    </div>  
+    <!-- <div class="pure-menu pure-menu-open">
+      <a class="pure-menu-heading">Page 2</a>
+      <ul>
+          <li><a href="#how-to-install">Animate.css</a></li>
+          <li><a href="#default-settings">Default Settings</a></li>
+          <li><a href="#autoplay-and-transition-controls">Autoplay & Transition Controls</a></li>
+          <li><a href="#continuous-slide-disabled">Continuous Slide Disabled</a></li>
+          <li><a href="#advanced-controls">Advanced Controls</a></li>
+          <li><a href="#hooks">Hooks</a></li>
+      </ul>
+    </div>     -->
+  </div>
+<div id="how-to-install">
+  <h2>How To Install<a href="#how-to-install">#</a></h2>
   <p>Copy the files to your working directory, then add this to the <code class="language-javascript">&lt;head&gt;</code> or the <code class="language-javascript">&lt;footer&gt;</code>:</p>
   <pre class="line-numbers language-javascript"><code>/* Add this to the &lt;head&gt; */
 &lt;link rel="stylesheet" href="./css/animate.css"&gt; &lt;!-- Optional --&gt;
@@ -107,9 +99,40 @@ $(function(){
      &lt;/div&gt;
 &lt;/div&gt;</code></pre>
   <hr>
+</div>
+<div class="content-ad">
+<script type="text/javascript"> 
+  var width = window.innerWidth 
+    || document.documentElement.clientWidth 
+    || document.body.clientWidth;
+
+  google_ad_client = "ca-pub-3827380040284749";
+ 
+  if (width > 800) {
+    // Load the Leaderboard 728x90 Unit for wide screen
+    google_ad_slot = "6954218739"; 
+    google_ad_width = 728; 
+    google_ad_height = 90;
+  } else if ((width < 800) && (width > 400)) { 
+    // Load the 336x280 Medium Rectangle 
+    google_ad_slot = "8430951934"; 
+    google_ad_width = 336; 
+    google_ad_height = 280;
+  } else { 
+    // For small screens, load the 468x60 banner 
+    google_ad_slot = "9907685131"; 
+    google_ad_width = 468; 
+    google_ad_height = 60;
+  }
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  <hr>
+</div>
 <div id="default-settings">
   <!-- Slider 1 -->
-  <h2>Default Settings</h2>
+  <h2>Default Settings<a href="#default-settings">#</a></h2>
   <p>These are the default settings</p>
 
   <div class="liquid-slider" id="slider-1">
@@ -136,7 +159,7 @@ $(function(){
 </div>
 <div id="continuous-slide-disabled">
   <!-- Slider 2 -->
-  <h2>Continuous Slide Disabled</h2>
+  <h2>Continuous Slide Disabled <a href="#continuous-slide-disabled">#</a></h2>
   <p>With continuous disabled, the slider wont continue in one direction forever. Try sliding left.</p>
   <div class="liquid-slider" id="slider-2">
     <div>
@@ -160,9 +183,39 @@ $(function(){
   <pre class="line-numbers language-javascript"><code>$('#slider-2').liquidSlider({continuous:false});</code></pre>
   <hr>
 </div>
-<div id="Autoplay-and-Transition-Controls">
+<div class="content-ad">
+<script type="text/javascript"> 
+  var width = window.innerWidth 
+    || document.documentElement.clientWidth 
+    || document.body.clientWidth;
+
+  google_ad_client = "ca-pub-3827380040284749";
+ 
+  if (width > 800) {
+    // Load the Leaderboard 728x90 Unit for wide screen
+    google_ad_slot = "6954218739"; 
+    google_ad_width = 728; 
+    google_ad_height = 90;
+  } else if ((width < 800) && (width > 400)) { 
+    // Load the 336x280 Medium Rectangle 
+    google_ad_slot = "8430951934"; 
+    google_ad_width = 336; 
+    google_ad_height = 280;
+  } else { 
+    // For small screens, load the 468x60 banner 
+    google_ad_slot = "9907685131"; 
+    google_ad_width = 468; 
+    google_ad_height = 60;
+  }
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  <hr>
+</div>
+<div id="autoplay-and-transition-controls">
   <!-- Slider 3 -->
-  <h2>Autoplay & Transition Controls</h2>
+  <h2>Autoplay & Transition Controls<a href="#autoplay-and-transition-controls">#</a></h2>
   <p>The play button will dynamically update to stop when clicked. The controls use the internal API to control speed and delay. Note that these HTML5 sliders will not work in all browsers (specifically Firefox and IE), but can be functional using a polyfill. See <a href="http://html5please.com/#range">here</a> for the latest info about that.</p>
   <div class="liquid-slider" id="slider-3">
     <div>
@@ -207,9 +260,9 @@ $('#range-delay').change(function() {
 });</code></pre>
   <hr>
 </div>
-<div id="hash-linking-cross-linking-and-api-control">
+<div id="advanced-controls">
   <!-- Slider 4 -->
-  <h2>Hash Linking, Cross Links, And API Control.</h2>
+  <h2>Advanced Controls. <a href="#advanced-controls">#</a></h2>
   <p>Hash linking allows you to link to the slider from an external page, and have a specific panel appear (Look in the URL). Perfect for selective marketting, and more. Cross links control the slider from anywhere on the page, even from within the slider itself. You can also use the API to control the slider, which is useful when using other javascript functions or plugins.</p>
   <p>This slider should load on panel 2 if no hash tag is supplied via <code class="language-javascript">firstPanelToLoad:2</code></p>
   <div class="liquid-slider" id="slider-4">
@@ -234,7 +287,7 @@ $('#range-delay').change(function() {
     </div>
   </div>
   <h3>Cross Links</h3>
-  <p>The href can be a number, the title, or the direction. Note that you must use the <code class="language-javascript">panelTitleSelector</code> option if you want the <code class="language-javascript">.currentCrossLink</code> class to be applied.</p>
+  <p>The href can be a number, the title, or the direction. Note that you must use the <code class="language-javascript">panelTitleSelector</code> option if you want the <code class="language-javascript">.currentCrossLink</code> class to be applied. That's why the class applies to #slide-3 below but not #1.</p>
   <a href="#1" class="pure-button" data-liquidslider-ref="slider-4">#1</a>
   <a href="#slide-3" class="pure-button" data-liquidslider-ref="slider-4">#slide-3</a>
   <a href="#left" class="pure-button" data-liquidslider-ref="slider-4">#left</a>
@@ -264,9 +317,39 @@ $('#range-delay').change(function() {
   <pre class="language-markup"><code>&lt;button class="btn-hover"&gt;Hover&lt;/button&gt;</code></pre>
   <hr>
 </div>
+<div class="content-ad">
+<script type="text/javascript"> 
+  var width = window.innerWidth 
+    || document.documentElement.clientWidth 
+    || document.body.clientWidth;
+
+  google_ad_client = "ca-pub-3827380040284749";
+ 
+  if (width > 800) {
+    // Load the Leaderboard 728x90 Unit for wide screen
+    google_ad_slot = "6954218739"; 
+    google_ad_width = 728; 
+    google_ad_height = 90;
+  } else if ((width < 800) && (width > 400)) { 
+    // Load the 336x280 Medium Rectangle 
+    google_ad_slot = "8430951934"; 
+    google_ad_width = 336; 
+    google_ad_height = 280;
+  } else { 
+    // For small screens, load the 468x60 banner 
+    google_ad_slot = "9907685131"; 
+    google_ad_width = 468; 
+    google_ad_height = 60;
+  }
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  <hr>
+</div>
 <div id="hooks">
   <!-- Slider 5 -->
-  <h2>Hooks</h2>
+  <h2>Hooks <a href="#hooks">#</a></h2>
   <p>There are four functions that you can hook into. Once right before the slider removes the preloader (preload), once the slider fully loads (onload), at the start of a transition (pretransition), and once a transition completes (callback).</p>
   <div class="liquid-slider" id="slider-5">
     <div>
@@ -287,12 +370,12 @@ $('#range-delay').change(function() {
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
     </div>
   </div>
-  <p>preload just runs right before removing the preloader. You must run <code class="line-numbers language-javascript">finalize();</code> in your code if you edit this.</p>
+  <p>No, the slider isn't broken :) You can run a code that fires right before the preloader is removed. But you must run <code class="language-javascript">this.finalize();</code> if you edit this. Click below to complete the loading.</p>
   <button class="btn-load pure-button">Complete Loading</button>
-  <div class="top-bar"><span>Sliding...</span></div>
-  <p>First, I created a button that hooks into the preload function.</p>
-  <pre class="line-numbers language-javascript"><code>&lt;button class="btn-load"&gt;Complete Loading&lt;/button&gt;</code></pre>
-  <p>The preload function will execute after the user clicks the button. The onload function executes only after the slider is completely loaded. The pretransition function fires as soon as a transition begins. in this case I set a top bar to slide down. Then finally the callback function executes after a transition is complete. This one slides up the top bar and sets random colors to the navigation tabs.</p>
+  <div class="top-bar gradient">Sliding...</div>
+  <p>After clicking, you will notice tha another event fires, which is the <code class="language-javascript">onload</code> function.</p>
+  <p>The pretransition function fires as soon as a transition begins. in this case I set a top bar to slide down. Then finally the callback function executes after a transition is complete. This one slides up the top bar and sets random colors to the navigation tabs.</p>
+  <p>Additionally, the <code class="language-javascript">pretransition</code> function must include <code class="language-javascript">this.transition();</code> if you plan to edit this setting. Otherwise it won't complete the transition. Note that you may also pause the slider at this point.</p>  
   <pre class="line-numbers language-javascript"><code>$('#slider-5').liquidSlider({
   preload: function() {
     var self = this;
@@ -304,8 +387,9 @@ $('#range-delay').change(function() {
     $('.btn-load').after('&lt;button&gt;onload complete!&lt;/button&gt;').fadeOut();
   },
   pretransition: function() {
-    $('.top-bar span').text(this.getFromPanel(this.options.panelTitleSelector, this.nextPanel));
+    $('.top-bar').text(this.getFromPanel(this.options.panelTitleSelector, this.nextPanel));
     $('.top-bar').css('top', '0');
+    this.transition();
   },
   callback: function() {
      $('.top-bar').css('top', '-100px');
@@ -316,63 +400,28 @@ $('#range-delay').change(function() {
      })
   },
 })</code></pre>
-  <hr>
 </div>
-<div id="animate-css">
-  <!-- Slider-6 -->
-  <h2>Animate.css</h2>
-  <p>Slide in with the popular animate.css</p>
-  <div class="liquid-slider" id="slider-6">
-    <div>
-      <h2 class="title">Slide 1</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
-    </div>
-    <div>
-      <h2 class="title">Slide 2</h2>
-      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
-    </div>          
-    <div>
-      <h2 class="title">Slide 3</h2>
-      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
-    </div>
-    <div>
-      <h2 class="title">Slide 4</h2>
-      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+  <a class="next-page pure-button pure-button-secondary" href="page2.html">Onward to Page 2</a>
+</div>
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="profile">
+      <a class="circle-image-link" href="https://twitter.com/kevinbatdorf" title="Kevin Batdorf on Twitter">
+        <img src="./assets/mee.jpeg">
+      </a>
+      <div class="info">
+        <h2 class="title">by Kevin Batdorf</h2>
+        <a href="https://twitter.com/kevinbatdorf" class="twitter-follow-button" data-show-count="false" data-size="large" data-show-screen-name="false" data-dnt="true">Follow @kevinbatdorf</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        <p>Hey there fellow developer. I wrote the <a class="link" href="https://github.com/KevinBatdorf/codaslider" title="Liquid Slider">Liquid Slider</a> with the purpose of building a fast, lightweight and flexible slider that runs great on any device. It is also the successor to the <a class="link" href="https://github.com/KevinBatdorf/codaslider" title="Coda Slider download">Coda Slider</a> which has been around for years. I'm a <a class="link" href="http://paniki-studios.com/" title="Websites in Manila" rel="designer">freelance web developer</a> who has been travelling around for the past 5 years. I'm currently living in the Philippines. You can find me on <a class="link" href="http://www.twitter.com/#!/kevinbatdorf?rel=author">Twitter</a>, <a class="link" href="http://plus.google.com/118132051528769460950?rel=author">Google+</a> or check out all my videos on <a class="link" href="http://www.youtube.com/user/kbat82?rel=author">Youtube</a>.</p>
+      </div>
     </div>
   </div>
-  <p>The following are supported entrances. Click to activate, then use the navigation above to continue testing.</p>
-  <div class="animations">
-    <h3>Attention seekers</h3>
-    <button class="pure-button">flash</button><button class="pure-button">bounce</button><button class="pure-button">shake</button><button class="pure-button">tada</button><button class="pure-button">swing</button><button class="pure-button">wobble</button><button class="pure-button">wiggle</button><button class="pure-button">pulse</button>
-    <h3>Flippers (currently Webkit, Firefox, & IE10 only):</h3>
-    <button class="pure-button">flip</button><button class="pure-button">flipInX</button><button class="pure-button">flipInY</button>
-    <h3>Fading entrances:</h3>
-    <button class="pure-button">fadeIn</button><button class="pure-button">fadeInUp</button><button class="pure-button">fadeInDown</button><button class="pure-button">fadeInLeft</button><button class="pure-button">fadeInRight</button><button class="pure-button">fadeInUpBig</button><button class="pure-button">fadeInDownBig</button><button class="pure-button">fadeInLeftBig</button><button class="pure-button">fadeInRightBig</button>
-    <h3>Bouncing entrances:</h3>
-    <button class="pure-button">bounceIn</button><button class="pure-button">bounceInDown</button><button class="pure-button">bounceInUp</button><button class="pure-button">bounceInLeft</button><button class="pure-button">bounceInRight</button>
-    <h3>Rotating entrances:</h3>
-    <button class="pure-button">rotateIn</button><button class="pure-button">rotateInDownLeft</button><button class="pure-button">rotateInDownRight</button><button class="pure-button">rotateInUpLeft</button><button class="pure-button">rotateInUpRight</button>
-    <h3>Lightspeed:</h3>
-    <button class="pure-button">lightSpeedIn</button>
-    <h3>Specials:</h3>
-    <button class="pure-button">hinge</button><button class="pure-button">rollIn</button>
-  </div>
-  <p>This one is easy to set up.</p>
-  <pre class="line-numbers language-javascript"><code>$('#slider-6').liquidSlider({
-  slideEaseFunction:'animate.css',
-  animateIn:"wobble"
-})</code></pre>
-  <hr>
-</div>
-More to come!
-
-</div>
-<footer>
   
-  <script src="./js/jquery.easing.1.3.js"></script>
-  <script src="./js/jquery.touchSwipe.min.js"></script>
-  <script src="./js/jquery.liquid-slider.js"></script>
+  <script src="../js/jquery.easing.1.3.js"></script>
+  <script src="../js/jquery.touchSwipe.min.js"></script>
+  <script src="../js/jquery.liquid-slider.js"></script>
+  <script src="./assets/prism.js"></script>
   <script>
   $('#slider-1').liquidSlider();
   $('#slider-2').liquidSlider({continuous:false});
@@ -412,8 +461,9 @@ More to come!
       $('.btn-load').after('<button class="pure-button pure-button-disabled">onload complete!</button>').fadeOut();
     },
     pretransition: function() {
-      $('.top-bar span').text(this.getFromPanel(this.options.panelTitleSelector, this.nextPanel));
+      $('.top-bar').text(this.getFromPanel(this.options.panelTitleSelector, this.nextPanel));
       $('.top-bar').css('top', '0');
+      this.transition();
     },
     callback: function() {
        $('.top-bar').css('top', '-100px');
@@ -424,32 +474,7 @@ More to come!
        })
     }
   });
-  $('#slider-6').liquidSlider({
-    slideEaseFunction:'animate.css',
-    animateIn:"wobble"
-  })
-  $('.animations button').on('click', function() {
-    var api3 = $.data( $('#slider-6')[0], 'liquidSlider');
-    $('.slider-6-panel').each(function() {
-      $(this).removeClass(api3.options.animateIn);
-    });
-    api3.options.animateIn = $(this).text();
-    api3.setNextPanel('right');
-  })
   </script>
-  <script>
-  /**
- * Prism: Lightweight, robust, elegant syntax highlighting
- * MIT license http://www.opensource.org/licenses/mit-license.php/
- * @author Lea Verou http://lea.verou.me
- */(function(){var e=/\blang(?:uage)?-(?!\*)(\w+)\b/i,t=self.Prism={util:{type:function(e){return Object.prototype.toString.call(e).match(/\[object (\w+)\]/)[1]},clone:function(e){var n=t.util.type(e);switch(n){case"Object":var r={};for(var i in e)e.hasOwnProperty(i)&&(r[i]=t.util.clone(e[i]));return r;case"Array":return e.slice()}return e}},languages:{extend:function(e,n){var r=t.util.clone(t.languages[e]);for(var i in n)r[i]=n[i];return r},insertBefore:function(e,n,r,i){i=i||t.languages;var s=i[e],o={};for(var u in s)if(s.hasOwnProperty(u)){if(u==n)for(var a in r)r.hasOwnProperty(a)&&(o[a]=r[a]);o[u]=s[u]}return i[e]=o},DFS:function(e,n){for(var r in e){n.call(e,r,e[r]);t.util.type(e)==="Object"&&t.languages.DFS(e[r],n)}}},highlightAll:function(e,n){var r=document.querySelectorAll('code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code');for(var i=0,s;s=r[i++];)t.highlightElement(s,e===!0,n)},highlightElement:function(r,i,s){var o,u,a=r;while(a&&!e.test(a.className))a=a.parentNode;if(a){o=(a.className.match(e)||[,""])[1];u=t.languages[o]}if(!u)return;r.className=r.className.replace(e,"").replace(/\s+/g," ")+" language-"+o;a=r.parentNode;/pre/i.test(a.nodeName)&&(a.className=a.className.replace(e,"").replace(/\s+/g," ")+" language-"+o);var f=r.textContent;if(!f)return;f=f.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\u00a0/g," ");var l={element:r,language:o,grammar:u,code:f};t.hooks.run("before-highlight",l);if(i&&self.Worker){var c=new Worker(t.filename);c.onmessage=function(e){l.highlightedCode=n.stringify(JSON.parse(e.data),o);t.hooks.run("before-insert",l);l.element.innerHTML=l.highlightedCode;s&&s.call(l.element);t.hooks.run("after-highlight",l)};c.postMessage(JSON.stringify({language:l.language,code:l.code}))}else{l.highlightedCode=t.highlight(l.code,l.grammar,l.language);t.hooks.run("before-insert",l);l.element.innerHTML=l.highlightedCode;s&&s.call(r);t.hooks.run("after-highlight",l)}},highlight:function(e,r,i){return n.stringify(t.tokenize(e,r),i)},tokenize:function(e,n,r){var i=t.Token,s=[e],o=n.rest;if(o){for(var u in o)n[u]=o[u];delete n.rest}e:for(var u in n){if(!n.hasOwnProperty(u)||!n[u])continue;var a=n[u],f=a.inside,l=!!a.lookbehind,c=0;a=a.pattern||a;for(var h=0;h<s.length;h++){var p=s[h];if(s.length>e.length)break e;if(p instanceof i)continue;a.lastIndex=0;var d=a.exec(p);if(d){l&&(c=d[1].length);var v=d.index-1+c,d=d[0].slice(c),m=d.length,g=v+m,y=p.slice(0,v+1),b=p.slice(g+1),w=[h,1];y&&w.push(y);var E=new i(u,f?t.tokenize(d,f):d);w.push(E);b&&w.push(b);Array.prototype.splice.apply(s,w)}}}return s},hooks:{all:{},add:function(e,n){var r=t.hooks.all;r[e]=r[e]||[];r[e].push(n)},run:function(e,n){var r=t.hooks.all[e];if(!r||!r.length)return;for(var i=0,s;s=r[i++];)s(n)}}},n=t.Token=function(e,t){this.type=e;this.content=t};n.stringify=function(e,r,i){if(typeof e=="string")return e;if(Object.prototype.toString.call(e)=="[object Array]")return e.map(function(t){return n.stringify(t,r,e)}).join("");var s={type:e.type,content:n.stringify(e.content,r,i),tag:"span",classes:["token",e.type],attributes:{},language:r,parent:i};s.type=="comment"&&(s.attributes.spellcheck="true");t.hooks.run("wrap",s);var o="";for(var u in s.attributes)o+=u+'="'+(s.attributes[u]||"")+'"';return"<"+s.tag+' class="'+s.classes.join(" ")+'" '+o+">"+s.content+"</"+s.tag+">"};if(!self.document){self.addEventListener("message",function(e){var n=JSON.parse(e.data),r=n.language,i=n.code;self.postMessage(JSON.stringify(t.tokenize(i,t.languages[r])));self.close()},!1);return}var r=document.getElementsByTagName("script");r=r[r.length-1];if(r){t.filename=r.src;document.addEventListener&&!r.hasAttribute("data-manual")&&document.addEventListener("DOMContentLoaded",t.highlightAll)}})();;
-Prism.languages.markup={comment:/&lt;!--[\w\W]*?-->/g,prolog:/&lt;\?.+?\?>/,doctype:/&lt;!DOCTYPE.+?>/,cdata:/&lt;!\[CDATA\[[\w\W]*?]]>/i,tag:{pattern:/&lt;\/?[\w:-]+\s*(?:\s+[\w:-]+(?:=(?:("|')(\\?[\w\W])*?\1|\w+))?\s*)*\/?>/gi,inside:{tag:{pattern:/^&lt;\/?[\w:-]+/i,inside:{punctuation:/^&lt;\/?/,namespace:/^[\w-]+?:/}},"attr-value":{pattern:/=(?:('|")[\w\W]*?(\1)|[^\s>]+)/gi,inside:{punctuation:/=|>|"/g}},punctuation:/\/?>/g,"attr-name":{pattern:/[\w:-]+/g,inside:{namespace:/^[\w-]+?:/}}}},entity:/&amp;#?[\da-z]{1,8};/gi};Prism.hooks.add("wrap",function(e){e.type==="entity"&&(e.attributes.title=e.content.replace(/&amp;/,"&"))});;
-Prism.languages.css={comment:/\/\*[\w\W]*?\*\//g,atrule:{pattern:/@[\w-]+?.*?(;|(?=\s*{))/gi,inside:{punctuation:/[;:]/g}},url:/url\((["']?).*?\1\)/gi,selector:/[^\{\}\s][^\{\};]*(?=\s*\{)/g,property:/(\b|\B)[\w-]+(?=\s*:)/ig,string:/("|')(\\?.)*?\1/g,important:/\B!important\b/gi,ignore:/&(lt|gt|amp);/gi,punctuation:/[\{\};:]/g};Prism.languages.markup&&Prism.languages.insertBefore("markup","tag",{style:{pattern:/(&lt;|<)style[\w\W]*?(>|&gt;)[\w\W]*?(&lt;|<)\/style(>|&gt;)/ig,inside:{tag:{pattern:/(&lt;|<)style[\w\W]*?(>|&gt;)|(&lt;|<)\/style(>|&gt;)/ig,inside:Prism.languages.markup.tag.inside},rest:Prism.languages.css}}});;
-Prism.languages.clike={comment:{pattern:/(^|[^\\])(\/\*[\w\W]*?\*\/|(^|[^:])\/\/.*?(\r?\n|$))/g,lookbehind:!0},string:/("|')(\\?.)*?\1/g,"class-name":{pattern:/((?:(?:class|interface|extends|implements|trait|instanceof|new)\s+)|(?:catch\s+\())[a-z0-9_\.\\]+/ig,lookbehind:!0,inside:{punctuation:/(\.|\\)/}},keyword:/\b(if|else|while|do|for|return|in|instanceof|function|new|try|catch|finally|null|break|continue)\b/g,"boolean":/\b(true|false)\b/g,"function":{pattern:/[a-z0-9_]+\(/ig,inside:{punctuation:/\(/}}, number:/\b-?(0x[\dA-Fa-f]+|\d*\.?\d+([Ee]-?\d+)?)\b/g,operator:/[-+]{1,2}|!|&lt;=?|>=?|={1,3}|(&amp;){1,2}|\|?\||\?|\*|\/|\~|\^|\%/g,ignore:/&(lt|gt|amp);/gi,punctuation:/[{}[\];(),.:]/g};;
-Prism.languages.javascript=Prism.languages.extend("clike",{keyword:/\b(var|let|if|else|while|do|for|return|in|instanceof|function|new|with|typeof|try|catch|finally|null|break|continue)\b/g,number:/\b-?(0x[\dA-Fa-f]+|\d*\.?\d+([Ee]-?\d+)?|NaN|-?Infinity)\b/g});Prism.languages.insertBefore("javascript","keyword",{regex:{pattern:/(^|[^/])\/(?!\/)(\[.+?]|\\.|[^/\r\n])+\/[gim]{0,3}(?=\s*($|[\r\n,.;})]))/g,lookbehind:!0}});Prism.languages.markup&&Prism.languages.insertBefore("markup","tag",{script:{pattern:/(&lt;|<)script[\w\W]*?(>|&gt;)[\w\W]*?(&lt;|<)\/script(>|&gt;)/ig,inside:{tag:{pattern:/(&lt;|<)script[\w\W]*?(>|&gt;)|(&lt;|<)\/script(>|&gt;)/ig,inside:Prism.languages.markup.tag.inside},rest:Prism.languages.javascript}}});;
-Prism.hooks.add("after-highlight",function(e){var t=e.element.parentNode;if(!t||!/pre/i.test(t.nodeName)||t.className.indexOf("line-numbers")===-1){return}var n=1+e.code.split("\n").length;var r;lines=new Array(n);lines=lines.join("<span></span>");r=document.createElement("span");r.className="line-numbers-rows";r.innerHTML=lines;if(t.hasAttribute("data-start")){t.style.counterReset="linenumber "+(parseInt(t.getAttribute("data-start"),10)-1)}e.element.appendChild(r)})
-;
-</script>
 </footer>
 </body>
 </html>
