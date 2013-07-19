@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" />
+  <meta name="description" content="Liquid Slider : A JQuery Slider Plugin" />
+
+  <!-- You may want to "minify" these after making edits http://www.refresh-sf.com/yui/ -->
+  <link rel="stylesheet" href="./css/animate.css"> <!-- Optional -->
+  <link rel="stylesheet" href="./css/liquid-slider.css">
+
+  <!-- Only for the demo (not required) -->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans|Lobster' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.0/pure-min.css">
+  <link rel="stylesheet" href="./examples/assets/prism.css">
+  <link rel="stylesheet" href="./examples/assets/styles.css">
+
+  <!-- Liquid Slider relies on jQuery -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <!-- More scripts below! -->
+
+  <title>Liquid Slider</title>
+</head>
+<h1 class="gradient"><a href="http://liquidslider.com">Liquid Slider</a></h1>
+<div class="container">
+  <div class="top-buttons">
+    <a href="http://liquidslider.com" class="pure-button pure-button-xlarge pure-button-secondary">Homepage</a>
+    <a href="./examples/page1.html" class="pure-button pure-button-xlarge pure-button-secondary">Examples</a></div>
+  <div class="liquid-slider"  id="main-slider">
+    <div>
+      <h2 class="title">Slide 1</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 2</h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+    </div>          
+    <div>
+      <h2 class="title">Slide 3</h2>
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 4</h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+    </div>
+  </div>
+  <span class="shadow"></span>
+  <p>The Liquid Slider is a light-weight content slider built for any device. It comes with an powerful API, a custom builder, and easily integrates with animate.css.</p>
+  <pre class="home-code line-numbers language-javascript"><code>$('#main-slider').liquidSlider({
+  slideEaseFunction:'animate.css',
+  animateOut:'rollOut',
+  animateIn:'lightSpeedIn',
+  heightEaseDuration:1000,
+  slideEaseDuration:1000
+});</code></pre>
+</div> <!-- End Container -->
+<footer class="site-footer" role="contentinfo">
+<div class="container">
+  <div class="profile">
+    <a class="circle-image-link" href="https://twitter.com/kevinbatdorf" title="Kevin Batdorf on Twitter">
+      <img src="./examples/assets/mee.jpeg">
+    </a>
+    <div class="info">
+      <h2 class="title">by Kevin Batdorf</h2>
+      <a href="https://twitter.com/kevinbatdorf" class="twitter-follow-button" data-show-count="false" data-size="large" data-show-screen-name="false" data-dnt="true">Follow @kevinbatdorf</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      <p>Hey there fellow developer. I wrote the <a class="link" href="https://github.com/KevinBatdorf/codaslider" title="Liquid Slider">Liquid Slider</a> with the purpose of building a fast, lightweight and flexible slider that runs great on any device. It is also the successor to the <a class="link" href="https://github.com/KevinBatdorf/codaslider" title="Coda Slider download">Coda Slider</a> which has been around for years. I'm a <a class="link" href="http://paniki-studios.com/" title="Websites in Manila" rel="designer">freelance web developer</a> who has been travelling around for the past 5 years. I'm currently living in the Philippines. You can find me on <a class="link" href="http://www.twitter.com/#!/kevinbatdorf?rel=author">Twitter</a>, <a class="link" href="http://plus.google.com/118132051528769460950?rel=author">Google+</a> or check out all my videos on <a class="link" href="http://www.youtube.com/user/kbat82?rel=author">Youtube</a>.</p>
+    </div>
+  </div>
+</div>
+  <!-- Feel free to load scripts in the footer -->
+  <script src="./examples/assets/prism.js"></script>
+  <script src="./js/jquery.easing.1.3.js"></script>
+  <script src="./js/jquery.touchSwipe.min.js"></script>
+  <script src="./js/jquery.liquid-slider.min.js"></script>  
+  <script>
+    $('#main-slider').liquidSlider({
+      slideEaseFunction:'animate.css',
+      animateOut:'rollOut',
+      animateIn:'lightSpeedIn',
+      heightEaseDuration:1000,
+      slideEaseDuration:1000
+    });
+
+    /* If you need to access the internal property or methods, use this:
+    var api = $.data( $('#slider-id')[0], 'liquidSlider');
+    */
+  </script>
+</footer>
+</body>
+</html>
