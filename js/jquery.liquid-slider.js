@@ -329,15 +329,6 @@ if (typeof Object.create !== 'function') {
       window.location.hash = self.getFromPanel(self.options.hashTitleSelector, filtered);
     },
 
-    transitionFade: function() {
-      var self = this;
-      $(self.panelClass).eq(self.nextPanel)
-        .fadeTo(self.options.fadeInDuration, 1.0).css('z-index', 1);
-      $(self.panelClass).eq(self.prevPanel)
-        .fadeTo(self.options.fadeOutDuration, 0).css('z-index', 0);
-      self.callback(self.options.callback, true);
-    },
-
     adjustHeight: function(noAnimation, height, easing, duration) {
       var self = this;
       if (noAnimation || self.useCSS) {
@@ -610,6 +601,15 @@ if (typeof Object.create !== 'function') {
           });
         }
       }
+    },
+    
+    transitionFade: function() {
+      var self = this;
+      $(self.panelClass).eq(self.nextPanel)
+        .fadeTo(self.options.fadeInDuration, 1.0).css('z-index', 1);
+      $(self.panelClass).eq(self.prevPanel)
+        .fadeTo(self.options.fadeOutDuration, 0).css('z-index', 0);
+      self.callback(self.options.callback, true);
     },
 
     hover: function() {
