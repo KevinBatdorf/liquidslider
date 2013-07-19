@@ -26,15 +26,16 @@
 * and be sure to include the ".no-js" class in your html 
 * markup.
 *******************************************************/
-.liquid-slider-wrapper .liquid-slider-preloader {  
+.ls-wrapper .ls-preloader {  
   background: url(../img/loading.gif) #f2f2f2 no-repeat center 75px;
-  opacity:.90;
+  opacity:1;
   /* Do not edit below this line */
   width:100%;
-  height:200%;
+  height:100%;
   position:absolute;
   top:0;
   left:0;
+  z-index:2;
 }
 
 /******************************************************************
@@ -47,7 +48,7 @@
 *
 * Additional media queries are at the bottom of this document
 ******************************************************************/
-.liquid-slider-wrapper {
+.ls-wrapper {
   margin:0 auto;
   /* Do not edit below this line */
   clear: both;
@@ -65,7 +66,7 @@
 * The responsive slider will interpret the width as the
 * max width instead
 *******************************************************/
-.liquid-slider-wrapper .liquid-slider {
+.ls-wrapper .liquid-slider {
   background: #f2f2f2;
   width: 1030px;
   /* Do not edit below this line */
@@ -73,17 +74,17 @@
   overflow: hidden;
   position: relative;
 }
-.liquid-slider-wrapper .panel-container {
+.ls-wrapper .panel-container {
   /* Do not edit below this line */
   position: relative;
 
 }
-.liquid-slider-wrapper .liquid-slider .panel-container .fadeClass {
+.ls-wrapper .liquid-slider .panel-container .fade {
   /* Do not edit below this line */
   position: absolute;
   top: 0; 
   left: 0;
-  display: none;
+  display: block;
 }
 
 /******************************************************
@@ -92,7 +93,7 @@
 * responsive setting, this will act as the max-width
 * for the entire slider.
 *******************************************************/
-.liquid-slider-wrapper .liquid-slider .panel {  
+.ls-wrapper .liquid-slider .panel {  
   width: 1030px;
   /* Do not edit below this line */
   display: block;
@@ -105,7 +106,7 @@
 * based on the content you use. Use the @media queries 
 * at the bottom of this file.
 *******************************************************/
-.liquid-slider-wrapper .liquid-slider .panel img{
+.ls-wrapper .liquid-slider .panel img{
   /*
   width:100%;
   height:auto;  
@@ -113,7 +114,7 @@
   */
 }
 
-.liquid-slider-wrapper .liquid-slider .panel video {
+.ls-wrapper .liquid-slider .panel video {
   /*
   width:100%;  
   height:auto;
@@ -125,7 +126,7 @@
 * panel. If you are using the responsive setting, you
 * need to use the settings below as this will not apply.
 *******************************************************/
-.liquid-slider-wrapper .liquid-slider .panel-wrapper {  
+.ls-wrapper .liquid-slider .panel-wrapper {  
   padding: 20px;
   /* Do not edit below this line */
   position:relative;
@@ -144,24 +145,24 @@
 *
 * .currentCrossLink refers to external crosslinking.
 *******************************************************/
-.liquid-slider-wrapper .liquid-nav a {
+.ls-wrapper .ls-nav a {
   background: #d8d8d8;
   color: #333333;
   margin-right: 1px;
   padding: 3px 6px;  
 }
-.liquid-slider-wrapper .liquid-nav a:hover {
+.ls-wrapper .ls-nav a:hover {
   background: #f2f2f2;
   color: #333333;
   text-shadow: none;
 }
-.liquid-slider-wrapper .liquid-nav .current {
+.ls-wrapper .ls-nav .current {
   background: #f2f2f2;
 }
 .currentCrossLink {
   font-weight: bold;
 }
-.liquid-slider-wrapper .liquid-nav ul {  
+.ls-wrapper .ls-nav ul {  
   padding:0;
   /* Do not edit below this line */
   clear: both;
@@ -169,11 +170,11 @@
   margin: auto;
   overflow: hidden;
 }
-.liquid-slider-wrapper .liquid-nav ul li {
+.ls-wrapper .ls-nav ul li {
   /* Do not edit below this line */
   display: inline;
 }
-.liquid-slider-wrapper .liquid-nav ul li a {
+.ls-wrapper .ls-nav ul li a {
  
   /* Do not edit below this line */
   display: block;
@@ -186,11 +187,11 @@
 * included a simple example to create a custom select
 * box.
 *******************************************************/
-.liquid-slider-wrapper .liquid-nav {
+.ls-wrapper .ls-nav {
   overflow:hidden;
   clear:both;
 }
-.liquid-slider-wrapper .liquid-slider-select-box {  
+.ls-wrapper .ls-select-box {  
   /* Delete these if you want the standard select box.
      Also delete the rules below */
 
@@ -200,7 +201,7 @@
   background: url(../img/menu.png) no-repeat right #ddd;
   
 }
-.liquid-slider-wrapper .liquid-slider-select-box select {  
+.ls-wrapper .ls-select-box select {  
   /* If you want the standard select box, use 
   width:100%
   And delete the rest of the styling here */
@@ -225,11 +226,11 @@
 * Some settings will be overwritten when using the 
 * responsive setting.
 *******************************************************/
-.liquid-slider-wrapper .liquid-nav-left, .liquid-slider-wrapper .liquid-nav-right {
+.ls-wrapper .ls-nav-left, .ls-wrapper .ls-nav-right {
   /* Do not edit below this line */
   float: left;
 }
-.liquid-slider-wrapper .liquid-nav-left a, .liquid-slider-wrapper .liquid-nav-right a {
+.ls-wrapper .ls-nav-left a, .ls-wrapper .ls-nav-right a {
   /* non-graphical arrows */
   background: #000;
   color: #fff;
@@ -240,20 +241,20 @@
   text-align: center;
   text-decoration: none;
 }
-.liquid-slider-wrapper .liquid-nav-left-arrow, .liquid-slider-wrapper .liquid-nav-right-arrow {
+.ls-wrapper .ls-nav-left-arrow, .ls-wrapper .ls-nav-right-arrow {
   cursor: pointer;
   /* Do not edit below this line */
   float: left;
 }
-.liquid-slider-wrapper .liquid-nav-left-arrow a, .liquid-slider-wrapper .liquid-nav-right-arrow a {
+.ls-wrapper .ls-nav-left-arrow a, .ls-wrapper .ls-nav-right-arrow a {
   /* Do not edit below this line */
   display: block;
 }
-.liquid-slider-wrapper .liquid-nav-left, .liquid-slider-wrapper .liquid-nav-left-arrow {
+.ls-wrapper .ls-nav-left, .ls-wrapper .ls-nav-left-arrow {
   /* Do not edit below this line */
   clear: both;
 }
-.liquid-slider-wrapper .liquid-nav-right-arrow {
+.ls-wrapper .ls-nav-right-arrow {
   width: 25px;
   height: 25px;
   background: url(../img/arrow.png) no-repeat top right;
@@ -262,7 +263,7 @@
   /* Do not edit below this line */
   position:relative;
 }
-.liquid-slider-wrapper .liquid-nav-left-arrow {
+.ls-wrapper .ls-nav-left-arrow {
   width: 25px;
   height: 25px;
   background: url(../img/arrow.png) no-repeat top left;
@@ -271,18 +272,18 @@
   /* Do not edit below this line */
   position:relative;
 }
-.liquid-slider-wrapper .liquid-nav-left-arrow:hover {
+.ls-wrapper .ls-nav-left-arrow:hover {
   /* Left graphical arrows hover */
   background: url(../img/arrow.png) no-repeat bottom left;
 }
-.liquid-slider-wrapper .liquid-nav-left-arrow:active {
+.ls-wrapper .ls-nav-left-arrow:active {
   /* Left graphical arrows click */
 }
-.liquid-slider-wrapper .liquid-nav-right-arrow:hover {
+.ls-wrapper .ls-nav-right-arrow:hover {
   /* Right graphical arrows hover */
   background: url(../img/arrow.png) no-repeat bottom right;
 }
-.liquid-slider-wrapper .liquid-nav-right-arrow:active {
+.ls-wrapper .ls-nav-right-arrow:active {
   /* Right graphical arrows click */
 }
 .arrows .liquid-slider {
@@ -296,57 +297,57 @@
 * covers the arrows, and most of the settings can be
 * applied above.
 *******************************************************/
-.liquid-responsive .liquid-slider {
+.ls-responsive .liquid-slider {
   /* Do not edit below this line */
   width: 100%;
   margin: 0;
 }
-.liquid-responsive .liquid-slider .panel .panel-wrapper {
+.ls-responsive .liquid-slider .panel .panel-wrapper {
   padding: 10px;
 }
-.liquid-responsive .liquid-nav-left {
+.ls-responsive .ls-nav-left {
   /* Left non-graphical arrows */
   /* Do not edit below this line */
   position: absolute;
   left: 0;
-  z-index: 1;
+  z-index: 2;
 }
-.liquid-responsive .liquid-nav-left a {
+.ls-responsive .ls-nav-left a {
   /* Left non-graphical arrows */
   background: #9A9A9A;
   width: 80px;
 }
-.liquid-responsive .liquid-nav-left a:hover {
+.ls-responsive .ls-nav-left a:hover {
   /* Left non-graphical hover */
   background: #747474;
 }
-.liquid-responsive .liquid-nav-right {
+.ls-responsive .ls-nav-right {
   /* Right non-graphical arrows */
   /* Do not edit below this line */
   position: absolute;
   right: 0;
-  z-index: 1;
+  z-index: 2;
 }
-.liquid-responsive .liquid-nav-right a {
+.ls-responsive .ls-nav-right a {
   /* Right non-graphical arrows */
   background: #9A9A9A;
   width: 80px;
 }
-.liquid-responsive .liquid-nav-right a:hover {
+.ls-responsive .ls-nav-right a:hover {
   /* Right non-graphical arrows hover */
   background: #747474;
 }
-.liquid-responsive .liquid-nav-left-arrow {
+.ls-responsive .ls-nav-left-arrow {
   /* Do not edit below this line */
   position: absolute;
   left: 0;
-  z-index: 1;
+  z-index: 2;
 }
-.liquid-responsive .liquid-nav-right-arrow {
+.ls-responsive .ls-nav-right-arrow {
   /* Do not edit below this line */
   position: absolute;
   right: 0;
-  z-index: 1;
+  z-index: 2;
 }
 
 /******************************************************************
@@ -355,7 +356,7 @@
 * larger than an iPhone but smaller than a tablet. 
 ******************************************************************/
 @media only screen and (min-width: 481px) {
-  .liquid-slider-wrapper .liquid-slider .panel img{
+  .ls-wrapper .liquid-slider .panel img{
     /* Example */
     /*
     width:24%;
@@ -370,13 +371,13 @@
 * This will include tablets and some netbooks.
 ******************************************************************/
 @media only screen and (min-width: 768px) {
-  .liquid-slider-wrapper .liquid-slider .panel img{
+  .ls-wrapper .liquid-slider .panel img{
     /* Example */
     /*
     width:24%;
     */
   }
-  .liquid-responsive .liquid-slider .panel .panel-wrapper {
+  .ls-responsive .liquid-slider .panel .panel-wrapper {
     padding: 20px 35px;
   }
 }
