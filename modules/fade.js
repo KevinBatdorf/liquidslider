@@ -1,0 +1,1 @@
+transitionFade:function(){var f=this;d(f.panelClass).eq(f.nextPanel).fadeTo(f.options.fadeInDuration,1).css("z-index",1);d(f.panelClass).eq(f.prevPanel).fadeTo(f.options.fadeOutDuration,0).css("z-index",0);f.callback(f.options.callback,true)},

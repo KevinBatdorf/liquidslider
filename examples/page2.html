@@ -28,7 +28,7 @@
 <div class="container">
   <a class="link" href="http://liquidslider.com">Download Page</a>
   <div class="message">
-  <p>Below is a collection of demos mainly used for visual testing. I've included the code for your convenience. I'll try to add more over time, but feel free to <a class="link" href="http://www.liquidslider.com/support">contact me</a> if you have a clever idea you want to see included. To view the responsivness, simply resize your browser.</p>
+  <p>Below is a collection of demos mainly used for visual testing. I've included the code for your convenience. I'll try to add more over time, but feel free to <a class="link" href="http://www.liquidslider.com/support">contact me</a> if you have a clever idea you want to see included. <strong>To view the responsivness, simply resize your browser.</strong></p>
   </div>
   <div class="nav-area">
     <div class="pure-menu pure-menu-open">
@@ -36,8 +36,8 @@
       <ul>
           <li><a href="./page1.html#how-to-install">How To Install</a></li>
           <li><a href="./page1.html#default-settings">Default Settings</a></li>
+          <li><a href="./page1.html#how-to-edit-settings">How To Edit Settings</a></li>
           <li><a href="./page1.html#autoplay-and-transition-controls">Autoplay & Transition Controls</a></li>
-          <li><a href="./page1.html#continuous-slide-disabled">Continuous Slide Disabled</a></li>
           <li><a href="./page1.html#advanced-controls">Advanced Controls</a></li>
           <li><a href="./page1.html#hooks">Hooks</a></li>
       </ul>
@@ -128,17 +128,29 @@
   slideEaseFunction:'animate.css',
   slideEaseDuration:1000,
   heightEaseDuration:1000,
-  animateIn:"rotateIn",
-  animateOut:"rotateOutDownRight",
+  animateIn:"rotateInUpRight",
+  animateOut:"rotateOutUpLeft",
   callback: function() {
-    // Use the callback when you want to use the
-    // same transition for both entrance and exit
     var self = this;
     $('.slider-6-panel').each(function() {
       $(this).removeClass('animated ' + self.options.animateIn);
     });
   }
-})</code></pre>
+});</code></pre>
+<p>To disable the Auto Height on the fly like I did above, you simply jump into the api, disable the setting, then recalculate the height. Without height animation the slider is set to use the heighest panel height.</p>
+<pre class="line-numbers language-javascript"><code>$('.height-toggle').on('click', function(e) {
+  var api = $.data( $('#slider-6')[0], 'liquidSlider');
+  if ($(this).text() === "turn off") {
+    api.options.autoHeight = false;
+    $(this).text('turn on'); 
+    api.adjustHeight(false, api.getHeighestPanel());
+  } else {
+    api.options.autoHeight = true;
+    $(this).text('turn off');
+    api.adjustHeight(false, api.getHeight());
+  }
+  e.preventDefault();
+});</code></pre>
  <hr>
 </div>
 <div class="content-ad">
@@ -189,15 +201,15 @@
 
 <script src="../js/jquery.easing.1.3.js"></script>
 <script src="../js/jquery.touchSwipe.min.js"></script>
-<script src="../js/jquery.liquid-slider.js"></script>
+<script src="../js/jquery.liquid-slider.min.js"></script>
 <script src="./assets/prism.js"></script>
 <script>
 $('#slider-6').liquidSlider({
   slideEaseFunction:'animate.css',
   slideEaseDuration:1000,
   heightEaseDuration:1000,
-  animateIn:"rotateIn",
-  animateOut:"rotateOutDownRight",
+  animateIn:"rotateInUpRight",
+  animateOut:"rotateOutUpLeft",
   callback: function() {
     var self = this;
     $('.slider-6-panel').each(function() {
@@ -216,7 +228,6 @@ $('.height-toggle').on('click', function(e) {
     $(this).text('turn off');
     api.adjustHeight(false, api.getHeight());
   }
-
   e.preventDefault();
 });
 $('.entrance button').on('click', function() {

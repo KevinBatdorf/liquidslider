@@ -28,7 +28,7 @@
 <div class="container">
   <a class="link" href="http://liquidslider.com">Download Page</a>
   <div class="message">
-  <p>Below is a collection of demos mainly used for visual testing. I've included the code for your convenience. I'll try to add more over time, but feel free to <a class="link" href="http://www.liquidslider.com/support">contact me</a> if you have a clever idea you want to see included. To view the responsivness, simply resize your browser.</p>
+  <p>Below is a collection of demos mainly used for visual testing. I've included the code for your convenience. I'll try to add more over time, but feel free to <a class="link" href="http://www.liquidslider.com/support">contact me</a> if you have a clever idea you want to see included. <strong>To view the responsivness, simply resize your browser.</strong></p>
   </div>
   <div class="nav-area">
     <div class="pure-menu pure-menu-open">
@@ -36,8 +36,8 @@
       <ul>
           <li><a href="#how-to-install">How To Install</a></li>
           <li><a href="#default-settings">Default Settings</a></li>
+          <li><a href="#how-to-edit-settings">How To Edit Settings</a></li>
           <li><a href="#autoplay-and-transition-controls">Autoplay & Transition Controls</a></li>
-          <li><a href="#continuous-slide-disabled">Continuous Slide Disabled</a></li>
           <li><a href="#advanced-controls">Advanced Controls</a></li>
           <li><a href="#hooks">Hooks</a></li>
       </ul>
@@ -157,10 +157,10 @@ $(function(){
   <pre class="line-numbers language-javascript"><code>$('#slider-id').liquidSlider();</code></pre>
   <hr>
 </div>
-<div id="continuous-slide-disabled">
+<div id="how-to-edit-settings">
   <!-- Slider 2 -->
-  <h2>Continuous Slide Disabled <a href="#continuous-slide-disabled">#</a></h2>
-  <p>With continuous disabled, the slider wont continue in one direction forever. Try sliding left.</p>
+  <h2>How to edit settings <a href="#how-to-edit-settings">#</a></h2>
+  <p>Changing a setting is easy. The following disables continuous sliding and changes the default easing.</p>
   <div class="liquid-slider" id="slider-2">
     <div>
       <h2 class="title">Slide 1</h2>
@@ -180,7 +180,10 @@ $(function(){
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
     </div>
   </div>
-  <pre class="line-numbers language-javascript"><code>$('#slider-2').liquidSlider({continuous:false});</code></pre>
+  <pre class="line-numbers language-javascript"><code>$('#slider-2').liquidSlider({
+  continuous:false,
+  slideEaseFunction: "easeInOutCubic"
+});</code></pre>
   <hr>
 </div>
 <div class="content-ad">
@@ -264,7 +267,7 @@ $('#range-delay').change(function() {
   <!-- Slider 4 -->
   <h2>Advanced Controls. <a href="#advanced-controls">#</a></h2>
   <p>Hash linking allows you to link to the slider from an external page, and have a specific panel appear (Look in the URL). Perfect for selective marketting, and more. Cross links control the slider from anywhere on the page, even from within the slider itself. You can also use the API to control the slider, which is useful when using other javascript functions or plugins.</p>
-  <p>This slider should load on panel 2 if no hash tag is supplied via <code class="language-javascript">firstPanelToLoad:2</code></p>
+  <p>This slider should load on panel 2 if no hash tag is supplied because of <code class="language-javascript">firstPanelToLoad:2</code>. I disabled hash linking for this page so that I can link to specific sections of this page. <a href="#" class="link enable-hash">Click to enable.</a></p>
   <div class="liquid-slider" id="slider-4">
     <div>
       <h2 class="title">Slide 1</h2>
@@ -350,7 +353,7 @@ $('#range-delay').change(function() {
 <div id="hooks">
   <!-- Slider 5 -->
   <h2>Hooks <a href="#hooks">#</a></h2>
-  <p>There are four functions that you can hook into. Once right before the slider removes the preloader (preload), once the slider fully loads (onload), at the start of a transition (pretransition), and once a transition completes (callback).</p>
+  <p>There are four functions that you can hook into. Once right before the slider removes the preloader (preload), once the slider fully loads (onload), at the start of a transition (pretransition), and once a transition completes (callback). Note that this might be slow when testing offline due to Google Analytics delaying page load.</p>
   <div class="liquid-slider" id="slider-5">
     <div>
       <h2 class="title">Slide 1</h2>
@@ -377,6 +380,7 @@ $('#range-delay').change(function() {
   <p>The pretransition function fires as soon as a transition begins. in this case I set a top bar to slide down. Then finally the callback function executes after a transition is complete. This one slides up the top bar and sets random colors to the navigation tabs.</p>
   <p>Additionally, the <code class="language-javascript">pretransition</code> function must include <code class="language-javascript">this.transition();</code> if you plan to edit this setting. Otherwise it won't complete the transition. Note that you may also pause the slider at this point.</p>  
   <pre class="line-numbers language-javascript"><code>$('#slider-5').liquidSlider({
+  preloader:true,
   preload: function() {
     var self = this;
     $('.btn-load').on('click', function () {
@@ -420,7 +424,7 @@ $('#range-delay').change(function() {
   
   <script src="../js/jquery.easing.1.3.js"></script>
   <script src="../js/jquery.touchSwipe.min.js"></script>
-  <script src="../js/jquery.liquid-slider.js"></script>
+  <script src="../js/jquery.liquid-slider.min.js"></script>
   <script src="./assets/prism.js"></script>
   <script>
   $('#slider-1').liquidSlider();
@@ -441,16 +445,25 @@ $('#range-delay').change(function() {
   $('#range-delay').change(function() {
     api.options.autoSlideInterval = -$(this).val()
   });
+
   $('#slider-4').liquidSlider({
-    hashLinking:true,
+    //hashLinking:true,
     crossLinks:true,
-    firstPanelToLoad:2
+    firstPanelToLoad:2,
   });
   var api2 = $.data( $('#slider-4')[0], 'liquidSlider');
+  $('.enable-hash').on('click', function(e){
+    e.preventDefault();
+    api2.options.hashLinking = true;
+    api2.updateHashTags();
+    $(this).fadeOut();
+  })
   $('.btn-hover').on('mouseover', function() {
     api2.setNextPanel(3);
   });
+
   $('#slider-5').liquidSlider({
+    preloader:true,
     preload: function() {
       var self = this;
       $('.btn-load').on('click', function () {

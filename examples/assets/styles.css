@@ -62,7 +62,10 @@ h2:not(.title) {
 }
 h2:not(.title):before {
   content: counter(paniki-counter) '. ';
-}    
+}
+h3 {
+  color: rgb(66, 184, 221);
+}
 hr {
   margin: 30px 0;
   border: 2px dashed #eee;
@@ -110,6 +113,13 @@ button {
   border-radius: 4px;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
+.pure-button-xlarge {
+    font-size: 125%;
+}
+.top-buttons {
+  width:305px;
+  margin:100px auto;
+}
 .nav-area {
   overflow:hidden;
 }
@@ -124,6 +134,65 @@ button {
   width: 150px;
   margin: 50px auto 10px;
 }
+/*#main-slider-wrapper {
+  -webkit-animation-duration: 3s;
+     -moz-animation-duration: 3s;
+       -o-animation-duration: 3s;
+          animation-duration: 3s;
+  -webkit-animation-iteration-count: infinite;
+     -moz-animation-iteration-count: infinite;
+       -o-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-name: UpDown;
+     -moz-animation-name: UpDown;
+       -o-animation-name: UpDown;
+          animation-name: UpDown;
+}
+@-webkit-keyframes UpDown {
+  0% {-webkit-transform: translateY(20px);}
+  50% {-webkit-transform:translateY(0);}  
+  100% {-webkit-transform: translateY(20px);}
+}
+
+@-moz-keyframes UpDown {
+  0% {-moz-transform: translateY(20px);}
+  50% {-moz-transform:translateY(0);}  
+  100% {-moz-transform: translateY(20px);}
+}
+
+@-o-keyframes UpDown {
+  0% {-o-transform: translateY(20px);}
+  50% {-o-transform:translateY(0);}  
+  100% {-o-transform: translateY(20px);}
+}
+
+@keyframes UpDown {
+  0% {transform: translateY(20px);}
+  50% {transform:translateY(0);}  
+  100% {transform: translateY(20px);}
+}*/
+.shadow {
+  position: relative;
+  height: 20px;
+  width:70%;
+  margin:0 auto;
+  display:block;
+}
+.shadow:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  border-radius: 50% / 20px; 
+  box-shadow: rgba(0, 0, 0, 0.5) 0 5px 10px;
+  clip: rect(20px, auto, 50px, 0);
+}
+/*pre.home-code {
+  margin-top:100px;
+}*/
+
 
 @media (min-width:600px) {
   .animations {

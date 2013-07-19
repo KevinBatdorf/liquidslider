@@ -1,5 +1,5 @@
 /*!
- *  Liquid Slider v1.3.8
+ *  Liquid Slider v2.0.0
  *  http://liquidslider.com
  *  GPL license
  */
@@ -24,103 +24,6 @@ if (typeof Object.create !== 'function') {
   var Slider = {
     //initialize
 
-    addPreloader: function() {
-      var self = this;
-      $(self.sliderId + '-wrapper').append('<div class="ls-preloader"></div>');
-    },
-
-    removePreloader: function() {
-      var self = this;
-      $(self.sliderId + '-wrapper .ls-preloader').fadeTo('slow', 0, function() {
-        $(this).remove();
-      });
-    },
-
-    determineAnimationType: function() {
-      var self = this,
-        animationstring = 'animation',
-        keyframeprefix = '',
-        domPrefixes = 'Webkit Moz O ms Khtml'.split(' '),
-        pfx = '',
-        i = 0;
-      // Decide whether or not to use CSS transitions or jQuery
-      // https://developer.mozilla.org/en-US/docs/CSS/CSS_animations/Detecting_CSS_animation_support
-      self.useCSS = false;
-      if (self.elem.style.animationName) {
-        self.useCSS = true;
-      }
-      if (self.useCSS === false) {
-        for (i = 0; i < domPrefixes.length; i++) {
-          if (self.elem.style[domPrefixes[i] + 'AnimationName'] !== undefined) {
-            pfx = domPrefixes[i];
-            animationstring = pfx + 'Animation';
-            keyframeprefix = '-' + pfx.toLowerCase() + '-';
-            self.useCSS = true;
-            break;
-          }
-        }
-      }
-      if (document.documentElement.clientWidth > self.options.useCSSMaxWidth) {
-        self.useCSS = false;
-      }
-    },
-
-    configureCSSTransitions: function(slide, height) {
-      var self = this,
-        slideTransition,
-        heightTransition;
-      self.easing = {
-        // Penner equations
-        easeOutCubic: 'cubic-bezier(.215,.61,.355,1)',
-        easeInOutCubic: 'cubic-bezier(.645,.045,.355,1)',
-        easeInCirc: 'cubic-bezier(.6,.04,.98,.335)',
-        easeOutCirc: 'cubic-bezier(.075,.82,.165,1)',
-        easeInOutCirc: 'cubic-bezier(.785,.135,.15,.86)',
-        easeInExpo: 'cubic-bezier(.95,.05,.795,.035)',
-        easeOutExpo: 'cubic-bezier(.19,1,.22,1)',
-        easeInOutExpo: 'cubic-bezier(1,0,0,1)',
-        easeInQuad: 'cubic-bezier(.55,.085,.68,.53)',
-        easeOutQuad: 'cubic-bezier(.25,.46,.45,.94)',
-        easeInOutQuad: 'cubic-bezier(.455,.03,.515,.955)',
-        easeInQuart: 'cubic-bezier(.895,.03,.685,.22)',
-        easeOutQuart: 'cubic-bezier(.165,.84,.44,1)',
-        easeInOutQuart: 'cubic-bezier(.77,0,.175,1)',
-        easeInQuint: 'cubic-bezier(.755,.05,.855,.06)',
-        easeOutQuint: 'cubic-bezier(.23,1,.32,1)',
-        easeInOutQuint: 'cubic-bezier(.86,0,.07,1)',
-        easeInSine: 'cubic-bezier(.47,0,.745,.715)',
-        easeOutSine: 'cubic-bezier(.39,.575,.565,1)',
-        easeInOutSine: 'cubic-bezier(.445,.05,.55,.95)',
-        easeInBack: 'cubic-bezier(.6,-.28,.735,.045)',
-        easeOutBack: 'cubic-bezier(.175,.885,.32,1.275)',
-        easeInOutBack: 'cubic-bezier(.68,-.55,.265,1.55)'
-      };
-      // Build a CSS class depending on the type of transition
-      if (self.useCSS) {
-        slideTransition = 'all ' + (slide || self.options.slideEaseDuration) + 'ms ' +
-          self.easing[self.options.slideEaseFunction];
-        heightTransition = 'all ' + (height || self.options.heightEaseDuration) + 'ms ' +
-          self.easing[self.options.heightEaseFunction];
-        // Build the width transition rules
-        $(self.panelContainer).css({
-          '-webkit-transition': slideTransition,
-          '-moz-transition': slideTransition,
-          '-ms-transition': slideTransition,
-          '-o-transition': slideTransition,
-          'transition': slideTransition
-        });
-        // Build the height transition rules
-        if (self.options.autoHeight) {
-          (self.$sliderId).css({
-            '-webkit-transition': heightTransition,
-            '-moz-transition': heightTransition,
-            '-ms-transition': heightTransition,
-            '-o-transition': heightTransition,
-            'transition': heightTransition
-          });
-        }
-      }
-    },
     makeResponsive: function() {
       var self = this;
       // Adjust widths and add classes to make responsive
@@ -145,7 +48,8 @@ if (typeof Object.create !== 'function') {
         clearTimeout(self.resizingTimeout);
         self.resizingTimeout = setTimeout(function() {
           var height = (self.options.autoHeight) ? self.getHeight() : self.getHeighestPanel(self.nextPanel);
-          self.adjustHeight(false, height);
+          if (self.options.autoHeight)
+      self.adjustHeight(false, height);
         }, 500);
       });
     },
@@ -285,6 +189,14 @@ if (typeof Object.create !== 'function') {
       }
     },
 
+    registerNav: function() {
+      var self = this;
+      (self.$sliderWrap).find('[class^=ls-nav] li').on('click', function() {
+        self.setNextPanel(parseInt($(this).attr('class').split('tab')[1], 10) - 1);
+        return false;
+      });
+    },
+
     addArrows: function(arrowClass) {
       var self = this,
         arrow = (self.options.dynamicArrowsGraphical) ? "-arrow " : ' ';
@@ -331,39 +243,10 @@ if (typeof Object.create !== 'function') {
       }
     },
 
-    hover: function() {
-      var self = this;
-
-      (self.$sliderWrap).hover(
-        function() {
-          if (self.options.hoverArrows)
-            self.hideShowArrows(self.options.fadeInDuration, true, true, false);
-
-          if (self.options.pauseOnHover)
-            clearTimeout(self.autoSlideTimeout);
-        },
-        function() {
-          if (self.options.hoverArrows)
-            self.hideShowArrows(self.options.fadeOutnDuration, true, false, true);
-
-          if (self.options.pauseOnHover && self.options.autoSlide)
-            self.startAutoSlide();
-        }
-      );
-    },
-
     registerArrows: function() {
       var self = this;
       $((self.$sliderWrap).find('[class^=ls-nav-]')).on('click', function() {
         self.setNextPanel($(this).attr('class').split(' ')[0].split('-')[2]);
-      });
-    },
-
-    registerTabs: function() {
-      var self = this;
-      (self.$sliderWrap).find('[class^=ls-nav] li').on('click', function() {
-        self.setNextPanel(parseInt($(this).attr('class').split('tab')[1], 10) - 1);
-        return false;
       });
     },
 
@@ -379,21 +262,7 @@ if (typeof Object.create !== 'function') {
       });
     },
 
-    stopAutoSlide: function() {
-      var self = this;
-      self.options.autoSlide = false;
-      clearTimeout(self.autoSlideTimeout);
-    },
-
-    startAutoSlide: function(reset) {
-      var self = this;
-      self.options.autoSlide = true;
-      if (!reset) self.setNextPanel(self.options.autoSlideDirection);
-      self.autoSlide(clearTimeout(self.autoSlideTimeout));
-    },
-
-    touch: function() {
-      // Touch Events
+    registerTouch: function() {
       var self = this;
       $(self.sliderId + ' .panel').swipe({
         fallbackToMouseEvents: false,
@@ -406,8 +275,7 @@ if (typeof Object.create !== 'function') {
       });
     },
 
-    keyboard: function() {
-      // Keyboard Events
+    registerKeyboard: function() {
       var self = this;
       $(document).keydown(function(event) {
         var key = event.keyCode || event.which;
@@ -441,6 +309,71 @@ if (typeof Object.create !== 'function') {
         self.setNextPanel(self.options.autoSlideDirection);
         self.autoSlide();
       }, self.options.autoSlideInterval);
+    },
+
+    stopAutoSlide: function() {
+      var self = this;
+      self.options.autoSlide = false;
+      clearTimeout(self.autoSlideTimeout);
+    },
+
+    startAutoSlide: function(reset) {
+      var self = this;
+      self.options.autoSlide = true;
+      if (!reset) self.setNextPanel(self.options.autoSlideDirection);
+      self.autoSlide(clearTimeout(self.autoSlideTimeout));
+    },
+
+    updateHashTags: function() {
+      var self = this,
+        filtered = (self.nextPanel === self.panelCount) ? 0 : self.nextPanel;
+      window.location.hash = self.getFromPanel(self.options.hashTitleSelector, filtered);
+    },
+
+    transitionFade: function() {
+      var self = this;
+      $(self.panelClass).eq(self.nextPanel)
+        .fadeTo(self.options.fadeInDuration, 1.0).css('z-index', 1);
+      $(self.panelClass).eq(self.prevPanel)
+        .fadeTo(self.options.fadeOutDuration, 0).css('z-index', 0);
+      self.callback(self.options.callback, true);
+    },
+
+    adjustHeight: function(noAnimation, height, easing, duration) {
+      var self = this;
+      if (noAnimation || self.useCSS) {
+        if (noAnimation) self.configureCSSTransitions('0', '0');
+        (self.$sliderId).height(height);
+        if (noAnimation) self.configureCSSTransitions();
+        return;
+      }
+      (self.$sliderId).animate({
+        'height': height + 'px'
+      }, {
+        easing: easing || self.options.heightEaseFunction,
+        duration: duration || self.options.heightEaseDuration,
+        queue: false
+      });
+    },
+
+    getHeight: function(height) {
+      var self = this;
+      height = height || self.$panelClass.eq(self.sanatizeNumber(self.nextPanel) - 1).outerHeight(true);
+      // If the height in the settings be higher, honor thy
+      height = (height < self.options.minHeight) ? self.options.minHeight : height;
+      return height;
+    },
+
+    addPreloader: function() {
+      var self = this;
+      $(self.sliderId + '-wrapper').append('<div class="ls-preloader"></div>');
+    },
+
+    removePreloader: function() {
+      var self = this;
+      $(self.sliderId + '-wrapper .ls-preloader').fadeTo('slow', 0, function() {
+        $(this).remove();
+      });
     },
 
     init: function(options, elem) {
@@ -494,6 +427,8 @@ if (typeof Object.create !== 'function') {
         self.$sliderWrap.width(self.$sliderId.outerWidth(true) +
           self.leftArrow.outerWidth(true) +
           self.rightArrow.outerWidth(true));
+
+      self.loaded = true;
 
       $(window).bind("load", function() {
         self.options.preload.call(self);
@@ -592,18 +527,111 @@ if (typeof Object.create !== 'function') {
       self.updateClass();
     },
 
-    getFirstPanel: function() {
+    determineAnimationType: function() {
       var self = this,
-        output;
-      // is there a hash tag?
-      if (self.options.hashLinking) {
-        output = self.getPanelNumber(window.location.hash, self.options.hashTitleSelector);
-        // Default to panel 1 if mistyped
-        if (typeof(output) !== 'number') {
-          output = 0;
+        animationstring = 'animation',
+        keyframeprefix = '',
+        domPrefixes = 'Webkit Moz O ms Khtml'.split(' '),
+        pfx = '',
+        i = 0;
+      // Decide whether or not to use CSS transitions or jQuery
+      // https://developer.mozilla.org/en-US/docs/CSS/CSS_animations/Detecting_CSS_animation_support
+      self.useCSS = false;
+      if (self.elem.style.animationName) {
+        self.useCSS = true;
+      }
+      if (self.useCSS === false) {
+        for (i = 0; i < domPrefixes.length; i++) {
+          if (self.elem.style[domPrefixes[i] + 'AnimationName'] !== undefined) {
+            pfx = domPrefixes[i];
+            animationstring = pfx + 'Animation';
+            keyframeprefix = '-' + pfx.toLowerCase() + '-';
+            self.useCSS = true;
+            break;
+          }
         }
       }
-      return (output) ? output : self.options.firstPanelToLoad - 1;
+      if (document.documentElement.clientWidth > self.options.useCSSMaxWidth) {
+        self.useCSS = false;
+      }
+    },
+
+    configureCSSTransitions: function(slide, height) {
+      var self = this,
+        slideTransition,
+        heightTransition;
+      self.easing = {
+        // Penner equations
+        easeOutCubic: 'cubic-bezier(.215,.61,.355,1)',
+        easeInOutCubic: 'cubic-bezier(.645,.045,.355,1)',
+        easeInCirc: 'cubic-bezier(.6,.04,.98,.335)',
+        easeOutCirc: 'cubic-bezier(.075,.82,.165,1)',
+        easeInOutCirc: 'cubic-bezier(.785,.135,.15,.86)',
+        easeInExpo: 'cubic-bezier(.95,.05,.795,.035)',
+        easeOutExpo: 'cubic-bezier(.19,1,.22,1)',
+        easeInOutExpo: 'cubic-bezier(1,0,0,1)',
+        easeInQuad: 'cubic-bezier(.55,.085,.68,.53)',
+        easeOutQuad: 'cubic-bezier(.25,.46,.45,.94)',
+        easeInOutQuad: 'cubic-bezier(.455,.03,.515,.955)',
+        easeInQuart: 'cubic-bezier(.895,.03,.685,.22)',
+        easeOutQuart: 'cubic-bezier(.165,.84,.44,1)',
+        easeInOutQuart: 'cubic-bezier(.77,0,.175,1)',
+        easeInQuint: 'cubic-bezier(.755,.05,.855,.06)',
+        easeOutQuint: 'cubic-bezier(.23,1,.32,1)',
+        easeInOutQuint: 'cubic-bezier(.86,0,.07,1)',
+        easeInSine: 'cubic-bezier(.47,0,.745,.715)',
+        easeOutSine: 'cubic-bezier(.39,.575,.565,1)',
+        easeInOutSine: 'cubic-bezier(.445,.05,.55,.95)',
+        easeInBack: 'cubic-bezier(.6,-.28,.735,.045)',
+        easeOutBack: 'cubic-bezier(.175,.885,.32,1.275)',
+        easeInOutBack: 'cubic-bezier(.68,-.55,.265,1.55)'
+      };
+      // Build a CSS class depending on the type of transition
+      if (self.useCSS) {
+        slideTransition = 'all ' + (slide || self.options.slideEaseDuration) + 'ms ' +
+          self.easing[self.options.slideEaseFunction];
+        heightTransition = 'all ' + (height || self.options.heightEaseDuration) + 'ms ' +
+          self.easing[self.options.heightEaseFunction];
+        // Build the width transition rules
+        $(self.panelContainer).css({
+          '-webkit-transition': slideTransition,
+          '-moz-transition': slideTransition,
+          '-ms-transition': slideTransition,
+          '-o-transition': slideTransition,
+          'transition': slideTransition
+        });
+        // Build the height transition rules
+        if (self.options.autoHeight) {
+          (self.$sliderId).css({
+            '-webkit-transition': heightTransition,
+            '-moz-transition': heightTransition,
+            '-ms-transition': heightTransition,
+            '-o-transition': heightTransition,
+            'transition': heightTransition
+          });
+        }
+      }
+    },
+
+    hover: function() {
+      var self = this;
+
+      (self.$sliderWrap).hover(
+        function() {
+          if (self.options.hoverArrows)
+            self.hideShowArrows(self.options.fadeInDuration, true, true, false);
+
+          if (self.options.pauseOnHover)
+            clearTimeout(self.autoSlideTimeout);
+        },
+        function() {
+          if (self.options.hoverArrows)
+            self.hideShowArrows(self.options.fadeOutnDuration, true, false, true);
+
+          if (self.options.pauseOnHover && self.options.autoSlide)
+            self.startAutoSlide();
+        }
+      );
     },
 
     events: function() {
@@ -611,22 +639,18 @@ if (typeof Object.create !== 'function') {
 
       if (self.options.dynamicArrows) self.registerArrows();
       if (self.options.crossLinks) self.registerCrossLinks();
-      if (self.options.dynamicTabs) self.registerTabs();
+      if (self.options.dynamicTabs) self.registerNav();
+      if (self.options.swipe) self.registerTouch();
+      if (self.options.keyboardNavigation) self.registerKeyboard();
 
       // Click to stop autoSlider
       (self.$sliderWrap).find('*').on('click', function() {
         if (self.options.forceAutoSlide)
           self.startAutoSlide(true);
-        else
+        else if (self.options.autoSlide)
           self.stopAutoSlide();
       });
       self.hover();
-
-      // Enable Touch Events
-      if (self.options.swipe) self.touch();
-
-      // Enable Keyboard Events
-      if (self.options.keyboardNavigation) self.keyboard();
     },
 
     setNextPanel: function(direction) {
@@ -651,6 +675,20 @@ if (typeof Object.create !== 'function') {
       }
     },
 
+    getFirstPanel: function() {
+      var self = this,
+        output;
+      // is there a hash tag?
+      if (self.options.hashLinking) {
+        output = self.getPanelNumber(window.location.hash, self.options.hashTitleSelector);
+        // Default to panel 1 if mistyped
+        if (typeof(output) !== 'number') {
+          output = 0;
+        }
+      }
+      return (output) ? output : self.options.firstPanelToLoad - 1;
+    },
+
     getPanelNumber: function(input, searchTerm) {
       var self = this,
         title,
@@ -664,12 +702,6 @@ if (typeof Object.create !== 'function') {
         }
       });
       return (parseInt(output, 10) ? parseInt(output, 10) - 1 : output);
-    },
-
-    updateHashTags: function() {
-      var self = this,
-        filtered = (self.nextPanel === self.panelCount) ? 0 : self.nextPanel;
-      window.location.hash = self.getFromPanel(self.options.hashTitleSelector, filtered);
     },
 
     getFromPanel: function(searchTerm, panelNumber) {
@@ -713,13 +745,29 @@ if (typeof Object.create !== 'function') {
 
     finalize: function() {
       var self = this;
-      self.loaded = true;
       // Adjust the height again
       var height = (self.options.autoHeight) ? self.getHeight() : self.getHeighestPanel(self.nextPanel);
-      self.adjustHeight(true, height);
+      if (self.options.autoHeight)
+        self.adjustHeight(true, height);
       if (self.options.autoSlide) self.autoSlide();
       if (self.options.preloader) self.removePreloader();
       self.onload();
+    },
+
+    callback: function(callbackFn, isFade) {
+      var self = this;
+      if (callbackFn && self.loaded) {
+        if (self.useCSS && typeof isFade !== 'undefined') {
+          $('.panel-container').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend',
+            function(e) {
+              callbackFn.call(self);
+            });
+        } else {
+          setTimeout(function() {
+            callbackFn.call(self);
+          }, self.options.slideEaseDuration + 50);
+        }
+      }
     },
 
     onload: function() {
@@ -764,7 +812,7 @@ if (typeof Object.create !== 'function') {
           marginLeft = self.getTransitionMargin();
 
       if ((marginLeft + self.pSign) !== (self.panelContainer).css('margin-left') || (marginLeft !== -100)) {
-        if (self.options.autoHeight)
+        if (self.options.autoHeight && !self.animateCSS)
           self.adjustHeight(true, self.getHeight());
         // SLIDE!
         if (self.fade)
@@ -779,19 +827,8 @@ if (typeof Object.create !== 'function') {
       if (!self.noPosttransition) self.callback(self.options.callback);
     },
 
-    transitionFade: function() {
-      var self = this;
-      $(self.panelClass).eq(self.nextPanel)
-        .fadeTo(self.options.fadeInDuration, 1.0).css('z-index', 1);
-      $(self.panelClass).eq(self.prevPanel)
-        .fadeTo(self.options.fadeOutDuration, 0).css('z-index', 0);
-      self.callback(self.options.callback, true);
-    },
-
     transitionOutAnimateCSS: function() {
       var self = this;
-      if (self.options.autoHeight)
-        self.adjustHeight(false, self.getHeight());
       $(self.panelClass).removeClass(self.options.animateIn + ' animated');
       $(self.panelClass).eq(self.prevPanel).addClass('animated ' + self.options.animateOut);
       self.callback(self.transitionInAnimateCSS, undefined);
@@ -799,6 +836,8 @@ if (typeof Object.create !== 'function') {
 
     transitionInAnimateCSS: function() {
       var self = this;
+      if (self.options.autoHeight)
+        self.adjustHeight(false, self.getHeight());
       self.transitionCSS(self.getTransitionMargin(), !self.loaded);
       $(self.panelClass).removeClass(self.options.animateOut + ' animated');
       $(self.panelClass).eq(self.nextPanel).addClass('animated ' + self.options.animateIn);
@@ -840,47 +879,6 @@ if (typeof Object.create !== 'function') {
           //}
         });
       }
-    },
-
-    callback: function(callbackFn, isFade) {
-      var self = this;
-      if (callbackFn && self.loaded) {
-        if (self.useCSS && typeof isFade !== 'undefined') {
-          $('.panel-container').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend',
-            function(e) {
-              callbackFn.call(self);
-            });
-        } else {
-          setTimeout(function() {
-            callbackFn.call(self);
-          }, self.options.slideEaseDuration + 50);
-        }
-      }
-    },
-
-    adjustHeight: function(noAnimation, height, easing, duration) {
-      var self = this;
-      if (noAnimation || self.useCSS) {
-        if (noAnimation) self.configureCSSTransitions('0', '0');
-        (self.$sliderId).height(height);
-        if (noAnimation) self.configureCSSTransitions();
-        return;
-      }
-      (self.$sliderId).animate({
-        'height': height + 'px'
-      }, {
-        easing: easing || self.options.heightEaseFunction,
-        duration: duration || self.options.heightEaseDuration,
-        queue: false
-      });
-    },
-
-    getHeight: function(height) {
-      var self = this;
-      height = height || self.$panelClass.eq(self.sanatizeNumber(self.nextPanel) - 1).outerHeight(true);
-      // If the height in the settings be higher, honor thy
-      height = (height < self.options.minHeight) ? self.options.minHeight : height;
-      return height;
     },
 
     getHeighestPanel: function() {
@@ -946,10 +944,10 @@ if (typeof Object.create !== 'function') {
   $.fn.liquidSlider.options = {
     autoHeight: true,
     minHeight: 0,
-    heightEaseDuration: 1000,
+    heightEaseDuration: 1500,
     heightEaseFunction: "easeInOutExpo",
 
-    slideEaseDuration: 1000,
+    slideEaseDuration: 1500,
     slideEaseFunction: "easeInOutExpo",
     animateIn: "bounceInRight",
     animateOut: "bounceOutRight",
@@ -978,7 +976,7 @@ if (typeof Object.create !== 'function') {
     dynamicTabs: true,
     dynamicTabsHtml: true,
     includeTitle: true,
-    panelTitleSelector: "h2.title",
+    panelTitleSelector: ".title",
     dynamicTabsAlign: "left",
     dynamicTabsPosition: "top",
     firstPanelToLoad: 1,
@@ -986,7 +984,7 @@ if (typeof Object.create !== 'function') {
 
     crossLinks: false,
     hashLinking: false,
-    hashTitleSelector: "h2.title",
+    hashTitleSelector: ".title",
 
     keyboardNavigation: false,
     leftKey: 39,
@@ -1014,7 +1012,8 @@ if (typeof Object.create !== 'function') {
       this.transition();
     },
     callback: function() {},
-    preloader: true,
+
+    preloader: false,
     swipe: true
   };
 
