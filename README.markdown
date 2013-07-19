@@ -1,4 +1,4 @@
-[Liquid Slider](http://liquidslider.com)
+[Liquid Slider 2](http://liquidslider.com)
 ============
 A Responsive jQuery HTML Content Slider
 
