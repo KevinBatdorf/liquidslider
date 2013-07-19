@@ -957,9 +957,6 @@ if (typeof Object.create !== 'function') {
     autoSlide: false,
     autoSlideDirection: 'right',
     autoSlideInterval: 6000,
-    autoSlideControls: false,
-    autoSlideStartText: 'Start',
-    autoSlideStopText: 'Stop',
     forceAutoSlide: false,
     pauseOnHover: false,
 
@@ -978,9 +975,9 @@ if (typeof Object.create !== 'function') {
     panelTitleSelector: ".title",
     dynamicTabsAlign: "left",
     dynamicTabsPosition: "top",
-    firstPanelToLoad: 1,
     navElementTag: "div",
 
+    firstPanelToLoad: 1,
     crossLinks: false,
     hashLinking: false,
     hashTitleSelector: ".title",
