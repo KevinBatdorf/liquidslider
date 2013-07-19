@@ -156,6 +156,9 @@ Default settings vary on custom builds
 
 Versions
 --------
+Version 2.0.1
+- Fixes auto height on resize bug
+
 Version 2.0.0
 - Completely rebuilt from the ground up
 - New API

@@ -1,5 +1,5 @@
 /*!
- *  Liquid Slider v2.0.0
+ *  Liquid Slider v2.0.1
  *  http://liquidslider.com
  *  GPL license
  */
@@ -48,8 +48,7 @@ if (typeof Object.create !== 'function') {
         clearTimeout(self.resizingTimeout);
         self.resizingTimeout = setTimeout(function() {
           var height = (self.options.autoHeight) ? self.getHeight() : self.getHeighestPanel(self.nextPanel);
-          if (self.options.autoHeight)
-      self.adjustHeight(false, height);
+          self.adjustHeight(false, height);
         }, 500);
       });
     },
