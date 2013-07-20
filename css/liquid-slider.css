@@ -213,9 +213,10 @@
   background: transparent;
   padding: 5px;
   font-size: 110%;
-  border: 1px solid #bbb;
+  border: none;
   height: 35px;
   cursor:pointer;
+  outline: 0;
 }
 
 /******************************************************
