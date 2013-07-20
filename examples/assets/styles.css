@@ -120,7 +120,7 @@ button {
   width:305px;
   margin:100px auto;
 }
-.nav-area {
+.nav-area, .animation-block {
   overflow:hidden;
 }
 .liquid-slider p, .liquid-slider h2 {
