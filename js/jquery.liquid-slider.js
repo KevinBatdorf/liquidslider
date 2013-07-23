@@ -1,5 +1,5 @@
 /*!
- *  Liquid Slider v2.0.1
+ *  Liquid Slider v2.0.2
  *  http://liquidslider.com
  *  GPL license
  */
@@ -117,16 +117,6 @@ if (typeof Object.create !== 'function') {
       } else {
         (self.$sliderId).before(dynamicTabsElm);
       }
-      // Add labels
-      $.each(
-        (self.$elem).find(self.options.panelTitleSelector),
-        function(n) {
-          $((self.$sliderWrap)).find('.ls-nav ul').append('<li class="tab' +
-            (n + 1) + '"><a class="' + ( navClass || '') + '" href="#' +
-            (n + 1) + '">' + self.getNavInsides(this) + '</a></li>');
-          if (!self.options.includeTitle) $(this).remove();
-        }
-      );
 
       // Add responsive navigation
       if (self.options.mobileNavigation) {
@@ -148,10 +138,19 @@ if (typeof Object.create !== 'function') {
             $((self.$sliderWrap)).find('.ls-select-box select')
               .append('<option value="tab' + (n + 1) + '">' +
               $(this).text() + '</option>');
-            if (!self.options.includeTitle) $(this).remove();
           }
         );
       }
+      // Add standard navigation
+      $.each(
+        (self.$elem).find(self.options.panelTitleSelector),
+        function(n) {
+          $((self.$sliderWrap)).find('.ls-nav ul').append('<li class="tab' +
+            (n + 1) + '"><a class="' + ( navClass || '') + '" href="#' +
+            (n + 1) + '">' + self.getNavInsides(this) + '</a></li>');
+          if (!self.options.includeTitle) $(this).remove();
+        }
+      );
     },
 
     getNavInsides: function(input) {

@@ -156,6 +156,9 @@ Default settings vary on custom builds
 
 Versions
 --------
+Version 2.0.2
+- Fixes a bug that loses menu names in select box when includeTitle:false
+
 Version 2.0.1
 - Fixes auto height on resize bug
 
