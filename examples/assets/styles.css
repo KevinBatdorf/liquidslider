@@ -3,10 +3,10 @@ body {
   font-size: 16px;
 }
 .container {
-  width:75%;
+  width:90%;
   max-width:1030px;
   margin:0 auto;
-  padding:100px 20px 20px;
+  padding:100px 10px 20px;
 }
 .message {
   margin-bottom:20px;
@@ -134,43 +134,7 @@ button {
   width: 150px;
   margin: 50px auto 10px;
 }
-/*#main-slider-wrapper {
-  -webkit-animation-duration: 3s;
-     -moz-animation-duration: 3s;
-       -o-animation-duration: 3s;
-          animation-duration: 3s;
-  -webkit-animation-iteration-count: infinite;
-     -moz-animation-iteration-count: infinite;
-       -o-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-name: UpDown;
-     -moz-animation-name: UpDown;
-       -o-animation-name: UpDown;
-          animation-name: UpDown;
-}
-@-webkit-keyframes UpDown {
-  0% {-webkit-transform: translateY(20px);}
-  50% {-webkit-transform:translateY(0);}  
-  100% {-webkit-transform: translateY(20px);}
-}
 
-@-moz-keyframes UpDown {
-  0% {-moz-transform: translateY(20px);}
-  50% {-moz-transform:translateY(0);}  
-  100% {-moz-transform: translateY(20px);}
-}
-
-@-o-keyframes UpDown {
-  0% {-o-transform: translateY(20px);}
-  50% {-o-transform:translateY(0);}  
-  100% {-o-transform: translateY(20px);}
-}
-
-@keyframes UpDown {
-  0% {transform: translateY(20px);}
-  50% {transform:translateY(0);}  
-  100% {transform: translateY(20px);}
-}*/
 .shadow {
   position: relative;
   height: 20px;
@@ -189,10 +153,7 @@ button {
   box-shadow: rgba(0, 0, 0, 0.5) 0 5px 10px;
   clip: rect(20px, auto, 50px, 0);
 }
-/*pre.home-code {
-  margin-top:100px;
-}*/
-
+.site-footer{padding:0 0 20px;background:rgb(66, 184, 221);overflow:hidden;*zoom:1}.site-footer .container{padding-top:20px;overflow:hidden;}.site-footer h2{margin:0}.site-footer a.link{color: #fff;border-bottom: 2px dashed #87E0FD}.site-footer a.link:hover{border-bottom:2px solid #87E0FD;text-shadow: 0px 0px 10px #fff}.site-footer .profile{margin-left:15px}.site-footer p{color:#111;margin-top:0}.site-footer .profile .info{margin-top:3%;width:100%;float:left}.site-footer .profile .info h2{color:#fff;display:inline-block;margin:0 0 20px;font-size:26px;padding:0}.circle-image-link{display:none;float:left;width:15%;margin:5% 2% 0 0}.circle-image-link img{width:100%;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;-webkit-border-radius:50%;-moz-border-radius:50%;-ms-border-radius:50%;-o-border-radius:50%;border-radius:50%;-webkit-filter:grayscale(100%);-moz-filter:grayscale(100%);filter:grayscale(100%);-webkit-transition:all 0.5s ease;-moz-transition:all 0.5s ease;-o-transition:all 0.5s ease;transition:all 0.5s ease;-webkit-background-clip:content-box;-moz-background-clip:content-box;background-clip:content-box;-webkit-box-shadow:0 0 0 5px #fff;-moz-box-shadow:0 0 0 5px #fff;box-shadow:0 0 0 5px #fff}.circle-image-link img:hover{-webkit-filter:grayscale(0);-moz-filter:grayscale(0);filter:grayscale(0)}
 
 @media (min-width:600px) {
   .animations {
@@ -210,5 +171,13 @@ button {
   .pure-menu:last-child {
     margin-right: 0;
   }
+  .container {
+    width:75%;
+    padding:100px 20px 20px;
+  }
+  .circle-image-link {
+    display:block;
+  }
+  .site-footer .profile .info { width:70% }
+  .site-footer .profile .info h2 { font-size:36px;margin-right:10px }
 }
-.site-footer{padding:0 0 20px;background:rgb(66, 184, 221);overflow:hidden;*zoom:1}.site-footer .container{padding-top:20px}.site-footer h2{margin:0}.site-footer a.link{color: #fff;border-bottom: 2px dashed #87E0FD}.site-footer a.link:hover{border-bottom:2px solid #87E0FD;text-shadow: 0px 0px 10px #fff}.site-footer .profile{margin-left:15px}.site-footer p{color:#111;margin-top:0}.site-footer .profile .info{margin-top:3%;width:70%;float:left}.site-footer .profile .info h2{color:#fff;display:inline-block;margin-right:10px;font-size:36px;padding:0}.circle-image-link{float:left;width:15%;margin:5% 2% 0 0}.circle-image-link img{width:100%;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;-webkit-border-radius:50%;-moz-border-radius:50%;-ms-border-radius:50%;-o-border-radius:50%;border-radius:50%;-webkit-filter:grayscale(100%);-moz-filter:grayscale(100%);filter:grayscale(100%);-webkit-transition:all 0.5s ease;-moz-transition:all 0.5s ease;-o-transition:all 0.5s ease;transition:all 0.5s ease;-webkit-background-clip:content-box;-moz-background-clip:content-box;background-clip:content-box;-webkit-box-shadow:0 0 0 5px #fff;-moz-box-shadow:0 0 0 5px #fff;box-shadow:0 0 0 5px #fff}.circle-image-link img:hover{-webkit-filter:grayscale(0);-moz-filter:grayscale(0);filter:grayscale(0)}
