@@ -48,8 +48,8 @@
       <a class="pure-menu-heading">Page 2</a>
       <ul>
           <li><a href="#animate-css">Animate.css</a></li>
-<!--           <li><a href="#"></a></li>
-          <li><a href="#"></a></li>
+          <li><a href="#ajax">Ajax</a></li>
+ <!--         <li><a href="#"></a></li>
           <li><a href="#"></a></li>
           <li><a href="#"></a></li>
           <li><a href="#"></a></li> -->
@@ -68,7 +68,6 @@
     </div>     -->
   </div>
 <div id="animate-css">
-  <!-- Slider-6 -->
   <h2>Animate.css</h2>
   <p>The Liquid Slider now natively supports the popular animate.css plugin. Test it out below by selecting your animation types and moving the slider. Note that if you want to use the same transition for both entrance and exit, you must include a specific callback function (see below). You can also <a class="link height-toggle" href="#">turn on</a> the <code class="language-javascript">autoHeight</code> setting too.</p>
   <div class="liquid-slider" id="slider-6">
@@ -188,6 +187,60 @@
 </script>
   <hr>
 </div>
+<div id="ajax">
+  <h2>Ajax</h2>
+  <p>This section actually has very little to do with Ajax, but when people ask me how to use the slider with Ajax, I know they are really asking how they can reconfigure the height after the content has loaded in. To take it one step further, I'll show you how you can easily use the built in preloader function as well!</p>
+  <div class="liquid-slider" id="slider-7">
+    <div>
+      <h2 class="title">Form</h2>
+      <div class="ajax-container">
+        <form class="pure-form">
+          <fieldset>
+              <legend>My favorite thing is...</legend>
+
+              <input style="font-size:0.97em" class="ajax1-input" type="text" placeholder="">
+              <button type="submit" class="ajax1 pure-button pure-button-secondary">Search</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+    <div>
+      <h2 class="title">Slider Settings</h2>
+      <pre class="language-javascript line-numbers"><code>$('#slider-7').liquidSlider({
+  includeTitle:false,
+  slideEaseFunction:'animate.css',
+  slideEaseDuration:1000,
+  heightEaseDuration:1000,
+  animateIn:"fadeIn",
+  animateOut:"bounceOutRight"
+});</code></pre>
+    </div>          
+    <div>
+      <h2 class="title">AJAX Logic</h2>
+      <pre class="language-javascript line-numbers"><code>var api2 = $.data( $('#slider-7')[0], 'liquidSlider');
+
+$('.ajax1').on('click', function(e) {
+  e.preventDefault();
+  api2.addPreloader();
+  $('.ajax-container').html('');
+  $.ajax({
+    type: "GET",
+    url: "",
+    dataType: "jsonp",
+    success: function() {},
+    error: function() {},
+    complete: function() {
+      $('.ajax-container').html('&lt;p&gt;This JSON request was faked...&lt;/p&gt;' + $('.profile').html());
+      api2.adjustHeight(true, api2.getHeight());
+      api2.removePreloader();
+    }
+  });</code></pre>
+    </div>
+  </div>
+  <p>I know I fooled you there a bit, but there's no sense in actually running an ajax request here. You can find those tutorials elsewhere. However, if you skip over to the AJAX Logic tab above I will walk you through the code.</p>
+  <p>Actually, it should be very easy to follow. Line 1 stores the slider in an object that lets us access the public functions. Then after the button is clicked, we prevent the form submission, add the preloader, delete the form, and make the ajax request. Here you would set up situations that run on success or error, then once completed you would adjust the height and finally remove the preloader. It's too simple, right?</p>
+</div> <!-- end #ajax -->
+
 </div>
 <footer class="site-footer" role="contentinfo">
 <div class="container">
@@ -206,7 +259,7 @@
 
 <script src="../js/jquery.easing.1.3.js"></script>
 <script src="../js/jquery.touchSwipe.min.js"></script>
-<script src="../js/jquery.liquid-slider.min.js"></script>
+<script src="../js/jquery.liquid-slider.js"></script>
 <script src="./assets/prism.js"></script>
 <script>
 $('#slider-6').liquidSlider({
@@ -232,7 +285,7 @@ $('.height-toggle').on('click', function(e) {
   } else {
     api.options.autoHeight = true;
     $(this).text('turn off');
-    api.adjustHeight(false, api.getHeight());
+    api.adjustHeight(true, api.getHeight());
   }
   e.preventDefault();
 });
@@ -251,6 +304,34 @@ $('.exit button').on('click', function() {
   if (api.options.animateIn !== api.options.animateOut)
     $(api.panelClass).removeClass(api.options.animateOut);
   api.options.animateOut = $(this).text();
+});
+
+$('#slider-7').liquidSlider({
+  includeTitle:false,
+  slideEaseFunction:'animate.css',
+  slideEaseDuration:1000,
+  heightEaseDuration:1000,
+  animateIn:"fadeIn",
+  animateOut:"bounceOutRight"
+});
+var api2 = $.data( $('#slider-7')[0], 'liquidSlider');
+// Ajax stuff
+$('.ajax1').on('click', function(e) {
+  e.preventDefault();
+  api2.addPreloader();
+  $('.ajax-container').html('');
+  $.ajax({
+    type: "GET",
+    url: "",
+    dataType: "jsonp",
+    success: function() {},
+    error: function() {},
+    complete: function() {
+      $('.ajax-container').html('<p>This JSON request was faked, and you will surely want to write a real one in it\'s place</p>' + $('.profile').html());
+      api2.adjustHeight(true, api2.getHeight());
+      api2.removePreloader();
+    }
+  });
 });
 </script>
 
