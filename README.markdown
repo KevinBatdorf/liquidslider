@@ -156,6 +156,9 @@ Default settings vary on custom builds
 
 Versions
 --------
+Version 2.0.3
+- Fixes a bug that didn't call pretransition when using animate.css
+
 Version 2.0.2
 - Fixes a bug that loses menu names in select box when includeTitle:false
 

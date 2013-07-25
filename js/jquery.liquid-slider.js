@@ -1,5 +1,5 @@
 /*!
- *  Liquid Slider v2.0.2
+ *  Liquid Slider v2.0.3
  *  http://liquidslider.com
  *  GPL license
  */
@@ -784,8 +784,6 @@ if (typeof Object.create !== 'function') {
       self.noPosttransition = noPosttransition;
       if (!self.loaded)
         self.transition();
-      else if(self.animateCSS)
-        self.transitionOutAnimateCSS();
       else
         self.options.pretransition.call(self);
     },
@@ -808,6 +806,11 @@ if (typeof Object.create !== 'function') {
     transition: function() {
       var self = this,
           marginLeft = self.getTransitionMargin();
+
+      if(self.animateCSS && self.loaded) {
+        self.transitionOutAnimateCSS();
+        return false;
+      }
 
       if ((marginLeft + self.pSign) !== (self.panelContainer).css('margin-left') || (marginLeft !== -100)) {
         if (self.options.autoHeight && !self.animateCSS)
