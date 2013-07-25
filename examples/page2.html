@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../css/animate.css">
   <link rel="stylesheet" href="./assets/prism.css">
   <link rel="stylesheet" href="./assets/styles.css">
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <title>Liquid Slider Examples</title>
@@ -49,8 +50,8 @@
       <ul>
           <li><a href="#animate-css">Animate.css</a></li>
           <li><a href="#ajax">Ajax</a></li>
- <!--         <li><a href="#"></a></li>
-          <li><a href="#"></a></li>
+          <li><a href="#alternative-navigation">Alternative Navigation</a></li>
+ <!--          <li><a href="#"></a></li>
           <li><a href="#"></a></li>
           <li><a href="#"></a></li> -->
       </ul>
@@ -68,7 +69,7 @@
     </div>     -->
   </div>
 <div id="animate-css">
-  <h2>Animate.css</h2>
+  <h2>Animate.css<a href="#animate-css">#</a></h2>
   <p>The Liquid Slider now natively supports the popular animate.css plugin. Test it out below by selecting your animation types and moving the slider. Note that if you want to use the same transition for both entrance and exit, you must include a specific callback function (see below). You can also <a class="link height-toggle" href="#">turn on</a> the <code class="language-javascript">autoHeight</code> setting too.</p>
   <div class="liquid-slider" id="slider-6">
     <div>
@@ -188,7 +189,7 @@
   <hr>
 </div>
 <div id="ajax">
-  <h2>Ajax</h2>
+  <h2>Ajax<a href="#ajax">#</a></h2>
   <p>This section actually has very little to do with Ajax, but when people ask me how to use the slider with Ajax, I know they are really asking how they can reconfigure the height after the content has loaded in. To take it one step further, I'll show you how you can easily use the built in preloader function as well!</p>
   <div class="liquid-slider" id="slider-7">
     <div>
@@ -239,9 +240,116 @@ $('.ajax1').on('click', function(e) {
   </div>
   <p>I know I fooled you there a bit, but there's no sense in actually running an ajax request here. You can find those tutorials elsewhere. However, if you skip over to the AJAX Logic tab above I will walk you through the code.</p>
   <p>Actually, it should be very easy to follow. Line 1 stores the slider in an object that lets us access the public functions. Then after the button is clicked, we prevent the form submission, add the preloader, delete the form, and make the ajax request. Here you would set up situations that run on success or error, then once completed you would adjust the height and finally remove the preloader. It's too simple, right?</p>
+  <hr>
 </div> <!-- end #ajax -->
+<style>
+  @media (max-width: 550px) {
+    #slider-8-nav-ul {
+      font-size: 2em;
+      width:100%;
+    }
+    #slider-8-nav-ul span {
+      display:none;
+    }
+    #slider-8-nav-ul li {
+      display: block;
+      width: 25%;
+      float: left;
+    }
+    #slider-8-nav-ul a {
+      box-sizing:border-box;
+      width:100%;
+      text-align: center;
+    }
+  }
+</style>
 
+<div id="alternative-navigation">
+  <h2>Alternative Navigation<a href="#alternative-navigation">#</a></h2>
+  <p>Using the select box on mobile devices provides a native experience that makes sense to the user and is hard to confuse. However, there are times when an alternative mobile navigation makes more sense. Here I will show you one popular alternative.</p>
+  <div class="liquid-slider" id="slider-8">
+    <div>
+      <h2 class="title"><i class="icon-home"></i><span>Home</span></h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+    </div>
+    <div>
+      <h2 class="title"><i class="icon-inbox"></i><span>Inbox</span></h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+    </div>          
+    <div>
+      <h2 class="title"><i class="icon-camera-retro"></i><span>Album</span></h2>
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+    </div>
+    <div>
+      <h2 class="title"><i class="icon-signout"></i><span>Sign Out</span></h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+    </div>
+  </div>
+  <p>This is also very easy to set up and involves a few simple settings and some css media queries. Additionally, you may need to realign the navigation in some cases where the content width is unknown until later on (i.e. images, fonts, etc).</p>     
+  <pre class="language-javascript line-numbers"><code>$('#slider-8').liquidSlider({
+  includeTitle:false,
+  mobileNavigation:false,
+  onload: function() {
+    this.alignNavigation();
+  }
+});</code></pre>
+<p>Here I have removed the title, disabled the mobile navigation, and told the slider to recalculate the alignment of the navigation after being loaded. The last part is only necessary if your navigation looks split in half and drops down to a second line.</p>
+<pre class="language-css line-numbers"><code class="language-markup">&lt;!-- html --&gt;
+&lt;h2 class="title"&gt;
+  &lt;i class="icon-inbox"&gt;&lt;/i&gt;
+  &lt;span&gt;Inbox&lt;/span&gt;
+&lt;/h2&gt;</code>
+<code class="language-css">/*css*/
+@media (max-width: 550px) {
+  #slider-8-nav-ul {
+    font-size:2em;width:100%}
+  #slider-8-nav-ul span {
+    display:none;}
+  #slider-8-nav-ul li {
+    display:block;width:25%;float:left}
+  #slider-8-nav-ul a {
+    box-sizing:border-box;width:100%;text-align:center}
+  }</code></pre>
+  <p>I included both the html I used within a panel and the css media query, which you would include in the head of your document. There isn't a lot of advanced wizardry happening here, but there are two important things to note.</p>
+  <ul>
+    <li>This might not be the best media query to use as it's not mobile-first in design. I included it for ease, but you might want to set these styles in your base css, then use a "min-width" media query to  override them on larger screens. @media queries only load if they are needed, and the less you load on mobile devices, the better. If you only have a few lines then the footprint is small and don't worry about it, but if you're building a full site then that approach is a must. </li>
+    <li>The <code class="language-css">box-sixing:border-box</code> propery basically tells an element that it will be the width stated, and not increase due to padding, etc. It's an amazing thing, but unfortunately, be sure to check browser support if you plan to use it as you might need vendor prefixes or a polyfill.</li>
+  </ul>
+  <hr>
+</div> <!-- end #ajax -->
+<div class="content-ad">
+<script type="text/javascript"> 
+  var width = window.innerWidth 
+    || document.documentElement.clientWidth 
+    || document.body.clientWidth;
+
+  google_ad_client = "ca-pub-3827380040284749";
+ 
+  if (width > 800) {
+    // Load the Leaderboard 728x90 Unit for wide screen
+    google_ad_slot = "6954218739"; 
+    google_ad_width = 728; 
+    google_ad_height = 90;
+  } else if ((width < 800) && (width > 400)) { 
+    // Load the 336x280 Medium Rectangle 
+    google_ad_slot = "8430951934"; 
+    google_ad_width = 336; 
+    google_ad_height = 280;
+  } else { 
+    // For small screens, load the 468x60 banner 
+    google_ad_slot = "9907685131"; 
+    google_ad_width = 468; 
+    google_ad_height = 60;
+  }
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  <hr>
 </div>
+
+</div> <!-- End of container -->
 <footer class="site-footer" role="contentinfo">
 <div class="container">
   <div class="profile">
@@ -332,6 +440,14 @@ $('.ajax1').on('click', function(e) {
       api2.removePreloader();
     }
   });
+});
+
+$('#slider-8').liquidSlider({
+  includeTitle:false,
+  mobileNavigation:false,
+  onload: function() {
+    this.alignNavigation();
+  }
 });
 </script>
 

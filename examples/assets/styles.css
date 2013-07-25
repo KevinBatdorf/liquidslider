@@ -74,11 +74,12 @@ a.link {
   text-decoration: none;
   color:#0AC0FB;
 }
-p {
+p, li {
   font-family: 'Open Sans', sans-serif;
-
-  margin-top:1.5em;
   line-height: 1.5;
+}
+p {
+  margin-top:1.5em;
 }
 button {
   margin:0 10px 10px 0;
@@ -89,6 +90,12 @@ button {
   -ms-transition: background-color 1s ease;
   -o-transition: background-color 1s ease;
   transition: background-color 1s ease;
+}
+[class^="icon-"] {
+  margin-right: 7px;
+}
+#slider-8-nav-ul {
+  font-size:1.2em;
 }
 .top-bar {
   position: fixed;
