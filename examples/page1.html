@@ -451,7 +451,7 @@ $('#range-delay').change(function() {
   $('#slider-4').liquidSlider({
     //hashLinking:true,
     crossLinks:true,
-    firstPanelToLoad:2,
+    firstPanelToLoad:2
   });
   var api2 = $.data( $('#slider-4')[0], 'liquidSlider');
   $('.enable-hash').on('click', function(e){
@@ -459,7 +459,7 @@ $('#range-delay').change(function() {
     api2.options.hashLinking = true;
     api2.updateHashTags();
     $(this).fadeOut();
-  })
+  });
   $('.btn-hover').on('mouseover', function() {
     api2.setNextPanel(3);
   });

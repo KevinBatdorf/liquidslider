@@ -156,6 +156,9 @@ Default settings vary on custom builds
 
 Versions
 --------
+Version 2.0.4
+- Changes how the slider downgrades to IE
+
 Version 2.0.3
 - Fixes a bug that didn't call pretransition when using animate.css
 
