@@ -1,5 +1,5 @@
 /*!
- *  Liquid Slider v2.0.3
+ *  Liquid Slider v2.0.4
  *  http://liquidslider.com
  *  GPL license
  */
