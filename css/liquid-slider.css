@@ -150,6 +150,7 @@
   color: #333333;
   margin-right: 1px;
   padding: 10px 15px;  
+  outline:0;
 }
 .ls-wrapper .ls-nav a:hover {
   background: #f2f2f2;

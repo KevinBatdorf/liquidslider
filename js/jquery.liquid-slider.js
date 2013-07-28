@@ -383,11 +383,6 @@ if (typeof Object.create !== 'function') {
       // Variable for the % sign if needed (responsive), otherwise px
       self.pSign = (self.options.responsive) ? '%' : 'px';
 
-      // Slide animations bad in ie7, so don't animate height
-      if (navigator.appVersion.indexOf("MSIE 7.") !== -1 ||
-        navigator.appVersion.indexOf("MSIE 8.") !== -1)
-        self.dontAnimateHeight = true;
-
       if (self.options.responsive) {
         // jQuery or CSS3 ?
         self.determineAnimationType();
@@ -400,7 +395,7 @@ if (typeof Object.create !== 'function') {
       // If using animate.css, add the class here and disable other options.
       if (self.options.slideEaseFunction === "animate.css") {
         if (!self.useCSS) {
-          self.options.slideEaseFunction = "fade";
+          self.options.slideEaseFunction = "easeInOutExpo";
         } else {
           self.options.continuous = false;
           self.animateCSS = true;
