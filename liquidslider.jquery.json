@@ -1,15 +1,18 @@
 {
     "name": "liquidslider",
     "title": "Liquid Slider",
-    "description": "A responsive html content slider that features CSS3 transitions, swipe navigation dynamic navigation, and more. Powerful, easy-to-use, and fast.",
+    "description": "A responsive html content slider that features CSS3 transitions, utilizes animate.css, swipe navigation dynamic navigation, and more. Powerful, easy-to-use, and fast.",
     "keywords": [
-        "content",
+        "ui",
         "slider",
         "responsive",
         "swipe",
-        "mobile"
+        "mobile",
+        "animation",
+        "slideshow",
+        "effect"
     ],
-    "version": "2.0.4",
+    "version": "2.0.5",
     "author": {
         "name": "Kevin Batdorf",
         "url": "http://www.kevinbatdorf.com"
