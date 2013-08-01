@@ -1,5 +1,5 @@
 /*!
- *  Liquid Slider v2.0.4
+ *  Liquid Slider v2.0.5
  *  http://liquidslider.com
  *  GPL license
  */
@@ -262,15 +262,7 @@ if (typeof Object.create !== 'function') {
 
     registerTouch: function() {
       var self = this;
-      $(self.sliderId + ' .panel').swipe({
-        fallbackToMouseEvents: false,
-        allowPageScroll: "vertical",
-        swipe: function(e, dir) {
-          // Reverse the swipe direction
-          self.swipeDir = (dir === 'left') ? 'right' : 'left';
-          self.setNextPanel(self.swipeDir);
-        }
-      });
+      $(self.sliderId + ' .panel').swipe(self.options.swipeArgs);
     },
 
     registerKeyboard: function() {
@@ -1007,7 +999,18 @@ if (typeof Object.create !== 'function') {
     callback: function() {},
 
     preloader: false,
-    swipe: true
+    swipe: true,
+    swipeArgs: {
+      fallbackToMouseEvents: false,
+      allowPageScroll: "vertical",
+      swipe: function(e, dir) {
+        if (dir === 'up' || dir === 'down')
+          return false;
+        // Reverse the swipe direction
+        this.swipeDir = (dir === 'left') ? 'right' : 'left';
+        this.setNextPanel(this.swipeDir);
+      }
+    }
   };
 
 })(jQuery, window, document);

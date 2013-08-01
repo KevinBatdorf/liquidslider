@@ -156,6 +156,9 @@ Default settings vary on custom builds
 
 Versions
 --------
+Version 2.0.5
+- Updates touchSwipe and allows user to add options (not documented though)
+
 Version 2.0.4
 - Changes how the slider downgrades to IE
 
