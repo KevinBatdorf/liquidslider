@@ -1,5 +1,5 @@
 /*!
- *  Liquid Slider v2.0.5
+ *  Liquid Slider v2.0.6
  *  http://liquidslider.com
  *  GPL license
  */
@@ -96,9 +96,10 @@ if (typeof Object.create !== 'function') {
           (self.rightArrow).css('margin-' +
             self.options.dynamicTabsPosition, (self.navigation).css('height'));
         }
-        // While resizing, set the width to 100%
-        $(self.sliderId + '-wrapper').css('width', '100%');
       }
+      // While resizing, set the width to 100%
+      $(self.sliderId + '-wrapper').css('width', '100%');
+
       // Update when the select box changes
       if (self.options.mobileNavigation) {
         (self.dropdownSelect).change(function() {

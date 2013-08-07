@@ -156,6 +156,9 @@ Default settings vary on custom builds
 
 Versions
 --------
+Version 2.0.6
+- Fixes mobile width
+
 Version 2.0.5
 - Updates touchSwipe and allows user to add options (not documented though)
 
