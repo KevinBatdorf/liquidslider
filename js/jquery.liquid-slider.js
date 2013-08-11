@@ -847,7 +847,7 @@ if (typeof Object.create !== 'function') {
       var self = this;
       if (noAnimation) self.configureCSSTransitions('0', '0');
       (self.panelContainer).css({
-        '-webkit-transform': 'translate3d(' + marginLeft + self.pSign + ', 0, 0)',
+        '-webkit-transform': 'translate(' + marginLeft + self.pSign + ', 0)',
         '-moz-transform': 'translate3d(' + marginLeft + self.pSign + ', 0, 0)',
         '-ms-transform': 'translate3d(' + marginLeft + self.pSign + ', 0, 0)',
         '-o-transform': 'translate3d(' + marginLeft + self.pSign + ', 0, 0)',
