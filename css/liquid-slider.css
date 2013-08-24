@@ -77,7 +77,9 @@
 .ls-wrapper .panel-container {
   /* Do not edit below this line */
   position: relative;
-
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  /* from http://davidwalsh.name/translate3d */
 }
 .ls-wrapper .liquid-slider .panel-container .fade {
   /* Do not edit below this line */

@@ -263,16 +263,16 @@ if (typeof Object.create !== 'function') {
 
     registerTouch: function() {
       var self = this,
-          args = self.options.swipeArgs ||
-            {fallbackToMouseEvents: false,
-            allowPageScroll: "vertical",
-            swipe: function(e, dir) {
-              if (dir === 'up' || dir === 'down')
-                return false;
-              // Reverse the swipe direction
-              self.swipeDir = (dir === 'left') ? 'right' : 'left';
-              self.setNextPanel(self.swipeDir);
-            }};
+      args = self.options.swipeArgs || {
+        fallbackToMouseEvents: false,
+        allowPageScroll: "vertical",
+        swipe: function(e, dir) {
+          if (dir === 'up' || dir === 'down')
+            return false;
+          // Reverse the swipe direction
+          self.swipeDir = (dir === 'left') ? 'right' : 'left';
+          self.setNextPanel(self.swipeDir);
+        }};
       $(self.sliderId + ' .panel').swipe(args);
     },
 
