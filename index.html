@@ -49,13 +49,6 @@
   </div>
   <span class="shadow"></span>
   <p>The Liquid Slider is a light-weight content slider built for any device. It comes with an powerful API, a custom builder, and easily integrates with animate.css.</p>
-  <pre class="home-code line-numbers language-javascript"><code>$('#main-slider').liquidSlider({
-  slideEaseFunction:'animate.css',
-  animateOut:'rollOut',
-  animateIn:'lightSpeedIn',
-  heightEaseDuration:1000,
-  slideEaseDuration:1000
-});</code></pre>
 </div> <!-- End Container -->
 <footer class="site-footer" role="contentinfo">
 <div class="container">
@@ -77,13 +70,7 @@
   <script src="./js/jquery.touchSwipe.min.js"></script>
   <script src="./js/jquery.liquid-slider.min.js"></script>  
   <script>
-    $('#main-slider').liquidSlider({
-      slideEaseFunction:'animate.css',
-      animateOut:'rollOut',
-      animateIn:'lightSpeedIn',
-      heightEaseDuration:1000,
-      slideEaseDuration:1000
-    });
+    $('#main-slider').liquidSlider();
 
     /* If you need to access the internal property or methods, use this:
     var api = $.data( $('#slider-id')[0], 'liquidSlider');
