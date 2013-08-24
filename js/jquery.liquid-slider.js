@@ -1,5 +1,5 @@
 /*!
- *  Liquid Slider v2.0.7
+ *  Liquid Slider v2.0.8
  *  http://liquidslider.com
  *  GPL license
  */
@@ -491,7 +491,7 @@ if (typeof Object.create !== 'function') {
 
       // Count the number of panels and get the combined width
       self.panelCount = $(self.panelClass).length;
-      self.panelCountTotal = self.panelCount + clonedCount;
+      self.panelCountTotal = (self.fade) ? 1 : self.panelCount + clonedCount;
       self.panelWidth = $(self.panelClass).outerWidth();
       self.totalWidth = self.panelCountTotal * self.panelWidth;
 

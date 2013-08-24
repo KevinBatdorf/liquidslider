@@ -1,5 +1,9 @@
 /*!
+<<<<<<< HEAD
  *  Liquid Slider v2.0.7
+=======
+ *  Liquid Slider v2.0.8
+>>>>>>> origin/gh-pages
  *  http://liquidslider.com
  *  GPL license
  */

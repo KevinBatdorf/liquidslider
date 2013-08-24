@@ -156,6 +156,9 @@ Default settings vary on custom builds
 
 Versions
 --------
+Version 2.0.8
+- Changes the way the slider builds with fade
+
 Version 2.0.7
 - Fixes swipe bug
 
