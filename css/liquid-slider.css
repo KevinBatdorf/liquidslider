@@ -83,6 +83,7 @@
 }
 .ls-wrapper .liquid-slider .panel-container .fade {
   /* Do not edit below this line */
+  width:100%;
   opacity: 0;
   position: absolute;
   top: 0; 
