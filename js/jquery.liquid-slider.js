@@ -1,5 +1,5 @@
 /*!
- *  Liquid Slider v2.0.8
+ *  Liquid Slider v2.0.9
  *  http://liquidslider.com
  *  GPL license
  */
@@ -259,6 +259,7 @@ if (typeof Object.create !== 'function') {
         self.setNextPanel(self.getPanelNumber(($(this).attr('href').split('#')[1]), self.options.panelTitleSelector));
         e.preventDefault();
       });
+      self.updateClass();
     },
 
     registerTouch: function() {
@@ -717,10 +718,10 @@ if (typeof Object.create !== 'function') {
       }
       // Add current class to cross linked Tabs
       if (self.options.crossLinks && self.crosslinks) {
-              (self.crosslinks).not(self.nextPanel).removeClass('currentCrossLink');
+        (self.crosslinks).not(self.nextPanel).removeClass('currentCrossLink');
         (self.crosslinks).each(function() {
           if ($(this).attr('href') === ('#' +
-            self.getFromPanel(self.options.panelTitleSelector, self.nextPanel))) {
+            self.getFromPanel(self.options.panelTitleSelector, self.sanatizeNumber(self.nextPanel) - 1))) {
               $(this).addClass('currentCrossLink');
           }
        });

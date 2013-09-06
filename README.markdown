@@ -156,6 +156,9 @@ Default settings vary on custom builds
 
 Versions
 --------
+Version 2.0.9
+- Fixes a few of the problems with cross links
+
 Version 2.0.8
 - Changes the way the slider builds with fade
 
