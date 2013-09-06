@@ -720,7 +720,8 @@ if (typeof Object.create !== 'function') {
               (self.crosslinks).not(self.nextPanel).removeClass('currentCrossLink');
         (self.crosslinks).each(function() {
           if ($(this).attr('href') === ('#' +
-            self.getFromPanel(self.options.panelTitleSelector, self.nextPanel))) {
+            self.getFromPanel(self.options.panelTitleSelector, self.nextPanel ==
+              self.panelCount ? 0 : self.nextPanel))) {
               $(this).addClass('currentCrossLink');
           }
        });
