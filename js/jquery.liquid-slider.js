@@ -88,13 +88,13 @@ if (typeof Object.create !== 'function') {
             (!(self.leftArrow).length || !(self.rightArrow).length)) {
             self.addArrows();
             self.registerArrows();
+          } else if (!self.options.dynamicArrowsGraphical) {
+            // Reposition the text arrows
+            (self.leftArrow).css('margin-' +
+              self.options.dynamicTabsPosition, (self.navigation).css('height'));
+            (self.rightArrow).css('margin-' +
+              self.options.dynamicTabsPosition, (self.navigation).css('height'));
           }
-        } else if (!self.options.dynamicArrowsGraphical) {
-          // Reposition the text arrows
-          (self.leftArrow).css('margin-' +
-            self.options.dynamicTabsPosition, (self.navigation).css('height'));
-          (self.rightArrow).css('margin-' +
-            self.options.dynamicTabsPosition, (self.navigation).css('height'));
         }
       }
       // While resizing, set the width to 100%
