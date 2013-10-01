@@ -42,15 +42,17 @@ if (typeof Object.create !== 'function') {
       }
       // Set events and fire on browser resize
       self.responsiveEvents();
-      $(window).bind('resize', function() {
+      // Bind the orientation change & resize events
+      var respCallback = function() {
         self.responsiveEvents();
-
         clearTimeout(self.resizingTimeout);
         self.resizingTimeout = setTimeout(function() {
           var height = (self.options.autoHeight) ? self.getHeight() : self.getHeighestPanel(self.nextPanel);
           self.adjustHeight(false, height);
         }, 500);
-      });
+      };
+      if (typeof(orientationEvent) == undefined){ var orientationEvent = 0; /* Hack since this does not exist for desktop browsers */}
+      $(window).bind({'resize':respCallback,orientationEvent:respCallback});
     },
 
     responsiveEvents: function() {
