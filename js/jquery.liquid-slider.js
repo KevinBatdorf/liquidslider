@@ -58,6 +58,8 @@ if (typeof Object.create !== 'function') {
         mobileNavChangeOver = (self.options.hideArrowsThreshold ||
           self.options.mobileUIThreshold ||
           (self.totalNavWidth + 10));
+      // Check the tab height
+      self.setNavTallest();
       // Since we are resizing, let's simply test the width
       if ((self.$sliderId).outerWidth() < mobileNavChangeOver) {
         if (self.options.mobileNavigation) {
@@ -152,6 +154,20 @@ if (typeof Object.create !== 'function') {
           if (!self.options.includeTitle) $(this).remove();
         }
       );
+      self.setNavTallest();
+    },
+
+    setNavTallest: function() {
+      var self = this, maxHeight = 0;
+      var tabs = $((self.$sliderWrap)).find('.ls-nav ul li a');
+      tabs.each(function() {
+        $(this).removeAttr('style');
+        maxHeight = maxHeight > $(this).height() ? maxHeight : $(this).height();
+      });
+      console.log('Tallest '+maxHeight);
+      tabs.each(function() {
+        $(this).height(maxHeight);
+      });
     },
 
     getNavInsides: function(input) {
