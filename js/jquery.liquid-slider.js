@@ -162,8 +162,7 @@ if (typeof Object.create !== 'function') {
     setNavTallest: function() {
       var self = this, maxHeight = 0;
       var tabs = $((self.$sliderWrap)).find('.ls-nav ul li a');
-      tabs.each(function() {
-        $(this).removeAttr('style');
+      tabs.removeAttr('style').each(function() {
         maxHeight = maxHeight > $(this).height() ? maxHeight : $(this).height();
       });
       tabs.each(function() {
