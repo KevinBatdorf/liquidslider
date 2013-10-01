@@ -164,7 +164,6 @@ if (typeof Object.create !== 'function') {
         $(this).removeAttr('style');
         maxHeight = maxHeight > $(this).height() ? maxHeight : $(this).height();
       });
-      console.log('Tallest '+maxHeight);
       tabs.each(function() {
         $(this).height(maxHeight);
       });
