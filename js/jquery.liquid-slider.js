@@ -416,7 +416,7 @@ if (typeof Object.create !== 'function') {
       // If using animate.css, add the class here and disable other options.
       if (self.options.slideEaseFunction === "animate.css") {
         if (!self.useCSS) {
-          self.options.slideEaseFunction = "easeInOutExpo";
+          self.options.slideEaseFunction = self.options.slideEaseFunctionFallback;
         } else {
           self.options.continuous = false;
           self.animateCSS = true;
@@ -966,6 +966,7 @@ if (typeof Object.create !== 'function') {
 
     slideEaseDuration: 1500,
     slideEaseFunction: "easeInOutExpo",
+    slideEaseFunctionFallback: "easeInOutExpo",
     animateIn: "bounceInRight",
     animateOut: "bounceOutRight",
     continuous: true,
