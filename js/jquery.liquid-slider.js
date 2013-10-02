@@ -51,7 +51,7 @@ if (typeof Object.create !== 'function') {
           self.adjustHeight(false, height);
         }, 500);
       };
-      if (typeof(orientationEvent) == undefined){ var orientationEvent = 0; /* Hack since this does not exist for desktop browsers */}
+      if (typeof(orientationEvent) === undefined){ var orientationEvent = 0; /* Hack since this does not exist for desktop browsers */}
       $(window).bind({'resize':respCallback,orientationEvent:respCallback});
     },
 
