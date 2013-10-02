@@ -642,7 +642,7 @@ if (typeof Object.create !== 'function') {
             self.hideShowArrows(self.options.fadeOutnDuration, true, false, true);
 
           if (self.options.pauseOnHover && self.options.autoSlide)
-            self.startAutoSlide();
+            self.startAutoSlide(true);
         }
       );
     },
