@@ -1,5 +1,5 @@
 /*!
- *  Liquid Slider v2.0.9
+ *  Liquid Slider v2.0.10
  *  http://liquidslider.com
  *  GPL license
  */
@@ -88,13 +88,13 @@ if (typeof Object.create !== 'function') {
             (!(self.leftArrow).length || !(self.rightArrow).length)) {
             self.addArrows();
             self.registerArrows();
+          } else if (!self.options.dynamicArrowsGraphical) {
+            // Reposition the text arrows
+            (self.leftArrow).css('margin-' +
+              self.options.dynamicTabsPosition, (self.navigation).css('height'));
+            (self.rightArrow).css('margin-' +
+              self.options.dynamicTabsPosition, (self.navigation).css('height'));
           }
-        } else if (!self.options.dynamicArrowsGraphical) {
-          // Reposition the text arrows
-          (self.leftArrow).css('margin-' +
-            self.options.dynamicTabsPosition, (self.navigation).css('height'));
-          (self.rightArrow).css('margin-' +
-            self.options.dynamicTabsPosition, (self.navigation).css('height'));
         }
       }
       // While resizing, set the width to 100%
@@ -399,7 +399,7 @@ if (typeof Object.create !== 'function') {
       // If using animate.css, add the class here and disable other options.
       if (self.options.slideEaseFunction === "animate.css") {
         if (!self.useCSS) {
-          self.options.slideEaseFunction = "easeInOutExpo";
+          self.options.slideEaseFunction = self.options.slideEaseFunctionFallback;
         } else {
           self.options.continuous = false;
           self.animateCSS = true;
@@ -626,7 +626,7 @@ if (typeof Object.create !== 'function') {
             self.hideShowArrows(self.options.fadeOutnDuration, true, false, true);
 
           if (self.options.pauseOnHover && self.options.autoSlide)
-            self.startAutoSlide();
+            self.startAutoSlide(true);
         }
       );
     },
@@ -692,8 +692,7 @@ if (typeof Object.create !== 'function') {
         output = input.replace('#', '').toLowerCase();
       // Return the num that matches the panel, or return whats given.
       (self.$panelClass).each(function(i) {
-        title = $(this).find(searchTerm).text()
-          .toLowerCase().replace(/(^\s+|\s+$)/g, '').replace(/(\s)/g, '-');
+        title = self.convertRegex($(this).find(searchTerm).text());
         if (title === output) {
           output = i + 1;
         }
@@ -704,9 +703,14 @@ if (typeof Object.create !== 'function') {
     getFromPanel: function(searchTerm, panelNumber) {
       var self = this;
       // Return string that matches selector.
-      return self.$panelClass.find(searchTerm).eq(panelNumber)
-        .text().replace(/(^\s+|\s+$)/g, '').replace(/(\s)/g, '-', '-')
-        .toLowerCase();
+      return self.convertRegex(self.$panelClass.find(searchTerm).eq(panelNumber).text());
+    },
+
+    convertRegex: function(input) {
+      return input
+      .replace(/[^\w -]+/g,'')
+      .replace(/ +/g,'-')
+      .toLowerCase();
     },
 
     updateClass: function() {
@@ -949,6 +953,7 @@ if (typeof Object.create !== 'function') {
 
     slideEaseDuration: 1500,
     slideEaseFunction: "easeInOutExpo",
+    slideEaseFunctionFallback: "easeInOutExpo",
     animateIn: "bounceInRight",
     animateOut: "bounceOutRight",
     continuous: true,

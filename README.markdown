@@ -82,13 +82,14 @@ Default settings vary on custom builds
   heightEaseDuration: 1000,
   heightEaseFunction: "easeInOutExpo",
   
-  slideEaseDuration: 1000,
-  slideEaseFunction: "easeInOutExpo",
-  animateIn:         "bounceInRight",
-  animateOut:        "bounceOutRight",
-  continuous:        true,
-  fadeInDuration:    500,
-  fadeOutDuration:   500,
+  slideEaseDuration:          1000,
+  slideEaseFunction:          "easeInOutExpo",
+  slideEaseFunctionFallback:  "easeInOutExpo",
+  animateIn:                  "bounceInRight",
+  animateOut:                 "bounceOutRight",
+  continuous:                 true,
+  fadeInDuration:             500,
+  fadeOutDuration:            500,
   
   autoSlide:          false,
   autoSlideDirection: 'right',
@@ -156,6 +157,12 @@ Default settings vary on custom builds
 
 Versions
 --------
+Version 2.0.10
+- Fixes how RegEx works (hashLinking)
+- Fixes a bug when dynamic arrows is disabled (@joeworkman)
+- Adds a fallback for animate.css when css not supported (@joeworkman)
+- Fixes autoslide bug (@joeworkman)
+
 Version 2.0.9
 - Fixes a few of the problems with cross links
 
