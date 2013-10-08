@@ -652,14 +652,18 @@ if (typeof Object.create !== 'function') {
 
     setNextPanel: function(direction) {
       var self = this;
+      
       if (direction === self.nextPanel)
         return;
       self.prevPanel = self.nextPanel;
+
       if (self.loaded) {
         if (typeof direction === 'number') {
           self.nextPanel = direction;
+          self.direction = (self.prevPanel > direction) ? 'left' : 'right';
         } else {
           // "left" = -1; "right" = 1;
+          self.direction = direction
           self.nextPanel += (~~(direction === 'right') || -1);
           // If not continuous, slide back at the last or first panel
           if (!self.options.continuous)
@@ -833,8 +837,9 @@ if (typeof Object.create !== 'function') {
 
     transitionOutAnimateCSS: function() {
       var self = this;
-      $(self.panelClass).removeClass(self.options.animateIn + ' animated');
-      $(self.panelClass).eq(self.prevPanel).addClass('animated ' + self.options.animateOut);
+      $(self.panelClass).removeClass(self.options.animateInLeft + ' animated ' + self.options.animateInRight);
+      var classStr = 'animated ' + ((self.direction == 'right') ? self.options.animateOutLeft : self.options.animateOutRight);
+      $(self.panelClass).eq(self.prevPanel).addClass(classStr);
       self.callback(self.transitionInAnimateCSS, undefined);
     },
 
@@ -843,8 +848,9 @@ if (typeof Object.create !== 'function') {
       if (self.options.autoHeight)
         self.adjustHeight(false, self.getHeight());
       self.transitionCSS(self.getTransitionMargin(), !self.loaded);
-      $(self.panelClass).removeClass(self.options.animateOut + ' animated');
-      $(self.panelClass).eq(self.nextPanel).addClass('animated ' + self.options.animateIn);
+      $(self.panelClass).removeClass(self.options.animateOutLeft + ' animated ' + self.options.animateOutRight);
+      var classStr = 'animated ' + ((self.direction == 'right') ? self.options.animateInRight : self.options.animateInLeft);
+      $(self.panelClass).eq(self.nextPanel).addClass(classStr);
       self.callback(self.options.callback, undefined);
     },
 
@@ -954,8 +960,10 @@ if (typeof Object.create !== 'function') {
     slideEaseDuration: 1500,
     slideEaseFunction: "easeInOutExpo",
     slideEaseFunctionFallback: "easeInOutExpo",
-    animateIn: "bounceInRight",
-    animateOut: "bounceOutRight",
+    animateInLeft: "bounceInLeft",
+    animateInRight: "bounceInRight",
+    animateOutLeft: "bounceOutLeft",
+    animateOutRight: "bounceOutRight",
     continuous: true,
     fadeInDuration: 500,
     fadeOutDuration: 500,
