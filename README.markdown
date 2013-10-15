@@ -157,6 +157,9 @@ Default settings vary on custom builds
 
 Versions
 --------
+Version 2.0.11
+- Had to revert a autoslide bug fix
+
 Version 2.0.10
 - Fixes how RegEx works (hashLinking)
 - Fixes a bug when dynamic arrows is disabled (@joeworkman)

@@ -1,5 +1,5 @@
 /*!
- *  Liquid Slider v2.0.10
+ *  Liquid Slider v2.0.11
  *  http://liquidslider.com
  *  GPL license
  */
@@ -626,7 +626,7 @@ if (typeof Object.create !== 'function') {
             self.hideShowArrows(self.options.fadeOutnDuration, true, false, true);
 
           if (self.options.pauseOnHover && self.options.autoSlide)
-            self.startAutoSlide(true);
+            self.startAutoSlide();
         }
       );
     },
