@@ -1,5 +1,5 @@
 /*!
- *  Liquid Slider v2.0.11
+ *  Liquid Slider v2.0.12
  *  http://liquidslider.com
  *  GPL license
  */
@@ -730,6 +730,10 @@ if (typeof Object.create !== 'function') {
           }
        });
       }
+      // Set current panel class
+      self.$panelClass.eq(self.nextPanel)
+          .addClass('currentPanel')
+          .siblings().removeClass('currentPanel');
     },
 
     sanatizeNumber: function(panel) {
