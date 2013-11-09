@@ -157,6 +157,9 @@ Default settings vary on custom builds
 
 Versions
 --------
+Version 2.0.12
+- Adds currentPanel class to the current panel
+
 Version 2.0.11
 - Had to revert a autoslide bug fix
 
