@@ -1,5 +1,5 @@
 /*!
- *  Liquid Slider v2.0.9
+ *  Liquid Slider v2.0.12
  *  http://liquidslider.com
  *  GPL license
  */
@@ -42,17 +42,15 @@ if (typeof Object.create !== 'function') {
       }
       // Set events and fire on browser resize
       self.responsiveEvents();
-      // Bind the orientation change & resize events
-      var respCallback = function() {
+      $(window).bind('resize', function() {
         self.responsiveEvents();
+
         clearTimeout(self.resizingTimeout);
         self.resizingTimeout = setTimeout(function() {
           var height = (self.options.autoHeight) ? self.getHeight() : self.getHeighestPanel(self.nextPanel);
           self.adjustHeight(false, height);
         }, 500);
-      };
-      if (typeof(orientationEvent) === undefined){ var orientationEvent = 0; /* Hack since this does not exist for desktop browsers */}
-      $(window).bind({'resize':respCallback,orientationEvent:respCallback});
+      });
     },
 
     responsiveEvents: function() {
@@ -642,7 +640,7 @@ if (typeof Object.create !== 'function') {
             self.hideShowArrows(self.options.fadeOutnDuration, true, false, true);
 
           if (self.options.pauseOnHover && self.options.autoSlide)
-            self.startAutoSlide(true);
+            self.startAutoSlide();
         }
       );
     },
@@ -708,8 +706,7 @@ if (typeof Object.create !== 'function') {
         output = input.replace('#', '').toLowerCase();
       // Return the num that matches the panel, or return whats given.
       (self.$panelClass).each(function(i) {
-        title = $(this).find(searchTerm).text()
-          .toLowerCase().replace(/(^\s+|\s+$)/g, '').replace(/(\s)/g, '-');
+        title = self.convertRegex($(this).find(searchTerm).text());
         if (title === output) {
           output = i + 1;
         }
@@ -720,9 +717,14 @@ if (typeof Object.create !== 'function') {
     getFromPanel: function(searchTerm, panelNumber) {
       var self = this;
       // Return string that matches selector.
-      return self.$panelClass.find(searchTerm).eq(panelNumber)
-        .text().replace(/(^\s+|\s+$)/g, '').replace(/(\s)/g, '-', '-')
-        .toLowerCase();
+      return self.convertRegex(self.$panelClass.find(searchTerm).eq(panelNumber).text());
+    },
+
+    convertRegex: function(input) {
+      return input
+      .replace(/[^\w -]+/g,'')
+      .replace(/ +/g,'-')
+      .toLowerCase();
     },
 
     updateClass: function() {
@@ -742,6 +744,10 @@ if (typeof Object.create !== 'function') {
           }
        });
       }
+      // Set current panel class
+      self.$panelClass.eq(self.nextPanel)
+          .addClass('currentPanel')
+          .siblings().removeClass('currentPanel');
     },
 
     sanatizeNumber: function(panel) {
