@@ -721,7 +721,7 @@ if (typeof Object.create !== 'function') {
     },
 
     convertRegex: function(input) {
-      return input
+      return input.trim()
       .replace(/[^\w -]+/g,'')
       .replace(/ +/g,'-')
       .toLowerCase();
