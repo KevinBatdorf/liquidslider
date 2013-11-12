@@ -340,12 +340,6 @@ if (typeof Object.create !== 'function') {
       self.autoSlide(clearTimeout(self.autoSlideTimeout));
     },
 
-    updateHashTags: function() {
-      var self = this,
-        filtered = (self.nextPanel === self.panelCount) ? 0 : self.nextPanel;
-      window.location.hash = self.getFromPanel(self.options.hashTitleSelector, filtered);
-    },
-
     adjustHeight: function(noAnimation, height, easing, duration) {
       var self = this;
       if (noAnimation || self.useCSS) {
@@ -812,7 +806,6 @@ if (typeof Object.create !== 'function') {
     pretransition: function() {
       var self = this,
         marginLeft;
-      if (self.options.hashLinking) self.updateHashTags();
       if (self.options.mobileNavigation) self.dropdownSelect.val('tab' + (self.nextPanel + 1));
       if (self.options.hideSideArrows) self.hideShowArrows();
       self.updateClass();
