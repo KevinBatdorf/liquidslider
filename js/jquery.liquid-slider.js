@@ -204,7 +204,7 @@ if (typeof Object.create !== 'function') {
 
     registerNav: function() {
       var self = this;
-      (self.$sliderWrap).find('[class^=ls-nav] li').on(self.options.transitionEvent, function() {
+      (self.$sliderWrap).find('[class^=ls-nav] li').on('click', function() {
         self.setNextPanel(parseInt($(this).attr('class').split('tab')[1], 10) - 1);
         return false;
       });
@@ -970,7 +970,6 @@ if (typeof Object.create !== 'function') {
     continuous: true,
     fadeInDuration: 500,
     fadeOutDuration: 500,
-    transitionEvent:"click",
 
     autoSlide: false,
     autoSlideDirection: 'right',
