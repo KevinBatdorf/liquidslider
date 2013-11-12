@@ -58,6 +58,8 @@ if (typeof Object.create !== 'function') {
         mobileNavChangeOver = (self.options.hideArrowsThreshold ||
           self.options.mobileUIThreshold ||
           (self.totalNavWidth + 10));
+      // Check the tab height
+      self.setNavTallest();
       // Since we are resizing, let's simply test the width
       if ((self.$sliderId).outerWidth() < mobileNavChangeOver) {
         if (self.options.mobileNavigation) {
@@ -152,6 +154,18 @@ if (typeof Object.create !== 'function') {
           if (!self.options.includeTitle) $(this).remove();
         }
       );
+      self.setNavTallest();
+    },
+
+    setNavTallest: function() {
+      var self = this, maxHeight = 0;
+      var tabs = $((self.$sliderWrap)).find('.ls-nav ul li a');
+      tabs.removeAttr('style').each(function() {
+        maxHeight = maxHeight > $(this).height() ? maxHeight : $(this).height();
+      });
+      tabs.each(function() {
+        $(this).height(maxHeight);
+      });
     },
 
     getNavInsides: function(input) {
@@ -190,7 +204,7 @@ if (typeof Object.create !== 'function') {
 
     registerNav: function() {
       var self = this;
-      (self.$sliderWrap).find('[class^=ls-nav] li').on('click', function() {
+      (self.$sliderWrap).find('[class^=ls-nav] li').on(self.options.transitionEvent, function() {
         self.setNextPanel(parseInt($(this).attr('class').split('tab')[1], 10) - 1);
         return false;
       });
@@ -963,6 +977,7 @@ if (typeof Object.create !== 'function') {
     continuous: true,
     fadeInDuration: 500,
     fadeOutDuration: 500,
+    transitionEvent:"click",
 
     autoSlide: false,
     autoSlideDirection: 'right',
