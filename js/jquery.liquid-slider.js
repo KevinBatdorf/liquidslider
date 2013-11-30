@@ -731,7 +731,7 @@ if (typeof Object.create !== 'function') {
        });
       }
       // Set current panel class
-      self.$panelClass.eq(self.nextPanel)
+      self.$panelClass.eq(self.sanatizeNumber(self.nextPanel) - 1 )
           .addClass('currentPanel')
           .siblings().removeClass('currentPanel');
     },
