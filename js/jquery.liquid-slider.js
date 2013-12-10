@@ -343,7 +343,7 @@ if (typeof Object.create !== 'function') {
       (self.$sliderId).animate({
         'height': height + 'px'
       }, {
-        easing: easing || self.options.heightEaseFunction,
+        easing: jQuery.easing.hasOwnProperty(easing || self.options.heightEaseFunction) ? easing || self.options.heightEaseFunction : 'swing',
         duration: duration || self.options.heightEaseDuration,
         queue: false
       });
@@ -879,7 +879,7 @@ if (typeof Object.create !== 'function') {
         (self.panelContainer).animate({
           'margin-left': marginLeft + self.pSign
         }, {
-          easing: self.options.slideEaseFunction,
+          easing: jQuery.easing.hasOwnProperty(self.options.slideEaseFunction) ? self.options.slideEaseFunction : 'swing',
           duration: self.options.slideEaseDuration,
           queue: false //,
           //complete: function () {
