@@ -1,0 +1,37 @@
+{
+  "name": "liquidslider",
+  "version": "2.1.0",
+  "description": "A Responsive Content Slider",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KevinBatdorf/liquidslider.git"
+  },
+  "keywords": [
+    "ui",
+    "content",
+    "slider",
+    "responsive",
+    "swipe",
+    "mobile",
+    "tabs"
+  ],
+  "author": "Kevin Batdorf",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KevinBatdorf/liquidslider/issues"
+  },
+  "homepage": "https://liquidslider.com",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-uglify": "~0.4.0",
+    "grunt-contrib-watch": "~0.5.3"
+  }
+}
