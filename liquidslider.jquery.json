@@ -1,26 +1,25 @@
 {
     "name": "liquidslider",
     "title": "Liquid Slider",
-    "description": "A responsive html content slider that features CSS3 transitions, utilizes animate.css, swipe navigation dynamic navigation, and more. Powerful, easy-to-use, and fast.",
+    "description": "The Last Responsive Content Slider You'll Ever Need.",
     "keywords": [
         "ui",
+        "content"
         "slider",
         "responsive",
         "swipe",
         "mobile",
-        "animation",
-        "slideshow",
-        "effect"
+        "tabs"
     ],
-    "version": "2.0.12",
+    "version": "2.1.0",
     "author": {
         "name": "Kevin Batdorf",
         "url": "http://www.kevinbatdorf.com"
     },
     "licenses": [
         {
-            "type": "GPLv3",
-            "url": "https://github.com/KevinBatdorf/liquidslider/blob/master/GPL%20-%20License.txt"
+            "type": "MIT",
+            "url": "https://github.com/KevinBatdorf/liquidslider/blob/master/MIT.txt"
         }
     ],
     "dependencies": {
@@ -29,6 +28,6 @@
     "bugs": "https://github.com/KevinBatdorf/liquidslider/issues?state=open",
     "homepage": "http://liquidslider.com",
     "docs": "https://github.com/KevinBatdorf/liquidslider/blob/master/README.markdown",
-    "demo": "http://kevinbatdorf.github.io/liquidslider/examples/page1.html",
+    "demo": "http://kevinbatdorf.github.io/liquidslider/examples/index.html",
     "download": "http://liquidslider.com"
 }

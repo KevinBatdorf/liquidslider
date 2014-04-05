@@ -1,162 +1,154 @@
-[Liquid Slider 2](http://liquidslider.com)
-============
-A Responsive jQuery HTML Content Slider
+# Liquid Slider 
+
+## A Responsive jQuery HTML Content Slider
 
 [Download](https://github.com/KevinBatdorf/liquidslider/zipball/master)
-
-[Custom Build](http://liquidslider.com/custom-build)
 
 [Demo Page](http://kevinbatdorf.github.io/liquidslider)
 
 I'm on Twitter: [@Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
 
-
-Features
---------
-Unbelievably easy to use.
-Custom build can yeild Less than 5kb (gzipped)
-Full build just under 6kb (gzipped)
-Integrates with Animate.css
-Powerful API
-
 How to Use
 -----------
 
-See [here](http://kevinbatdorf.github.io/liquidslider) for further details and examples.
+1. Download the files to your working directory.
+2. Link files in the header and footer.
+3. Structure your html in a manner similar to below:
 
-Add the CSS to the `<head>` and optionally add animate.css as well.
+```html
+<head>
+  <link rel="stylesheet" href="./dist/css/liquid-slider.css">
+</head>
 
-```markup
-<link rel="stylesheet" href="./css/liquid-slider.css">
-<link rel="stylesheet" href="../css/animate.css">
+<section class="liquid-slider" id="main-slider">
+  <div>
+    <h2 class="title">Slide 1</h2>
+    <p>Content</p>
+  </div>
+  <div>
+    <h2 class="title">Slide 2</h2>
+    <p>Content</p>
+  </div>
+</section>
+
+<footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.4/jquery.touchSwipe.min.js"></script>
+  <script src="./dist/js/jquery.liquid-slider.min.js"></script>
+</footer>
 ```
-Install the javascripts in the head or footer after jQuery and other scripts. Note that if you install in the footer, you can omit the `$(function() {});` wrap.
 
-```markup
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="./js/jquery.easing.1.3.js"></script>
-<script src="./js/jquery.touchSwipe.min.js"></script>
-<script src="./js/jquery.liquid-slider.min.js"></script>
-```
-
-and...
+4. Initialize the content slider somewhere after the script.
 
 ```javascript
 $(function(){
-  $('#slider-id').liquidSlider();
+  $('#main-slider').liquidSlider();
 });
 ```
 
-The id (slider-id) should match the id of the content, as follows:
+If you would like to edit a setting, do so like this:
 
-```html
-<div class="liquid-slider"  id="slider-id">
-  <section>
-    <h2 class="title">Slide 1</h2>
-    <p>Content</p>
-  </section>
-  <section>
-    <h2 class="title">Slide 2</h2>
-    <p>Content</p>
-  </section>
-</div>
-```
-
-Add as many slides as you like within the `<div class="liquid-slider id="slider-id"></div>`
-
-One slide can be inside any element such as a section or a div:   
-```html
-<section>
-  <h2 class="title">A Slide</h2>
-  <p>Content</p>
-</section>
+```javascript
+$(function(){
+  $('#main-slider').liquidSlider({
+    setting: value,
+    setting: value
+  });
+});
 ```
 
 Default Settings
 ----------------
-Default settings vary on custom builds
 
 ```javascript
-  autoHeight:         true,
-  minHeight:          0,
-  heightEaseDuration: 1000,
-  heightEaseFunction: "easeInOutExpo",
-  
-  slideEaseDuration:          1000,
-  slideEaseFunction:          "easeInOutExpo",
-  slideEaseFunctionFallback:  "easeInOutExpo",
-  animateIn:                  "bounceInRight",
-  animateOut:                 "bounceOutRight",
-  continuous:                 true,
-  fadeInDuration:             500,
-  fadeOutDuration:            500,
-  
-  autoSlide:          false,
-  autoSlideDirection: 'right',
-  autoSlideInterval:  6000,
-  autoSlideControls:  false,
-  autoSlideStartText: 'Start',
-  autoSlideStopText:  'Stop',
-  forceAutoSlide:     false,
-  pauseOnHover:       false,
-  
-  dynamicArrows:          true,
-  dynamicArrowsGraphical: true,
-  dynamicArrowLeftText:   "&#171; left",
-  dynamicArrowRightText:  "right &#187;",
-  hideSideArrows:         false,
-  hideSideArrowsDuration:  750,
-  hoverArrows:            true,
-  hoverArrowDuration:     250,
-  
-  dynamicTabs:          true,
-  dynamicTabsHtml:      true,
-  includeTitle:         true,
-  panelTitleSelector:   "title",
-  dynamicTabsAlign:     "left",
-  dynamicTabsPosition:  "top",
-  firstPanelToLoad:     1,
-  navElementTag:        "div",
-  
-  crossLinks:         false,
-  hashLinking:        false,
-  hashTitleSelector:  "title",
-  
-  keyboardNavigation: false,
-  leftKey: 39,
-  rightKey: 37,
-  panelKeys: {
-    1: 49,
-    2: 50,
-    3: 51,
-    4: 52
-  },
-  
-  responsive:           true,
-  mobileNavigation:     true,
-  mobileNavDefaultText: 'Menu',
-  mobileUIThreshold:    0,
-  hideArrowsWhenMobile: true,
-  hideArrowsThreshold:  0,
-  useCSSMaxWidth:       2200,
-  
-  preload:        function() {
-                    this.finalize();
-                  },
-  onload:         function() {},
-  pretransition:  function() {
-                    this.transition();
-                  },
-  callback:       function() {},
+autoHeight: true,
+minHeight: 0,
+heightEaseDuration: 1500,
+heightEaseFunction: 'easeInOutExpo',
 
-  preloader:  false,
-  swipe:      true
+slideEaseDuration: 1500,
+slideEaseFunction: 'easeInOutExpo',
+slideEaseFunctionFallback: 'swing',
+animateIn: 'bounceInRight',
+animateOut: 'bounceOutRight',
+continuous: true,
+fadeInDuration: 500,
+fadeOutDuration: 500,
 
+autoSlide: false,
+autoSlideDirection: 'right',
+autoSlideInterval: 6000,
+forceAutoSlide: false,
+pauseOnHover: false,
+
+dynamicArrows: true,
+dynamicArrowsGraphical: true,
+dynamicArrowLeftText: '&#171; left',
+dynamicArrowRightText: 'right &#187;',
+hideSideArrows: false,
+hideSideArrowsDuration: 750,
+hoverArrows: true,
+hoverArrowDuration: 250,
+
+dynamicTabs: true,
+dynamicTabsHtml: true,
+includeTitle: true,
+panelTitleSelector: '.title',
+dynamicTabsAlign: 'left',
+dynamicTabsPosition: 'top',
+navElementTag: 'div',
+
+firstPanelToLoad: 1,
+crossLinks: false,
+hashLinking: false,
+hashTitleSelector: '.title',
+
+keyboardNavigation: false,
+leftKey: 39,
+rightKey: 37,
+panelKeys: {
+  1: 49,
+  2: 50,
+  3: 51,
+  4: 52
+},
+
+responsive: true,
+mobileNavigation: true,
+mobileNavDefaultText: 'Menu',
+mobileUIThreshold: 0,
+hideArrowsWhenMobile: true,
+hideArrowsThreshold: 0,
+useCSSMaxWidth: 3000,
+
+preload: function() {
+  this.finalize();
+},
+onload: function() {},
+pretransition: function() {
+  this.transition();
+},
+callback: function() {},
+
+preloader: false,
+swipe: true,
+swipeArgs: undefined
 ```
 
 
 Versions
 --------
+Version 2.1
+- Fixes currentPanel bug
+- Switches to a new (better?) modular strategy
+- Switches license to MIT
+- Improves coding style
+- Sets focus/blur for autoslide
+- Fixes class for cross links
+- sanaziteNumber() -> sanitizeNumber() spelling fix
+- Fixes autoSlide pauseOnHover bug 
+
 Version 2.0.12
 - Adds currentPanel class to the current panel
 
@@ -248,7 +240,7 @@ Version 1.2.4 - 1.2.5
 - Pushes new version # to jQuery repository.
 
 Version 1.2.3
-- Fixes a bug when using crosslinks on multible sliders wont apply the current class properly.
+- Fixes a bug when using crosslinks on multiple sliders wont apply the current class properly.
 
 Version 1.2.2
 - Fixes a bug where keyboard navigation fails.
