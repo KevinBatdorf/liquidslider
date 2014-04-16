@@ -18,7 +18,7 @@ module.exports = function (grunt) {
 			options: {
 				mangle: true,
 				compress: true,
-				sourceMap: true,
+				sourceMap: false,
 				banner: "/*\n *  Liquid Slider v2.0.12\n *  Copyright 2012 Kevin Batdorf\n *  http://liquidslider.com\n *  MIT license\n */"
 			},
 			main: {
@@ -29,7 +29,7 @@ module.exports = function (grunt) {
 		watch: {
 			scripts: {
 				files: ["src/js/jquery.liquid-slider.js"],
-				tasks: ["jshint"],
+				tasks: ["jshint", "uglify"],
 				options: {
 					livereload: true
 				}
@@ -41,6 +41,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
-	grunt.registerTask('default', ['jshint', 'uglify']);
+	grunt.registerTask('default', ['jshint', 'uglify', 'watch']);
 
 };

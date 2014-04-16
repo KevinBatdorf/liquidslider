@@ -139,7 +139,11 @@ swipeArgs: undefined
 
 Versions
 --------
-Version 2.1
+Version 2.1.0
+- Removes JS source map
+- Fixes crosslinks autoslide bug
+
+Version 2.1.0
 - Fixes currentPanel bug
 - Switches to a new (better?) modular strategy
 - Switches license to MIT

@@ -1,5 +1,5 @@
 /*!
- *  Liquid Slider v2.1.0
+ *  Liquid Slider v2.1.1
  *  Copyright 2012 Kevin Batdorf
  *  http://liquidslider.com
  *  MIT license
@@ -1093,7 +1093,7 @@ LiquidSlider.registerCrossLinks = function() {
   // Find cross links
   _this.crosslinks = jQuery('[data-liquidslider-ref*=' + (_this.sliderId).split('#')[1] + ']');
   (_this.crosslinks).on('click', function(e) {
-    _this.options.autoSlide || _this.startAutoSlide(true);
+    _this.options.autoSlide && _this.startAutoSlide(true);
     _this.setNextPanel(_this.getPanelNumber((jQuery(this).attr('href').split('#')[1]), _this.options.panelTitleSelector));
     e.preventDefault();
   });
