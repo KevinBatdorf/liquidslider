@@ -1,0 +1,25 @@
+{
+  "name": "liquidslider",
+  "version": "2.0.7",
+  "homepage": "https://github.com/KevinBatdorf/liquidslider",
+  "authors": [
+    "Kevin Batdorf <kevin@kevinbatdorf.com>"
+  ],
+  "description": "A Responsive jQuery Content Slider",
+  "keywords": [
+    "slider",
+    "jquery",
+    "liquid"
+  ],
+  "license": "GPLv3",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": ">=2.1.0",
+  }
+}
