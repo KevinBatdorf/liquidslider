@@ -1,5 +1,5 @@
 /*!
- *  Liquid Slider v2.1.0
+ *  Liquid Slider v2.2.0
  *  Copyright 2012 Kevin Batdorf
  *  http://liquidslider.com
  *  MIT license
@@ -90,7 +90,7 @@ if (typeof Object.create !== 'function') {
     preload: function() {
       var _this = this;
       jQuery(window).bind('load', function() {
-        _this.finalize();
+        _this.finalize(1000);
       });
     },
     onload: function() {},
@@ -99,7 +99,7 @@ if (typeof Object.create !== 'function') {
     },
     callback: function() {},
 
-    preloader: false,
+    preloader: true,
     swipe: true,
     swipeArgs: undefined
   };
@@ -119,7 +119,8 @@ LiquidSlider.init = function(options, elem) {
   jQuery('.no-js').removeClass('no-js');
 
   // Cache the ID and class. This allows for multiple instances with any ID name supplied
-  _this.sliderId = '#' + (_this.$elem).attr('id');
+  _this.sliderName = _this.$elem.attr('id');
+  _this.sliderId = '#' + _this.sliderName;
   _this.$sliderId = jQuery(_this.sliderId);
 
   // Set the options
@@ -168,7 +169,7 @@ LiquidSlider.init = function(options, elem) {
 
 LiquidSlider.build = function() {
   var _this = this,
-    isAbsolute;
+    isAbsolute, clonedCount;
 
   // Wrap the entire slider unless it exists already
   if ((_this.$sliderId).parent().attr('class') !== 'ls-wrapper') {
@@ -184,19 +185,21 @@ LiquidSlider.build = function() {
   _this.options.preloader && _this.addPreloader();
 
   // Add the .panel class to the individual panels
-  jQuery(_this.sliderId).children().addClass((_this.$elem).attr('id') + '-panel panel');
-  _this.panelClass = _this.sliderId + ' .' + (_this.$elem).attr('id') + '-panel:not(.clone)';
-  _this.$panelClass = jQuery(_this.panelClass);
+  _this.$panels = jQuery(_this.sliderId).children().addClass(_this.sliderName + '-panel panel');
+  _this.panelClass = _this.sliderId+ ' .' + _this.sliderName + '-panel:not(.clone)';
+
+  // Store panels in a collection
+  _this.$allPanels = _this.$panels;
 
   // Wrap all panels in a div, and wrap inner content in a div
-  (_this.$panelClass).wrapAll('<div class="panel-container"></div>');
-  (_this.$panelClass).wrapInner('<div class="panel-wrapper"></div>');
-  _this.panelContainer = (_this.$panelClass).parent();
+  (_this.$panels).wrapAll('<div class="panel-container"></div>');
+  (_this.$panels).wrapInner('<div class="panel-wrapper"></div>');
+  _this.panelContainer = (_this.$panels).parent();
   _this.$panelContainer = _this.panelContainer;
 
   // If using fade transition, add the class here and disable other options.
   if (_this.options.slideEaseFunction === 'fade') {
-    (_this.$panelClass).addClass('fade');
+    (_this.$panels).addClass('fade');
     _this.options.continuous = false;
     _this.fade = true;
   }
@@ -238,17 +241,13 @@ LiquidSlider.build = function() {
    */
   _this.options.hideSideArrows && (_this.options.continuous = false);
 
-  // Clone panels if continuous is enabled
-  if (_this.options.continuous) {
-    (_this.$panelContainer).prepend((_this.$panelContainer).children().last().clone().addClass('clone'));
-    (_this.$panelContainer).append((_this.$panelContainer).children().eq(1).clone().addClass('clone'));
-  }
-  var clonedCount = (_this.options.continuous) ? 2 : 0;
+  _this.options.continuous && _this.addClones();
 
   // Count the number of panels and get the combined width
-  _this.panelCount = jQuery(_this.panelClass).length;
+  _this.panelCount = _this.$panels.length;
+  clonedCount = (_this.options.continuous) ? 2 : 0;
   _this.panelCountTotal = (_this.fade) ? 1 : _this.panelCount + clonedCount;
-  _this.panelWidth = jQuery(_this.panelClass).outerWidth();
+  _this.panelWidth = _this.$panels.first().outerWidth();
   _this.totalWidth = _this.panelCountTotal * _this.panelWidth;
 
   // Apply the width to the panel container
@@ -269,6 +268,43 @@ LiquidSlider.build = function() {
 
   // Update the class
   _this.updateClass();
+};
+
+LiquidSlider.updateWidths = function(panelWidth) {
+  var _this = this,
+      width = panelWidth || _this.$panels.first().width();
+
+  _this.slideDistance = width;
+
+  // Slide in pixels to avoid subpixel problems with %
+  _this.pSign = 'px';
+
+  _this.$allPanels.css('width', width);
+
+  _this.transition();
+};
+
+LiquidSlider.addClones = function() {
+  var _this = this,
+      cloneOne, cloneTwo;
+
+  // Create a collection that includes the all panels (for API accessability)
+  _this.allPanels = _this.$allPanels.toArray();
+
+  // Clone the first and last panel, add classes for selectability
+  cloneOne = _this.$panels.first().addClass('c1').clone().addClass('clone c1');
+  cloneTwo = _this.$panels.last().addClass('c2').clone().addClass('clone c2');
+
+  // Append to the front and back of the slider
+  _this.$panelContainer.append(cloneOne);
+  _this.$panelContainer.prepend(cloneTwo);
+
+  // Add to the colection our new panels
+  _this.allPanels.push(cloneOne[0]);
+  _this.allPanels.unshift(cloneTwo[0]);
+
+  // Convert to jQuery object
+  _this.$allPanels = $(_this.allPanels);
 };
 
 LiquidSlider.determineAnimationType = function() {
@@ -463,7 +499,7 @@ LiquidSlider.getPanelNumber = function(input, searchTerm) {
     title,
     output = input.replace('#', '').toLowerCase();
 
-  (_this.$panelClass).each(function(i) {
+  (_this.$panels).each(function(i) {
     title = _this.convertRegex(jQuery(this).find(searchTerm).text());
     (title === output) && (output = i + 1);
   });
@@ -481,7 +517,7 @@ LiquidSlider.getPanelNumber = function(input, searchTerm) {
 LiquidSlider.getFromPanel = function(searchTerm, panelNumber) {
   var _this = this;
 
-  return _this.convertRegex(_this.$panelClass.find(searchTerm).eq(panelNumber).text());
+  return _this.convertRegex(_this.$panels.find(searchTerm).eq(panelNumber).text());
 };
 
 /**
@@ -525,7 +561,7 @@ LiquidSlider.updateClass = function() {
       }
     });
   }
-  _this.$panelClass.eq(_this.sanitizeNumber(_this.nextPanel) - 1 )
+  _this.$panels.eq(_this.sanitizeNumber(_this.nextPanel) - 1 )
       .addClass('currentPanel')
       .siblings().removeClass('currentPanel');
 
@@ -557,14 +593,14 @@ LiquidSlider.sanitizeNumber = function(panel) {
   }
 };
 
-LiquidSlider.finalize = function() {
+LiquidSlider.finalize = function(delay) {
   var _this = this;
 
   // Adjust the height again
   var height = (_this.options.autoHeight) ? _this.getHeight() : _this.getHeighestPanel(_this.nextPanel);
   _this.options.autoHeight && _this.adjustHeight(true, height);
   _this.options.autoSlide  && _this.autoSlide();
-  _this.options.preloader  && _this.removePreloader();
+  _this.options.preloader  && _this.removePreloader(delay);
   _this.onload();
 };
 
@@ -744,7 +780,7 @@ LiquidSlider.transitionjQuery = function(marginLeft, noAnimation) {
 LiquidSlider.getHeight = function(height) {
   var _this = this;
 
-  height = height || _this.$panelClass.eq(_this.sanitizeNumber(_this.nextPanel) - 1).outerHeight(true);
+  height = height || _this.$panels.eq(_this.sanitizeNumber(_this.nextPanel) - 1).outerHeight(true);
 
   // Allows a minimum height in the settings to override
   height = (height < _this.options.minHeight) ? _this.options.minHeight : height;
@@ -761,7 +797,7 @@ LiquidSlider.getHeighestPanel = function() {
       height,
       heighest = 0;
 
-  _this.$panelClass.each(function() {
+  _this.$panels.each(function() {
     height = jQuery(this).outerHeight(true);
     heighest = (height > heighest) ? height : heighest;
   });
@@ -1133,12 +1169,17 @@ LiquidSlider.addPreloader = function() {
   jQuery(_this.sliderId + '-wrapper').append('<div class="ls-preloader"></div>');
 };
 
-LiquidSlider.removePreloader = function() {
+LiquidSlider.removePreloader = function(delay) {
   var _this = this;
 
-  jQuery(_this.sliderId + '-wrapper .ls-preloader').fadeTo('slow', 0, function() {
-    jQuery(this).remove();
-  });
+  delay = delay || 0;
+
+  setTimeout(function() {
+    jQuery(_this.sliderId + '-wrapper .ls-preloader')
+      .fadeTo('slow', 0, function() {
+        jQuery(this).remove();
+      });
+  }, delay);
 };
 
 LiquidSlider.makeResponsive = function() {
@@ -1146,13 +1187,16 @@ LiquidSlider.makeResponsive = function() {
 
   // Adjust widths and add classes to make responsive
   jQuery(_this.sliderId + '-wrapper').addClass('ls-responsive').css({
-    'max-width': jQuery(_this.sliderId + ' .panel:first-child').width(),
+    'max-width': _this.$panels.first().width(),
     'width': '100%'
   });
 
   // Update widths
   jQuery(_this.sliderId + ' .panel-container').css('width', 100 * _this.panelCountTotal + _this.pSign);
-  jQuery(_this.sliderId + ' .panel').css('width', 100 / _this.panelCountTotal + _this.pSign);
+  _this.$allPanels.css('width', 100 / _this.panelCountTotal + _this.pSign);
+
+  // Reset to pixels
+  _this.updateWidths();
 
   // Cache the padding for add/removing arrows
   if (_this.options.hideArrowsWhenMobile) {
@@ -1169,6 +1213,10 @@ LiquidSlider.makeResponsive = function() {
     _this.resizingTimeout = setTimeout(function() {
       var height = (_this.options.autoHeight) ? _this.getHeight() : _this.getHeighestPanel(_this.nextPanel);
       _this.adjustHeight(false, height);
+      _this.updateWidths();
+      
+      // Change width back to pixels
+      _this.$allPanels.css('width', _this.$panels.first().width());
     }, 500);
   });
 };
@@ -1222,8 +1270,14 @@ LiquidSlider.responsiveEvents = function() {
     }
   }
 
-  // While resizing, set the width to 100%
+  // While resizing, set the width to %
   jQuery(_this.sliderId + '-wrapper').css('width', '100%');
+  if (_this.loaded) { 
+    _this.$allPanels.css('width', 100 / _this.panelCountTotal + '%');
+    _this.slideDistance = 100 / _this.panelCountTotal;
+    _this.pSign = '%';
+    _this.transitionCSS(_this.getTransitionMargin(), true);
+  }
 
   // Update when the select box changes
   _this.options.mobileNavigation &&
