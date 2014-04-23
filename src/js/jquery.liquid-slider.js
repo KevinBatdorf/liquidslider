@@ -1,5 +1,5 @@
 /*!
- *  Liquid Slider v2.2.0
+ *  Liquid Slider v2.3.0
  *  Copyright 2012 Kevin Batdorf
  *  http://liquidslider.com
  *  MIT license
@@ -172,9 +172,9 @@ LiquidSlider.build = function() {
     isAbsolute, clonedCount;
 
   // Wrap the entire slider unless it exists already
-  if ((_this.$sliderId).parent().attr('class') !== 'ls-wrapper') {
-    (_this.$sliderId).wrap('<div id="' +
-      (_this.$elem).attr('id') +
+  if (_this.$sliderId.parent().attr('class') !== 'ls-wrapper') {
+    _this.$sliderId.wrap('<div id="' +
+      _this.sliderId +
       '-wrapper" class="ls-wrapper"></div>');
   }
 
@@ -183,6 +183,9 @@ LiquidSlider.build = function() {
 
   // Add the preloader
   _this.options.preloader && _this.addPreloader();
+
+  // Look around for external areas (beta)
+  //_this.findPanels();
 
   // Add the .panel class to the individual panels
   _this.$panels = jQuery(_this.sliderId).children().addClass(_this.sliderName + '-panel panel');
@@ -203,6 +206,8 @@ LiquidSlider.build = function() {
     _this.options.continuous = false;
     _this.fade = true;
   }
+
+  _this.options.hashLinking && _this.buildHashTags();
 
   // Build navigation tabs
   if (_this.options.dynamicTabs) {
@@ -478,10 +483,10 @@ LiquidSlider.getFirstPanel = function() {
 
   // is there a hash tag?
   if (_this.options.hashLinking) {
-    output = _this.getPanelNumber(window.location.hash, _this.options.hashTitleSelector);
-
+    output = jQuery.inArray(_this.convertRegex(window.location.hash), _this.hashLinks);
+  
     // Default to panel 1 if mistyped
-    if (typeof(output) !== 'number') output = 0;
+    if (output === -1) output = 0;
   }
   return (output) ? output : _this.options.firstPanelToLoad - 1;
 };
@@ -1127,7 +1132,7 @@ LiquidSlider.registerCrossLinks = function() {
   var _this = this;
 
   // Find cross links
-  _this.crosslinks = jQuery('[data-liquidslider-ref*=' + (_this.sliderId).split('#')[1] + ']');
+  _this.crosslinks = jQuery('[data-liquidslider-ref*=' + _this.sliderName + ']');
   (_this.crosslinks).on('click', function(e) {
     _this.options.autoSlide && _this.startAutoSlide(true);
     _this.setNextPanel(_this.getPanelNumber((jQuery(this).attr('href').split('#')[1]), _this.options.panelTitleSelector));
@@ -1136,11 +1141,20 @@ LiquidSlider.registerCrossLinks = function() {
   _this.updateClass();
 };
 
-LiquidSlider.updateHashTags = function() {
-  var _this = this,
-    filtered = (_this.nextPanel === _this.panelCount) ? 0 : _this.nextPanel;
 
-  window.location.hash = _this.getFromPanel(_this.options.hashTitleSelector, filtered);
+LiquidSlider.buildHashTags = function() {
+  var _this = this;
+
+  _this.hashLinks = []
+  jQuery(_this.sliderId + ' ' + _this.options.hashTitleSelector).each(function() {
+    _this.hashLinks.push(_this.convertRegex($(this).text()));
+  });
+}
+
+LiquidSlider.updateHashTags = function() {
+  var _this = this;
+
+  window.location.hash = _this.hashLinks[_this.sanitizeNumber(_this.nextPanel) -1];
 };
 
 LiquidSlider.registerKeyboard = function() {

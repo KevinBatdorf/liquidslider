@@ -2,3 +2,4 @@
 node_modules
 src/vendor
 src/index.html
+src/js/dev.js
