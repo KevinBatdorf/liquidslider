@@ -139,6 +139,9 @@ swipeArgs: undefined
 
 Versions
 --------
+Version 2.3.0
+- Improves hash tags
+
 Version 2.2.0
 - Stores panels in a variable with and without clones
 - Renames $panelClass to $panels
