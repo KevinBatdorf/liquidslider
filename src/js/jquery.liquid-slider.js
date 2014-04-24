@@ -1145,11 +1145,11 @@ LiquidSlider.registerCrossLinks = function() {
 LiquidSlider.buildHashTags = function() {
   var _this = this;
 
-  _this.hashLinks = []
+  _this.hashLinks = [];
   jQuery(_this.sliderId + ' ' + _this.options.hashTitleSelector).each(function() {
     _this.hashLinks.push(_this.convertRegex($(this).text()));
   });
-}
+};
 
 LiquidSlider.updateHashTags = function() {
   var _this = this;
