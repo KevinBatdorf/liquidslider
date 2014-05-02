@@ -139,6 +139,11 @@ swipeArgs: undefined
 
 Versions
 --------
+
+Version 2.2.0
+- Fixes hash linking (new approach)
+- Uses API for cross links
+
 Version 2.1
 - Fixes currentPanel bug
 - Switches to a new (better?) modular strategy
