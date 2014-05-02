@@ -65,7 +65,6 @@ if (typeof Object.create !== 'function') {
     navElementTag: 'div',
 
     firstPanelToLoad: 1,
-    crossLinks: false,
     hashLinking: false,
     hashTitleSelector: '.title',
 
@@ -200,6 +199,8 @@ LiquidSlider.build = function() {
     _this.options.continuous = false;
     _this.fade = true;
   }
+
+  _this.options.hashLinking && _this.buildHashTags();
 
   // Build navigation tabs
   if (_this.options.dynamicTabs) {
@@ -394,7 +395,6 @@ LiquidSlider.events = function() {
 
   // Set events for all types of navigation
   _this.options.dynamicArrows       && _this.registerArrows();
-  _this.options.crossLinks          && _this.registerCrossLinks();
   _this.options.dynamicTabs         && _this.registerNav();
   _this.options.swipe               && _this.registerTouch();
   _this.options.keyboardNavigation  && _this.registerKeyboard();
@@ -442,33 +442,12 @@ LiquidSlider.getFirstPanel = function() {
 
   // is there a hash tag?
   if (_this.options.hashLinking) {
-    output = _this.getPanelNumber(window.location.hash, _this.options.hashTitleSelector);
-
+    output = jQuery.inArray(_this.convertRegex(window.location.hash), _this.hashLinks);
+  
     // Default to panel 1 if mistyped
-    if (typeof(output) !== 'number') output = 0;
+    if (output === -1) output = 0;
   }
   return (output) ? output : _this.options.firstPanelToLoad - 1;
-};
-
-/**
- * Returns the panel number based on hash tags or crosslinking.
- * Works with strings or numbers
- *
- * @param <Number> input
- * @param <String> searchTerm
- * @return <Number>
- */
-LiquidSlider.getPanelNumber = function(input, searchTerm) {
-  var _this = this,
-    title,
-    output = input.replace('#', '').toLowerCase();
-
-  (_this.$panelClass).each(function(i) {
-    title = _this.convertRegex(jQuery(this).find(searchTerm).text());
-    (title === output) && (output = i + 1);
-  });
-
-  return (parseInt(output, 10) ? parseInt(output, 10) - 1 : output);
 };
 
 /**
@@ -499,42 +478,36 @@ LiquidSlider.convertRegex = function(input) {
 };
 
 /**
- * Adds the class to both the dynamic tabs
- * as well as the crosslinks (if used).
- *
- * Version 2.1.0 
- * Adds a class to the current panel
+ * Updates all classes for current nav and panels
+ * 
+ * @param <Object> crosslink
  */
-LiquidSlider.updateClass = function() {
-  var _this = this,
-      next = _this.sanitizeNumber(_this.nextPanel),
-      target;
+LiquidSlider.updateClass = function(crosslink) {
+  var _this = this;
 
   if (_this.options.dynamicTabs) {
     jQuery((_this.$sliderWrap)).find('> .ls-nav .tab' + _this.sanitizeNumber(_this.nextPanel))
       .addClass('current')
       .siblings().removeClass('current');
   }
-  if (_this.options.crossLinks && _this.crosslinks) {
-    (_this.crosslinks).not(_this.nextPanel).removeClass('currentCrossLink');
-    (_this.crosslinks).each(function() {
-      target = jQuery(this).attr('href');
-      if (target === ( '#' + _this.getFromPanel( _this.options.panelTitleSelector, next - 1 ) ) ||
-          target === ('#' + next)) {
-        jQuery(this).addClass('currentCrossLink');
-      }
-    });
-  }
+
+  // Add it to cloned panels
   _this.$panelClass.eq(_this.sanitizeNumber(_this.nextPanel) - 1 )
       .addClass('currentPanel')
       .siblings().removeClass('currentPanel');
 
-  // Add it to cloned panels
   _this.$clones = jQuery(_this.sliderId + ' .clone');
   if (_this.options.continuous && ((_this.nextPanel === -1) || (_this.nextPanel === _this.panelCount))) {
     _this.$clones.addClass('currentPanel');
   } else {
     _this.$clones.removeClass('currentPanel');
+  }
+
+  // Crosslinks
+  // <a href="#2" onclick="api.setNextPanel(1);api.updateClass($(this))">slide 1</a>
+  if (crosslink) {
+    $('.ls-current').removeClass('ls-current');
+    crosslink.addClass('ls-current');
   }
 };
 
@@ -569,8 +542,7 @@ LiquidSlider.finalize = function() {
 };
 
 /**
- * Returns the panel number based on hash tags or crosslinking.
- * Works with strings or numbers
+ * Runs after each slide transition completes
  *
  * @param <Function> callbackFn
  * @param <Bool> isFade
@@ -1087,24 +1059,19 @@ LiquidSlider.startAutoSlide = function(reset) {
   _this.autoSlide(clearTimeout(_this.autoSlideTimeout));
 };
 
-LiquidSlider.registerCrossLinks = function() {
+LiquidSlider.buildHashTags = function() {
   var _this = this;
 
-  // Find cross links
-  _this.crosslinks = jQuery('[data-liquidslider-ref*=' + (_this.sliderId).split('#')[1] + ']');
-  (_this.crosslinks).on('click', function(e) {
-    _this.options.autoSlide && _this.startAutoSlide(true);
-    _this.setNextPanel(_this.getPanelNumber((jQuery(this).attr('href').split('#')[1]), _this.options.panelTitleSelector));
-    e.preventDefault();
+  _this.hashLinks = [];
+  jQuery(_this.sliderId + ' ' + _this.options.hashTitleSelector).each(function() {
+    _this.hashLinks.push(_this.convertRegex($(this).text()));
   });
-  _this.updateClass();
 };
 
 LiquidSlider.updateHashTags = function() {
-  var _this = this,
-    filtered = (_this.nextPanel === _this.panelCount) ? 0 : _this.nextPanel;
+  var _this = this;
 
-  window.location.hash = _this.getFromPanel(_this.options.hashTitleSelector, filtered);
+  window.location.hash = _this.hashLinks[_this.sanitizeNumber(_this.nextPanel) -1];
 };
 
 LiquidSlider.registerKeyboard = function() {
