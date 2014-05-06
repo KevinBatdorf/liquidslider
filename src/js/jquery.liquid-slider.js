@@ -978,7 +978,8 @@ LiquidSlider.hideShowArrows = function(speed, forceVisibility, showBoth, hideBot
 LiquidSlider.registerArrows = function() {
   var _this = this;
 
-  jQuery((_this.$sliderWrap).find('[class^=ls-nav-]')).on('click', function() {
+  jQuery((_this.$sliderWrap).find('[class^=ls-nav-]')).on('click', function(e) {
+    e.preventDefault();
     _this.setNextPanel(jQuery(this).attr('class').split(' ')[0].split('-')[2]);
   });
 };
