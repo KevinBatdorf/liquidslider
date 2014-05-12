@@ -141,6 +141,9 @@ Versions
 --------
 
 Version 2.2.0
+- Adds bower
+
+Version 2.2.0
 - Fixes hash linking (new approach)
 - Uses API for cross links
 
