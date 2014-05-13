@@ -140,6 +140,9 @@ swipeArgs: undefined
 Versions
 --------
 
+Version 2.3.1
+- Updates for jQuery repo
+
 Version 2.3.0
 - Adds bower
 - Uses px instead of %
