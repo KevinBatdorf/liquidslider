@@ -1122,6 +1122,9 @@ LiquidSlider.makeResponsive = function() {
   jQuery(_this.sliderId + ' .panel-container').css('width', 100 * _this.panelCountTotal + _this.pSign);
   jQuery(_this.sliderId + ' .panel').css('width', 100 / _this.panelCountTotal + _this.pSign);
 
+  // convert to pixels
+  jQuery(_this.sliderId + ' .panel').css('width', jQuery(_this.sliderId + ' .panel').outerWidth(true));
+
   // Cache the padding for add/removing arrows
   if (_this.options.hideArrowsWhenMobile) {
     _this.leftWrapperPadding = jQuery(_this.sliderId + '-wrapper').css('padding-left');
@@ -1137,6 +1140,8 @@ LiquidSlider.makeResponsive = function() {
     _this.resizingTimeout = setTimeout(function() {
       var height = (_this.options.autoHeight) ? _this.getHeight() : _this.getHeighestPanel(_this.nextPanel);
       _this.adjustHeight(false, height);
+      // convert to pixels
+      jQuery(_this.sliderId + ' .panel').css('width', jQuery(_this.sliderId + ' .panel').outerWidth(true));
     }, 500);
   });
 };
@@ -1192,6 +1197,7 @@ LiquidSlider.responsiveEvents = function() {
 
   // While resizing, set the width to 100%
   jQuery(_this.sliderId + '-wrapper').css('width', '100%');
+  _this.loaded && jQuery(_this.sliderId + ' .panel').width(100 / _this.panelCountTotal + _this.pSign);
 
   // Update when the select box changes
   _this.options.mobileNavigation &&
