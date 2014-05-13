@@ -140,8 +140,9 @@ swipeArgs: undefined
 Versions
 --------
 
-Version 2.2.0
+Version 2.3.0
 - Adds bower
+- Uses px instead of %
 
 Version 2.2.0
 - Fixes hash linking (new approach)
