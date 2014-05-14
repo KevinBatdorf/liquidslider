@@ -15,12 +15,17 @@
   ],
   "license": "MIT",
   "ignore": [
-    "**/.*",
+    "examples"
     "node_modules",
     "bower_components",
-    "src/vendor",
-    "test",
-    "tests"
+    "src",
+    ".bowerrc",
+    ".gitignore",
+    "bower.json",
+    "Gruntfile.js",
+    "liquidslider.jquery.json",
+    "package.json",
+    "README.markdown"
   ],
   "dependencies": {
     "jquery": "~1",
