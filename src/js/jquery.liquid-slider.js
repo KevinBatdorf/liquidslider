@@ -193,14 +193,15 @@ LiquidSlider.build = function() {
   _this.panelContainer = (_this.$panelClass).parent();
   _this.$panelContainer = _this.panelContainer;
 
+  // Build hash links
+  _this.options.hashLinking && _this.buildHashTags();
+  
   // If using fade transition, add the class here and disable other options.
   if (_this.options.slideEaseFunction === 'fade') {
     (_this.$panelClass).addClass('fade');
     _this.options.continuous = false;
     _this.fade = true;
   }
-
-  _this.options.hashLinking && _this.buildHashTags();
 
   // Build navigation tabs
   if (_this.options.dynamicTabs) {
@@ -905,7 +906,8 @@ LiquidSlider.alignNavigation = function() {
 
 LiquidSlider.registerNav = function() {
   var _this = this;
-  (_this.$sliderWrap).find('[class^=ls-nav] li').on('click', function() {
+  (_this.$sliderWrap).find('[class^=ls-nav] li').on('click', function(e) {
+    e.preventDefault();
     _this.setNextPanel(parseInt(jQuery(this).attr('class').split('tab')[1], 10) - 1);
     return false;
   });
@@ -1064,7 +1066,7 @@ LiquidSlider.buildHashTags = function() {
   var _this = this;
 
   _this.hashLinks = [];
-  jQuery(_this.sliderId + ' ' + _this.options.hashTitleSelector).each(function() {
+  jQuery(_this.panelClass + ' ' + _this.options.hashTitleSelector).each(function() {
     _this.hashLinks.push(_this.convertRegex($(this).text()));
   });
 };

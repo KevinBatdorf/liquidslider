@@ -269,7 +269,7 @@ $('#range-delay').change(function() {
 <div id="advanced-controls">
   <!-- Slider 4 -->
   <h2>Advanced Controls. <a href="#advanced-controls">#</a></h2>
-  <p>Hash linking allows you to link to the slider from an external page, and have a specific panel appear (Look in the URL). Perfect for selective marketting, and more. Cross links control the slider from anywhere on the page, even from within the slider itself. You can also use the API to control the slider, which is useful when using other javascript functions or plugins.</p>
+  <p>Hash linking allows you to link to the slider from an external page, and have a specific panel appear (Look in the URL). Cross links control the slider from anywhere on the page, even from within the slider itself.</p>
   <p>This slider should load on panel 2 if no hash tag is supplied because of <code class="language-javascript">firstPanelToLoad:2</code>. I disabled hash linking for this page so that I can link to specific sections of this page. <a href="#" class="link enable-hash">Click to enable.</a></p>
   <div class="liquid-slider" id="slider-4">
     <div>
@@ -279,7 +279,7 @@ $('#range-delay').change(function() {
     <div>
       <h2 class="title">Slide 2</h2>
       <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
-      <a href="#4" class="pure-button" data-liquidslider-ref="slider-4">Go to slide 4</a>
+      <a href="#4" class="pure-button" onclick="api2.setNextPanel(3);api.updateClass($(this))">Go to slide 4</a>
     </div>          
     <div>
       <h2 class="title">Slide 3</h2>
@@ -289,38 +289,23 @@ $('#range-delay').change(function() {
       <h2 class="title">Slide 4</h2>
       <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
-      <a href="#slide-2" class="pure-button" data-liquidslider-ref="slider-4">Go to slide 2</a>
+      <a href="#slide-2" class="pure-button" onclick="api2.setNextPanel(1);api.updateClass($(this))">Go to slide 2</a>
     </div>
   </div>
   <h3>Cross Links</h3>
-  <p>The href can be a number, the title, or the direction. Note that you must use the <code class="language-javascript">panelTitleSelector</code> option if you want the <code class="language-javascript">.currentCrossLink</code> class to be applied. That's why the class applies to #slide-3 below but not #1.</p>
-  <a href="#1" class="pure-button" data-liquidslider-ref="slider-4">#1</a>
-  <a href="#slide-3" class="pure-button" data-liquidslider-ref="slider-4">#slide-3</a>
-  <a href="#left" class="pure-button" data-liquidslider-ref="slider-4">#left</a>
-  <a href="#right" class="pure-button" data-liquidslider-ref="slider-4">#right</a>
-  <h3>Internal API</h3>
-  <p>You can use the API to control the slider. Here I will set it to go to slide 4 on hover.</p>
-  <button class="btn-hover pure-button">Hover</button>
+  <p>Use the API to manually control the slider from an external source. </p>
+  <a href="#slide-1" class="pure-button" onclick="api2.setNextPanel(0);api2.updateClass($(this))">slide 1</a>
+  <a href="#slide-3" class="pure-button" onclick="api2.setNextPanel(2);api2.updateClass($(this))">slide 3</a>
+  <a href="#left" class="pure-button" onclick="api2.setNextPanel('left');api2.updateClass($(this))">left</a>
+  <a href="#right" class="pure-button" onclick="api2.setNextPanel('right');api2.updateClass($(this))">right</a>
+  <p>To use the API, use the following javacript. Note that the API is 0-based, so 3 will go to panel 4.</p>
+  <pre class="line-numbers language-javascript"><code>var api2 = $.data( $('#slider-4')[0], 'liquidSlider');</code></pre>
+  <p>Use <code class="language-javascript">api2.setNextPanel(2)</code> to move the slider to various positions and <code class="language-javascript">api2.updateClass($(this))</code> to update the current class. Note that instead of <code class="language-javascript">$(this)</code> you may also use a class.</p>
+  <pre class="line-numbers language-javascript"><code>&lt;a href="#" onclick="api2.setNextPanel(0);api2.updateClass($(this))"&gt;slide 1&lt;/a&gt;
+&lt;a href="#slide-3" onclick="api2.setNextPanel(2);api2.updateClass($(this))"&gt;slide 3&lt;/a&gt;
+&lt;a href="#left" onclick="api2.setNextPanel('left');api2.updateClass($(this))"&gt;left&lt;/a&gt;
+&lt;a href="#right" onclick="api2.setNextPanel('right');api2.updateClass($(this))"&gt;right&lt;/a&gt;</code></pre>
 
-  <p>First, adjust the settings.</p>
-  <pre class="line-numbers language-javascript"><code>$('#slider-4').liquidSlider({
-  hashLinking:true,
-  crossLinks:true,
-  firstPanelToLoad:2
-});</code></pre>
-  <p>Next, set up the cross links as follows.</p>
-  <pre class="line-numbers language-javascript"><code>&lt;a href="#1" data-liquidslider-ref="slider-4"&gt;#1&lt;/a&gt;
-&lt;a href="#slide-3" data-liquidslider-ref="slider-4"&gt;#slide-3&lt;/a&gt;
-&lt;a href="#left" data-liquidslider-ref="slider-4"&gt;#left&lt;/a&gt;
-&lt;a href="#right" data-liquidslider-ref="slider-4"&gt;#right&lt;/a&gt;</code></pre>
-
-  <p>Then to use the api, use the following javacript. Note that the API is 0-based, so 3 will go to panel 4.</p>
-  <pre class="line-numbers language-javascript"><code>var api2 = $.data( $('#slider-4')[0], 'liquidSlider');
-  $('.btn-hover').on('mouseover', function() {
-    api2.setNextPanel(3);
-  });</code></pre>
-  <p>In this example, I set up the button as follows.</p>
-  <pre class="language-markup"><code>&lt;button class="btn-hover"&gt;Hover&lt;/button&gt;</code></pre>
   <hr>
 </div>
 <div class="content-ad">
@@ -459,7 +444,7 @@ $('#range-delay').change(function() {
   $('.enable-hash').on('click', function(e){
     e.preventDefault();
     api2.options.hashLinking = true;
-    api2.updateHashTags();
+    api2.buildHashTags();
     $(this).fadeOut();
   });
   $('.btn-hover').on('mouseover', function() {
