@@ -19,7 +19,7 @@ module.exports = function (grunt) {
 				mangle: true,
 				compress: true,
 				sourceMap: false,
-				banner: "/*\n *  Liquid Slider v2.3.1\n *  Copyright 2012 Kevin Batdorf\n *  http://liquidslider.com\n *  MIT license\n */"
+				banner: "/*\n *  Liquid Slider v2.3.2\n *  Copyright 2012 Kevin Batdorf\n *  http://liquidslider.com\n *  MIT license\n */"
 			},
 			main: {
 				src: "src/js/jquery.liquid-slider.js",

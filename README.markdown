@@ -10,6 +10,11 @@ I'm on Twitter: [@Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
 
 How to Use
 -----------
+The easy way is to use [bower](http://bower.io/):
+
+`bower install LiquidSlider`
+
+The manual way:
 
 1. Download the files to your working directory.
 2. Link files in the header and footer.
@@ -100,7 +105,6 @@ dynamicTabsPosition: 'top',
 navElementTag: 'div',
 
 firstPanelToLoad: 1,
-crossLinks: false,
 hashLinking: false,
 hashTitleSelector: '.title',
 
@@ -139,6 +143,10 @@ swipeArgs: undefined
 
 Versions
 --------
+
+Version 2.3.2
+- Updates examples
+- Fixes hashlink bug
 
 Version 2.3.1
 - Updates for jQuery repo

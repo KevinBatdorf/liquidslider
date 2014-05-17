@@ -114,7 +114,7 @@ button {
   -o-transition: top 0.4s ease;
   transition: top 0.4s ease;
 }
-.pure-button-secondary, .currentCrossLink {
+.pure-button-secondary, .ls-current {
   background: rgb(66, 184, 221);
   color: white;
   border-radius: 4px;
