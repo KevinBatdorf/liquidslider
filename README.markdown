@@ -105,7 +105,6 @@ dynamicTabsPosition: 'top',
 navElementTag: 'div',
 
 firstPanelToLoad: 1,
-crossLinks: false,
 hashLinking: false,
 hashTitleSelector: '.title',
 
