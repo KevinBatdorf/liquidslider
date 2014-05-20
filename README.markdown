@@ -12,7 +12,7 @@ How to Use
 -----------
 The easy way is to use [bower](http://bower.io/):
 
-`bower install LiquidSlider`
+`bower install jquery-liquidslider`
 
 The manual way:
 

@@ -1,6 +1,7 @@
 module.exports = function (grunt) {
 
 	grunt.initConfig({
+		version: '2.3.3',
 		jshint: {
 			options: {
 				browser: true,
@@ -19,7 +20,7 @@ module.exports = function (grunt) {
 				mangle: true,
 				compress: true,
 				sourceMap: false,
-				banner: "/*\n *  Liquid Slider v2.3.2\n *  Copyright 2012 Kevin Batdorf\n *  http://liquidslider.com\n *  MIT license\n */"
+				banner: "/*\n *  Liquid Slider <%= version %>\n *  Copyright 2012 Kevin Batdorf\n *  http://liquidslider.com\n *  MIT license\n */"
 			},
 			main: {
 				src: "src/js/jquery.liquid-slider.js",
@@ -40,13 +41,28 @@ module.exports = function (grunt) {
 				options: {
 					livereload: true
 				}
+			},
+			config: {
+				files: ['Gruntfile.js'],
+				tasks: ["jshint", "uglify"]
 			}
-		}
+		},
+		bump: {
+	    options: {
+	      files: ['./*.json', 'Gruntfile.js'],
+	      updateConfigs: ['version'],
+	      tagName: "%VERSION%",
+	      commit: false,
+	      push:false,
+	      createTag:false
+	    }
+	  },
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-bump');
 
 	grunt.registerTask('default', ['jshint', 'uglify', 'watch']);
 
