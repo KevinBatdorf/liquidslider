@@ -1,6 +1,6 @@
 {
   "name": "liquidslider",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "description": "A Responsive Content Slider",
   "main": "index.js",
   "directories": {
@@ -33,6 +33,7 @@
     "grunt-contrib-jshint": "~0.8.0",
     "grunt-contrib-uglify": "~0.4.0",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-contrib-jasmine": "~0.6.3"
+    "grunt-contrib-jasmine": "~0.6.3",
+    "grunt-bump": "0.0.14"
   }
 }
