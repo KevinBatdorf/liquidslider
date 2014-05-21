@@ -145,6 +145,9 @@ Versions
 --------
 
 Version 2.3.2
+- Fixes trim
+
+Version 2.3.2
 - Updates examples
 - Fixes hashlink bug
 
