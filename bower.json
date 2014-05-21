@@ -15,7 +15,7 @@
   ],
   "license": "MIT",
   "ignore": [
-    "examples"
+    "examples",
     "node_modules",
     "bower_components",
     "src",
