@@ -1,5 +1,5 @@
 /*!
- *  Liquid Slider v2.1.0
+ *  Liquid Slider
  *  Copyright 2012 Kevin Batdorf
  *  http://liquidslider.com
  *  MIT license
@@ -471,8 +471,7 @@ LiquidSlider.getFromPanel = function(searchTerm, panelNumber) {
  * @return <String>
  */
 LiquidSlider.convertRegex = function(input) {
-  return input
-  .trim()
+  return jQuery.trim(input)
   .replace(/[^\w -]+/g,'')
   .replace(/ +/g,'-')
   .toLowerCase();
