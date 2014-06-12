@@ -144,6 +144,10 @@ swipeArgs: undefined
 Versions
 --------
 
+Version 2.3.6
+- Recalculates panel width based on container
+- Minor CSS update
+
 Version 2.3.2
 - Fixes trim
 

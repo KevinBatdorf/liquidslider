@@ -130,6 +130,7 @@
 
 /*** Arrow Navigation (non-graphical) ***/
 .ls-nav-left, .ls-nav-right {
+  top:0;
   float: left;
   clear:both;
 }
