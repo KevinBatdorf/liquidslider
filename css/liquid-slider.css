@@ -58,7 +58,7 @@
 }
 
 /*** Panels ***/
-.liquid-slider .panel {  
+.liquid-slider .ls-panel {  
   width: 600px;
   display: block;
   float: left;

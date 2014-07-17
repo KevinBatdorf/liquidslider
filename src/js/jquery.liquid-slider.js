@@ -183,7 +183,7 @@ LiquidSlider.build = function() {
   _this.options.preloader && _this.addPreloader();
 
   // Add the .panel class to the individual panels
-  jQuery(_this.sliderId).children().addClass((_this.$elem).attr('id') + '-panel panel');
+  jQuery(_this.sliderId).children().addClass((_this.$elem).attr('id') + '-panel ls-panel');
   _this.panelClass = _this.sliderId + ' .' + (_this.$elem).attr('id') + '-panel:not(.clone)';
   _this.$panelClass = jQuery(_this.panelClass);
 
@@ -1115,16 +1115,16 @@ LiquidSlider.makeResponsive = function() {
 
   // Adjust widths and add classes to make responsive
   jQuery(_this.sliderId + '-wrapper').addClass('ls-responsive').css({
-    'max-width': jQuery(_this.sliderId + ' .panel:first-child').width(),
+    'max-width': jQuery(_this.sliderId + ' .ls-panel:first-child').width(),
     'width': '100%'
   });
 
   // Update widths
   jQuery(_this.sliderId + ' .panel-container').css('width', 100 * _this.panelCountTotal + _this.pSign);
-  jQuery(_this.sliderId + ' .panel').css('width', 100 / _this.panelCountTotal + _this.pSign);
+  jQuery(_this.sliderId + ' .ls-panel').css('width', 100 / _this.panelCountTotal + _this.pSign);
 
   // convert to pixels
-  jQuery(_this.sliderId + ' .panel').css('width', jQuery(_this.sliderId).outerWidth(true));
+  jQuery(_this.sliderId + ' .ls-panel').css('width', jQuery(_this.sliderId).outerWidth(true));
 
   // Cache the padding for add/removing arrows
   if (_this.options.hideArrowsWhenMobile) {
@@ -1142,7 +1142,7 @@ LiquidSlider.makeResponsive = function() {
       var height = (_this.options.autoHeight) ? _this.getHeight() : _this.getHeighestPanel(_this.nextPanel);
       _this.adjustHeight(false, height);
       // convert to pixels
-      jQuery(_this.sliderId + ' .panel').css('width', jQuery(_this.sliderId).outerWidth(true));
+      jQuery(_this.sliderId + ' .ls-panel').css('width', jQuery(_this.sliderId).outerWidth(true));
     }, 500);
   });
 };
@@ -1198,7 +1198,7 @@ LiquidSlider.responsiveEvents = function() {
 
   // While resizing, set the width to 100%
   jQuery(_this.sliderId + '-wrapper').css('width', '100%');
-  _this.loaded && jQuery(_this.sliderId + ' .panel').width(100 / _this.panelCountTotal + _this.pSign);
+  _this.loaded && jQuery(_this.sliderId + ' .ls-panel').width(100 / _this.panelCountTotal + _this.pSign);
 
   // Update when the select box changes
   _this.options.mobileNavigation &&
@@ -1219,5 +1219,5 @@ LiquidSlider.registerTouch = function() {
       _this.swipeDir = (dir === 'left') ? 'right' : 'left';
       _this.setNextPanel(_this.swipeDir);
     }};
-  jQuery(_this.sliderId + ' .panel').swipe(args);
+  jQuery(_this.sliderId + ' .ls-panel').swipe(args);
 };
