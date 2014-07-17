@@ -144,6 +144,9 @@ swipeArgs: undefined
 Versions
 --------
 
+Version 2.3.7
+- Fixes compatability with Bootstrap
+
 Version 2.3.6
 - Recalculates panel width based on container
 - Minor CSS update
