@@ -17,15 +17,6 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <title>Liquid Slider Examples</title>
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-40983504-1', 'liquidslider.com');
-    ga('send', 'pageview');
-  </script>
 </head>
 <body class='no-js'>
   <h1 class="gradient"><a href="http://liquidslider.com">Liquid Slider Examples</a></h1>
@@ -45,7 +36,7 @@
           <li><a href="./page1.html#advanced-controls">Advanced Controls</a></li>
           <li><a href="./page1.html#hooks">Hooks</a></li>
       </ul>
-    </div> 
+    </div>
     <div class="pure-menu pure-menu-open">
       <a class="pure-menu-heading">Page 2</a>
       <ul>
@@ -56,7 +47,7 @@
           <li><a href="#"></a></li>
           <li><a href="#"></a></li> -->
       </ul>
-    </div>  
+    </div>
     <!-- <div class="pure-menu pure-menu-open">
       <a class="pure-menu-heading">Page 2</a>
       <ul>
@@ -80,7 +71,7 @@
     <div>
       <h2 class="title">Slide 2</h2>
       <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
-    </div>          
+    </div>
     <div>
       <h2 class="title">Slide 3</h2>
       <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
@@ -148,7 +139,7 @@
   var api = $.data( $('#slider-6')[0], 'liquidSlider');
   if ($(this).text() === "turn off") {
     api.options.autoHeight = false;
-    $(this).text('turn on'); 
+    $(this).text('turn on');
     api.adjustHeight(false, api.getHeighestPanel());
   } else {
     api.options.autoHeight = true;
@@ -160,32 +151,15 @@
  <hr>
 </div>
 <div class="content-ad">
-<script type="text/javascript"> 
-  var width = window.innerWidth 
-    || document.documentElement.clientWidth 
-    || document.body.clientWidth;
-
-  google_ad_client = "ca-pub-3827380040284749";
- 
-  if (width > 800) {
-    // Load the Leaderboard 728x90 Unit for wide screen
-    google_ad_slot = "6954218739"; 
-    google_ad_width = 728; 
-    google_ad_height = 90;
-  } else if ((width < 800) && (width > 400)) { 
-    // Load the 336x280 Medium Rectangle 
-    google_ad_slot = "8430951934"; 
-    google_ad_width = 336; 
-    google_ad_height = 280;
-  } else { 
-    // For small screens, load the 468x60 banner 
-    google_ad_slot = "9907685131"; 
-    google_ad_width = 468; 
-    google_ad_height = 60;
-  }
-</script>
-<script type="text/javascript"
-  src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- liquid-slider-resopnsive -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3827380040284749"
+     data-ad-slot="8410664736"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
 </script>
   <hr>
 </div>
@@ -216,7 +190,7 @@
   animateIn:"fadeIn",
   animateOut:"bounceOutRight"
 });</code></pre>
-    </div>          
+    </div>
     <div>
       <h2 class="title">AJAX Logic</h2>
       <pre class="language-javascript line-numbers"><code>var api2 = $.data( $('#slider-7')[0], 'liquidSlider');
@@ -276,7 +250,7 @@ $('.ajax1').on('click', function(e) {
     <div>
       <h2 class="title"><i class="icon-inbox"></i><span>Inbox</span></h2>
       <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
-    </div>          
+    </div>
     <div>
       <h2 class="title"><i class="icon-camera-retro"></i><span>Album</span></h2>
       <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
@@ -287,7 +261,7 @@ $('.ajax1').on('click', function(e) {
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
     </div>
   </div>
-  <p>This is also very easy to set up and involves a few simple settings and some css media queries. Additionally, you may need to realign the navigation in some cases where the content width is unknown until later on (i.e. images, fonts, etc).</p>     
+  <p>This is also very easy to set up and involves a few simple settings and some css media queries. Additionally, you may need to realign the navigation in some cases where the content width is unknown until later on (i.e. images, fonts, etc).</p>
   <pre class="language-javascript line-numbers"><code>$('#slider-8').liquidSlider({
   includeTitle:false,
   mobileNavigation:false,
@@ -320,32 +294,15 @@ $('.ajax1').on('click', function(e) {
   <hr>
 </div> <!-- end #ajax -->
 <div class="content-ad">
-<script type="text/javascript"> 
-  var width = window.innerWidth 
-    || document.documentElement.clientWidth 
-    || document.body.clientWidth;
-
-  google_ad_client = "ca-pub-3827380040284749";
- 
-  if (width > 800) {
-    // Load the Leaderboard 728x90 Unit for wide screen
-    google_ad_slot = "6954218739"; 
-    google_ad_width = 728; 
-    google_ad_height = 90;
-  } else if ((width < 800) && (width > 400)) { 
-    // Load the 336x280 Medium Rectangle 
-    google_ad_slot = "8430951934"; 
-    google_ad_width = 336; 
-    google_ad_height = 280;
-  } else { 
-    // For small screens, load the 468x60 banner 
-    google_ad_slot = "9907685131"; 
-    google_ad_width = 468; 
-    google_ad_height = 60;
-  }
-</script>
-<script type="text/javascript"
-  src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- liquid-slider-resopnsive -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3827380040284749"
+     data-ad-slot="8410664736"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
 </script>
   <hr>
 </div>
@@ -389,7 +346,7 @@ $('.height-toggle').on('click', function(e) {
   var api = $.data( $('#slider-6')[0], 'liquidSlider');
   if ($(this).text() === "turn off") {
     api.options.autoHeight = false;
-    $(this).text('turn on'); 
+    $(this).text('turn on');
     api.adjustHeight(false, api.getHeighestPanel());
   } else {
     api.options.autoHeight = true;
