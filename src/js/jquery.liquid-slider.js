@@ -129,7 +129,7 @@ LiquidSlider.init = function(options, elem) {
 
   // jQuery or CSS3 ?
   _this.determineAnimationType();
-  
+
   // Disable some stuff when not responsive
   if (!_this.options.responsive) {
     _this.options.mobileNavigation = false;
@@ -195,7 +195,7 @@ LiquidSlider.build = function() {
 
   // Build hash links
   _this.options.hashLinking && _this.buildHashTags();
-  
+
   // If using fade transition, add the class here and disable other options.
   if (_this.options.slideEaseFunction === 'fade') {
     (_this.$panelClass).addClass('fade');
@@ -218,9 +218,9 @@ LiquidSlider.build = function() {
     _this.options.hideSideArrows = false;
     _this.options.hideArrowsWhenMobile = false;
   }
-  
+
   /**
-   * Create a container width to allow for a smooth float right. 
+   * Create a container width to allow for a smooth float right.
    * Won't calculate arrows if positioned absolute
    */
   isAbsolute = ((_this.$leftArrow) && (_this.$leftArrow).css('position') === 'absolute') ? 0 : 1;
@@ -234,7 +234,7 @@ LiquidSlider.build = function() {
   // Align navigation tabs
   _this.options.dynamicTabs && _this.alignNavigation();
 
-  /* 
+  /*
    * There is no need to use continuous if arrow navigation is hidden on sides.
    * If you want to use autoslide and still want hideSideArrows, use the API
    */
@@ -334,7 +334,7 @@ LiquidSlider.configureCSSTransitions = function(slide, height) {
     easeOutBack: 'cubic-bezier(.175,.885,.32,1.275)',
     easeInOutBack: 'cubic-bezier(.68,-.55,.265,1.55)'
   };
-  
+
   // Set some defaults
   sFunction = _this.easing[_this.options.slideEaseFunction] || _this.options.slideEaseFunction;
   hFunction = _this.easing[_this.options.heightEaseFunction] || _this.options.heightEaseFunction;
@@ -444,7 +444,7 @@ LiquidSlider.getFirstPanel = function() {
   // is there a hash tag?
   if (_this.options.hashLinking) {
     output = jQuery.inArray(_this.convertRegex(window.location.hash), _this.hashLinks);
-  
+
     // Default to panel 1 if mistyped
     if (output === -1) output = 0;
   }
@@ -479,7 +479,7 @@ LiquidSlider.convertRegex = function(input) {
 
 /**
  * Updates all classes for current nav and panels
- * 
+ *
  * @param <Object> crosslink
  */
 LiquidSlider.updateClass = function(crosslink) {
@@ -571,7 +571,7 @@ LiquidSlider.onload = function() {
 };
 
 /**
- * Prepares the slider for transition, giving the dev the option to 
+ * Prepares the slider for transition, giving the dev the option to
  * not animate, and override the pre and callback hooks
  *
  * @param <Number> nextPanel
@@ -742,7 +742,7 @@ LiquidSlider.getHeighestPanel = function() {
 
 /**
  * Basically checks if we need to jump panels
- * at the end of a transition while using the 
+ * at the end of a transition while using the
  * continuous option (verify we are in the right place)
  */
 LiquidSlider.verifyPanel = function() {
@@ -860,7 +860,7 @@ LiquidSlider.addNavigation = function(navClass) {
 };
 
 /**
- * Returns the title that will be used, 
+ * Returns the title that will be used,
  * supports html or a string.
  *
  * @param <Element> input
@@ -1185,7 +1185,7 @@ LiquidSlider.responsiveEvents = function() {
         (!(_this.leftArrow).length || !(_this.rightArrow).length)) {
         _this.addArrows();
         _this.registerArrows();
-      } else if (!_this.options.dynamicArrowsGraphical) {
+      } else if (!_this.options.dynamicArrowsGraphical && _this.options.mobileNavigation) {
 
         // Reposition the text arrows
         (_this.leftArrow).css('margin-' +

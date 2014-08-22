@@ -1,7 +1,7 @@
 module.exports = function (grunt) {
 
 	grunt.initConfig({
-		version: '2.3.7',
+		version: '2.3.8',
 		jshint: {
 			options: {
 				browser: true,

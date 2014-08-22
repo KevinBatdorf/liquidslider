@@ -144,6 +144,9 @@ swipeArgs: undefined
 Versions
 --------
 
+Version 2.3.8
+- Fixes bug with text arrows and no mobile nav
+
 Version 2.3.7
 - Fixes compatability with Bootstrap
 
