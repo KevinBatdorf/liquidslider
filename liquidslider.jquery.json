@@ -23,7 +23,7 @@
         }
     ],
     "dependencies": {
-        "jquery": ">=1.5"
+        "jquery": ">=1.7"
     },
     "bugs": "https://github.com/KevinBatdorf/liquidslider/issues?state=open",
     "homepage": "http://liquidslider.com",
