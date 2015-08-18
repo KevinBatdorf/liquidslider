@@ -591,7 +591,7 @@ LiquidSlider.prepareTransition = function(nextPanel, noAnimation, noPretransitio
   // stores some variables, then sends to pretransition hook
   _this.noAnimation = noAnimation;
   _this.noPosttransition = noPosttransition;
-  if (!_this.loaded) {
+  if (!_this.loaded || noPretransition) {
     _this.transition();
   } else {
     _this.options.pretransition.call(_this);
