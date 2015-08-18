@@ -18,7 +18,7 @@ module.exports = function (grunt) {
 		uglify: {
 			options: {
 				mangle: true,
-				compress: true,
+				compress: {},
 				sourceMap: false,
 				banner: "/*\n *  Liquid Slider <%= version %>\n *  Copyright 2012 Kevin Batdorf\n *  http://liquidslider.com\n *  MIT license\n */"
 			},
