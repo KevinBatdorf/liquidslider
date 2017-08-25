@@ -2,9 +2,13 @@
 
 ## A Responsive jQuery HTML Content Slider
 
+Update August 2017... Slider is a little dated but still works as well as ever. It might see a rewrite soon if there's interest shown. Click the star above to show your support! :)
+
 [Download](https://github.com/KevinBatdorf/liquidslider/zipball/master)
 
 [Demo Page](http://kevinbatdorf.github.io/liquidslider)
+
+[Example Page](http://kevinbatdorf.github.io/liquidslider/examples/page1.html)
 
 I'm on Twitter: [@Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
 
