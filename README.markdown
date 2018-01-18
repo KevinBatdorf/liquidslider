@@ -2,6 +2,8 @@
 
 ## A Responsive jQuery HTML Content Slider
 
+Update January 2018... I'm now lead developer on the [MetaSlider WordPress plugin](https://metaslider.com/upgrade?afref=9). There are plans to integrate new slideshow plugins, most likely including the LiquidSlider. You can find out more information [here](https://metaslider.com/upgrade?afref=9)
+
 Update August 2017... Slider is a little dated but still works as well as ever. It might see a rewrite soon if there's interest shown. Click the star above to show your support! :)
 
 [Download](https://github.com/KevinBatdorf/liquidslider/zipball/master)
