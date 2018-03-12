@@ -2,35 +2,57 @@
 
 ## A Responsive jQuery HTML Content Slider
 
-Update January 2018... I'm now lead developer on the [MetaSlider WordPress plugin](https://metaslider.com/upgrade?afref=9). There are plans to integrate new slideshow plugins, most likely including the LiquidSlider. You can find out more information [here](https://metaslider.com/upgrade?afref=9)
-
-Update August 2017... Slider is a little dated but still works as well as ever. It might see a rewrite soon if there's interest shown. Click the star above to show your support! :)
-
-[Download](https://github.com/KevinBatdorf/liquidslider/zipball/master)
-
-[Demo Page](http://kevinbatdorf.github.io/liquidslider)
-
-[Example Page](http://kevinbatdorf.github.io/liquidslider/examples/page1.html)
+[Demo Page](http://kevinbatdorf.github.io/liquidslider) | [Example Page (Advanced)](http://kevinbatdorf.github.io/liquidslider/examples/page1.html)
 
 I'm on Twitter: [@Kevin Batdorf](http://twitter.com/#!/kevinbatdorf)
 
-How to Use
------------
-The easy way is to use [bower](http://bower.io/):
+## Update
+I'm going to make this compatible with NPM soon, but for now there's a work around.
+Two issues:
 
-`bower install jquery-liquidslider`
+1) You still need to load in the dependencies on your own
+2) the asset files wil have to be manually moved, or overridden in your own css
 
-The manual way:
 
-1. Download the files to your working directory.
+## Installation
+
+### NPM
+```bash
+npm install --save git+https://git@github.com/KevinBatdorf/liquidslider.git
+```
+
+then in your js file add
+```js
+import 'liquidslider/js/jquery.liquid-slider.min.js'
+```
+
+The stylesheet is plain css, but you can load it in with sass
+```scss
+@import "node_modules/liquidslider/css/liquid-slider";
+```
+
+### The manual way:
+
+1. [Download](https://github.com/KevinBatdorf/liquidslider/zipball/master) the files to your working directory.
 2. Link files in the header and footer.
-3. Structure your html in a manner similar to below:
 
 ```html
 <head>
   <link rel="stylesheet" href="./dist/css/liquid-slider.css">
 </head>
+<body>
+  <footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.4/jquery.touchSwipe.min.js"></script>
+    <script src="./dist/js/jquery.liquid-slider.min.js"></script>
+  </footer>
+</body>
+```
+## How to use
+Structure your html in a manner similar to below:
 
+```html
 <section class="liquid-slider" id="main-slider">
   <div>
     <h2 class="title">Slide 1</h2>
@@ -41,19 +63,12 @@ The manual way:
     <p>Content</p>
   </div>
 </section>
-
-<footer>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.4/jquery.touchSwipe.min.js"></script>
-  <script src="./dist/js/jquery.liquid-slider.min.js"></script>
-</footer>
 ```
 
 4. Initialize the content slider somewhere after the script.
 
 ```javascript
-$(function(){
+jQuery(function($) {
   $('#main-slider').liquidSlider();
 });
 ```
@@ -61,7 +76,7 @@ $(function(){
 If you would like to edit a setting, do so like this:
 
 ```javascript
-$(function(){
+jQuery(function($) {
   $('#main-slider').liquidSlider({
     setting: value,
     setting: value
