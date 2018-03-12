@@ -1066,7 +1066,7 @@ LiquidSlider.buildHashTags = function() {
 
   _this.hashLinks = [];
   jQuery(_this.panelClass + ' ' + _this.options.hashTitleSelector).each(function() {
-    _this.hashLinks.push(_this.convertRegex($(this).text()));
+    _this.hashLinks.push(_this.convertRegex(jQuery(this).text()));
   });
 };
 

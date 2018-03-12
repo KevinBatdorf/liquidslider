@@ -4,14 +4,14 @@
     "description": "The Last Responsive Content Slider You'll Ever Need.",
     "keywords": [
         "ui",
-        "content"
+        "content",
         "slider",
         "responsive",
         "swipe",
         "mobile",
         "tabs"
     ],
-    "version": "2.3.9",
+    "version": "2.3.10",
     "author": {
         "name": "Kevin Batdorf",
         "url": "http://www.kevinbatdorf.com"
