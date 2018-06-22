@@ -1123,8 +1123,8 @@ LiquidSlider.makeResponsive = function() {
   jQuery(_this.sliderId + ' .panel-container').css('width', 100 * _this.panelCountTotal + _this.pSign);
   jQuery(_this.sliderId + ' .ls-panel').css('width', 100 / _this.panelCountTotal + _this.pSign);
 
-  // convert to pixels
-  jQuery(_this.sliderId + ' .ls-panel').css('width', jQuery(_this.sliderId).outerWidth(true));
+  // convert to pixels (Probably not needed anymore, and causing issues in chrome)
+  // jQuery(_this.sliderId + ' .ls-panel').css('width', jQuery(_this.sliderId).outerWidth(true));
 
   // Cache the padding for add/removing arrows
   if (_this.options.hideArrowsWhenMobile) {
@@ -1141,8 +1141,8 @@ LiquidSlider.makeResponsive = function() {
     _this.resizingTimeout = setTimeout(function() {
       var height = (_this.options.autoHeight) ? _this.getHeight() : _this.getHeighestPanel(_this.nextPanel);
       _this.adjustHeight(false, height);
-      // convert to pixels
-      jQuery(_this.sliderId + ' .ls-panel').css('width', jQuery(_this.sliderId).outerWidth(true));
+      // convert to pixels (Probably not needed anymore, and causing issues in chrome)
+      // jQuery(_this.sliderId + ' .ls-panel').css('width', jQuery(_this.sliderId).outerWidth(true));
     }, 500);
   });
 };
