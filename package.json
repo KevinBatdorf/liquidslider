@@ -1,6 +1,6 @@
 {
   "name": "liquidslider",
-  "version": "2.3.11",
+  "version": "2.3.12",
   "description": "A Responsive Content Slider",
   "main": "js/jquery.liquid-slider.min.js",
   "directories": {
