@@ -177,7 +177,7 @@
 .ls-nav-left-arrow a, .ls-nav-right-arrow a {
   display: block;
 }
-[class$="-arrow"] {
+.ls-wrapper [class$="-arrow"] {
   width: 25px;
   height: 25px;
   background-image: url(../images/arrow.png);
