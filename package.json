@@ -2,7 +2,7 @@
   "name": "liquidslider",
   "version": "2.3.12",
   "description": "A Responsive Content Slider",
-  "main": "js/jquery.liquid-slider.min.js",
+  "main": "src/js/jquery.liquidslider.npm.js",
   "directories": {
     "example": "examples"
   },
@@ -23,6 +23,13 @@
     "tabs"
   ],
   "author": "Kevin Batdorf",
+  "contributors": [
+    {
+      "name": "Tschallacka",
+      "email": "tschallacka@outlook.com",
+      "url": "https://www.tschallacka.de"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/KevinBatdorf/liquidslider/issues"
@@ -45,6 +52,7 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
     "gulplog": "^1.0.0",
+    "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
   },
   "dependencies": {

@@ -27,9 +27,9 @@ var Base = require("@tschallacka/oc.foundation.base");
 var APPNAME = 'LiquidSlider';
 var LiquidSlider = function (element, options) 
 {  
-    if(!options) {
-        options = $.extend({}, LiquidSlider.DEFAULTS, element && $.data(element));
-    }
+    
+  options = $.extend({}, LiquidSlider.DEFAULTS, element && $.data(element), typeof options == 'object' && options);
+    
 	Base.call(this, APPNAME, element, options);
 }; 
 LiquidSlider.prototype = Object.create(Base.prototype); 
@@ -164,7 +164,7 @@ LiquidSlider.prototype.handlers = function(type)
  * whilst the foobar needs a this.foobar=null in the destroy function.
  */
 LiquidSlider.prototype.init = function() 
-{
+{console.log('removed', this.options);
   if(this.options.removeGlobalNoJsMarker) {
       $('.no-js').removeClass('no-js');
   }
@@ -1407,8 +1407,7 @@ LiquidSlider.bindTojQuery = function(jQueryInstance)
          return this.each(function(index, elem) 
          {
            if(!$.data(elem, 'liquidSlider') && !$.data(elem, instance.oc)) {
-            let current_options = $.extend({}, LiquidSlider.DEFAULTS, $.data(elem), typeof options == 'object' && options);
-            let slider = new LiquidSlider(elem, current_options);
+            let slider = new LiquidSlider(elem, options);
             $.data(elem, 'liquidSlider', slider);
            }
            else {
