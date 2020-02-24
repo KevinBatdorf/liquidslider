@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
+  <meta name="description" content="Liquid Slider : A JQuery Slider Plugin">
+  <meta property="og:image" content="http://kevinbatdorf.github.io/liquidslider/examples/assets/fb.png"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans|Montserrat|Lobster' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.4.2/pure-min.css">
+  <link rel="stylesheet" href="../css/liquid-slider.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.0.0/animate.min.css">
+  <link rel="stylesheet" href="./assets/prism.css">
+  <link rel="stylesheet" href="./assets/styles.css">
+
+  
+  <title>Liquid Slider Examples</title>
+</head>
+<body class='no-js'>
+  <h1 class="gradient"><a href="http://liquidslider.com">Liquid Slider Examples</a></h1>
+<div class="container">
+  <a class="link" href="http://liquidslider.com">Download Page</a>
+  <div class="message">
+  <p>Below is a collection of demos mainly used for visual testing. I've included the code for your convenience. I'll try to add more over time, but feel free to <a class="link" href="http://www.liquidslider.com/support">contact me</a> if you have a clever idea you want to see included. <strong>To view the responsivness, simply resize your browser.</strong></p>
+  </div>
+  <div class="nav-area">
+    <div class="pure-menu pure-menu-open">
+      <a class="pure-menu-heading">Page 1</a>
+      <ul>
+          <li><a href="#how-to-install">How To Install</a></li>
+          <li><a href="#default-settings">Default Settings</a></li>
+          <li><a href="#how-to-edit-settings">How To Edit Settings</a></li>
+          <li><a href="#autoplay-and-transition-controls">Autoplay & Transition Controls</a></li>
+          <li><a href="#advanced-controls">Advanced Controls</a></li>
+          <li><a href="#hooks">Hooks</a></li>
+      </ul>
+    </div>
+    <div class="pure-menu pure-menu-open">
+      <a class="pure-menu-heading">Page 2</a>
+      <ul>
+          <li><a href="page2.npm.html#animate-css">Animate.css</a></li>
+          <li><a href="page2.npm.html#ajax">Ajax</a></li>
+          <li><a href="page2.npm.html#alternative-navigation">Alternative Navigation</a></li>
+<!--           <li><a href="#"></a></li>
+          <li><a href="#"></a></li>
+          <li><a href="#"></a></li> -->
+      </ul>
+    </div>
+    <!-- <div class="pure-menu pure-menu-open">
+      <a class="pure-menu-heading">Page 2</a>
+      <ul>
+          <li><a href="#how-to-install">Animate.css</a></li>
+          <li><a href="#default-settings">Default Settings</a></li>
+          <li><a href="#autoplay-and-transition-controls">Autoplay & Transition Controls</a></li>
+          <li><a href="#continuous-slide-disabled">Continuous Slide Disabled</a></li>
+          <li><a href="#advanced-controls">Advanced Controls</a></li>
+          <li><a href="#hooks">Hooks</a></li>
+      </ul>
+    </div>     -->
+  </div>
+<div id="how-to-install">
+  <h2>How To Install<a href="#how-to-install">#</a></h2>
+  <p>Copy the files to your working directory, then add this to the <code class="language-javascript">&lt;head&gt;</code> or the <code class="language-javascript">&lt;footer&gt;</code>:</p>
+  <pre class="line-numbers language-javascript"><code>/* Add this to the &lt;head&gt; */
+&lt;link rel="stylesheet" href="./css/animate.css"&gt; &lt;!-- Optional --&gt;
+&lt;link rel="stylesheet" href="./css/liquid-slider.css"&gt;
+
+/* Add these to the &lt;head&gt; or the &lt;footer&gt; */
+&lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="./js/jquery.easing.1.3.js"&gt;&lt;/script&gt;
+&lt;script src="./js/jquery.touchSwipe.min.js"&gt;&lt;/script&gt;
+&lt;script src="./js/jquery.liquid-slider.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+/* If installing in the footer, you won't need $(function() {} */
+$(function(){
+     $('#slider-id').liquidSlider();
+});
+&lt;/script&gt;</code></pre>
+  <p>Then in your code, build a three-panel slider like this:</p>
+  <pre class="line-numbers language-javascript"><code>&lt;div class="liquid-slider" id="slider-id"&gt;
+     &lt;div&gt;
+          &lt;h2 class="title"&gt;Slide 1&lt;/h2&gt;
+          // Content goes here
+     &lt;/div&gt;
+     &lt;div&gt;
+          &lt;h2 class="title"&gt;Slide 2&lt;/h2&gt;
+          // Content goes here
+     &lt;/div&gt;
+     &lt;div&gt;
+          &lt;h2 class="title"&gt;Slide 3&lt;/h2&gt;
+          // Content goes here
+     &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  <hr>
+</div>
+<div id="default-settings">
+  <!-- Slider 1 -->
+  <h2>Default Settings<a href="#default-settings">#</a></h2>
+  <p>These are the default settings</p>
+
+  <div class="liquid-slider" id="slider-1">
+    <div>
+      <h2 class="title">Slide 1</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 2</h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 3</h2>
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 4</h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+    </div>
+  </div>
+  <pre class="line-numbers language-javascript"><code>$('#slider-id').liquidSlider();</code></pre>
+  <hr>
+</div>
+<div id="how-to-edit-settings">
+  <!-- Slider 2 -->
+  <h2>How to edit settings <a href="#how-to-edit-settings">#</a></h2>
+  <p>Changing a setting is easy. The following disables continuous sliding and changes the default easing.</p>
+  <div class="liquid-slider" id="slider-2">
+    <div>
+      <h2 class="title">Slide 1</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 2</h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 3</h2>
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 4</h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+    </div>
+  </div>
+  <pre class="line-numbers language-javascript"><code>$('#slider-2').liquidSlider({
+  continuous:false,
+  slideEaseFunction: "easeInOutCubic"
+});</code></pre>
+  <hr>
+</div>
+<div id="autoplay-and-transition-controls">
+  <!-- Slider 3 -->
+  <h2>Autoplay & Transition Controls<a href="#autoplay-and-transition-controls">#</a></h2>
+  <p>The play button will dynamically update to stop when clicked. The controls use the internal API to control speed and delay. Note that these HTML5 sliders will not work in all browsers (specifically Firefox and IE), but can be functional using a polyfill. See <a href="http://html5please.com/#range">here</a> for the latest info about that.</p>
+  <div class="liquid-slider" id="slider-3">
+    <div>
+      <h2 class="title">Slide 1</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 2</h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 3</h2>
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 4</h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+    </div>
+  </div>
+  <button class="btn pure-button">Start</button> Speed: <input id="range-speed" type=range step=100 min=-5000 max=100 value=-1500> Delay: <input id="range-delay" type=range step=1000 min=-15000 max=100 value=-7000>
+  <p>First, create a button and two sliders like this:</p>
+  <pre class="line-numbers language-javascript"><code>&lt;button class="btn"&gt;A Pure Button&lt;/button&gt;
+&lt;input id="range-speed" type=range step=100 min=-5000 max=100 value=-1500&gt;
+&lt;input id="range-delay" type=range step=1000 min=-15000 max=100 value=-7000&gt;</code></pre>
+  <p>Next, initialize the Liquid Slider, access the internal api, and add a function to control the auto play. Then update the variable settings. Optionally, you may set autoSlide to true and change "Stop" and "Start" accordingly.</p>
+  <pre class="line-numbers language-javascript"><code>$('#slider-3').liquidSlider({/*autoSlide:true*/});
+$('.btn').on('click', function() {
+  var api = $.data( $('#slider-3')[0], 'liquidSlider'),
+      text = $(this).text() === 'Start' ? 'Stop' : 'Start';
+  if (text === 'Stop')
+    api.startAutoSlide();
+  else
+    api.stopAutoSlide();
+  $(this).text(text);
+});
+$('#range-speed').change(function() {
+  api.options.slideEaseDuration = -$(this).val()
+});
+$('#range-delay').change(function() {
+  api.options.autoSlideInterval = -$(this).val()
+});</code></pre>
+  <hr>
+</div>
+<div id="advanced-controls">
+  <!-- Slider 4 -->
+  <h2>Advanced Controls. <a href="#advanced-controls">#</a></h2>
+  <p>Hash linking allows you to link to the slider from an external page, and have a specific panel appear (Look in the URL). Cross links control the slider from anywhere on the page, even from within the slider itself.</p>
+  <p>This slider should load on panel 2 if no hash tag is supplied because of <code class="language-javascript">firstPanelToLoad:2</code>. I disabled hash linking for this page so that I can link to specific sections of this page. <a href="#" class="link enable-hash">Click to enable.</a></p>
+  <div class="liquid-slider" id="slider-4">
+    <div>
+      <h2 class="title">Slide 1</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 2</h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+      <a href="#4" class="pure-button" onclick="api2.setNextPanel(3);api.updateClass($(this))">Go to slide 4</a>
+    </div>
+    <div>
+      <h2 class="title">Slide 3</h2>
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 4</h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+      <a href="#slide-2" class="pure-button" onclick="api2.setNextPanel(1);api.updateClass($(this))">Go to slide 2</a>
+    </div>
+  </div>
+  <h3>Cross Links</h3>
+  <p>Use the API to manually control the slider from an external source. </p>
+  <a href="#slide-1" class="pure-button" onclick="api2.setNextPanel(0);api2.updateClass($(this))">slide 1</a>
+  <a href="#slide-3" class="pure-button" onclick="api2.setNextPanel(2);api2.updateClass($(this))">slide 3</a>
+  <a href="#left" class="pure-button" onclick="api2.setNextPanel('left');api2.updateClass($(this))">left</a>
+  <a href="#right" class="pure-button" onclick="api2.setNextPanel('right');api2.updateClass($(this))">right</a>
+  <p>To use the API, use the following javacript. Note that the API is 0-based, so 3 will go to panel 4.</p>
+  <pre class="line-numbers language-javascript"><code>var api2 = $.data( $('#slider-4')[0], 'liquidSlider');</code></pre>
+  <p>Use <code class="language-javascript">api2.setNextPanel(2)</code> to move the slider to various positions and <code class="language-javascript">api2.updateClass($(this))</code> to update the current class. Note that instead of <code class="language-javascript">$(this)</code> you may also use a class.</p>
+  <pre class="line-numbers language-javascript"><code>&lt;a href="#" onclick="api2.setNextPanel(0);api2.updateClass($(this))"&gt;slide 1&lt;/a&gt;
+&lt;a href="#slide-3" onclick="api2.setNextPanel(2);api2.updateClass($(this))"&gt;slide 3&lt;/a&gt;
+&lt;a href="#left" onclick="api2.setNextPanel('left');api2.updateClass($(this))"&gt;left&lt;/a&gt;
+&lt;a href="#right" onclick="api2.setNextPanel('right');api2.updateClass($(this))"&gt;right&lt;/a&gt;</code></pre>
+
+  <hr>
+</div>
+<div id="hooks">
+  <!-- Slider 5 -->
+  <h2>Hooks <a href="#hooks">#</a></h2>
+  <p>There are four functions that you can hook into. Once right before the slider removes the preloader (preload), once the slider fully loads (onload), at the start of a transition (pretransition), and once a transition completes (callback).</p>
+  <div class="liquid-slider" id="slider-5">
+    <div>
+      <h2 class="title">Slide 1</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 2</h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 3</h2>
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 4</h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+    </div>
+  </div>
+  <p>No, the slider isn't broken :) You can run a code that fires right before the preloader is removed. But you must run <code class="language-javascript">this.finalize();</code> if you edit this. Click below to complete the loading.</p>
+  <button class="btn-load pure-button">Complete Loading</button>
+  <div class="top-bar gradient">Sliding...</div>
+  <p>After clicking, you will notice tha another event fires, which is the <code class="language-javascript">onload</code> function.</p>
+  <p>The pretransition function fires as soon as a transition begins. in this case I set a top bar to slide down. Then finally the callback function executes after a transition is complete. This one slides up the top bar and sets random colors to the navigation tabs.</p>
+  <p>Additionally, the <code class="language-javascript">pretransition</code> function must include <code class="language-javascript">this.transition();</code> if you plan to edit this setting. Otherwise it won't complete the transition. Note that you may also pause the slider at this point.</p>
+  <pre class="line-numbers language-javascript"><code>$('#slider-5').liquidSlider({
+  preloader:true,
+  preload: function() {
+    var self = this;
+    $('.btn-load').on('click', function () {
+      self.finalize();
+    });
+  },
+  onload: function () {
+    $('.btn-load').after('&lt;button&gt;onload complete!&lt;/button&gt;').fadeOut();
+  },
+  pretransition: function() {
+    $('.top-bar').text(this.getFromPanel(this.options.panelTitleSelector, this.nextPanel));
+    $('.top-bar').css('top', '0');
+    this.transition();
+  },
+  callback: function() {
+     $('.top-bar').css('top', '-100px');
+     $('#slider-5-nav-ul a').each(function() {
+      // http://www.paulirish.com/2009/random-hex-color-code-snippets/
+      $(this).css('background', '#'+Math.floor(Math.random()*16777215).toString(16));
+      $(this).css('color', '#'+Math.floor(Math.random()*16777215).toString(16));
+     })
+  },
+})</code></pre>
+</div>
+  <a class="next-page pure-button pure-button-secondary" href="page2.npm.html">Onward to Page 2</a>
+</div>
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="profile">
+      <a class="circle-image-link" href="https://twitter.com/kevinbatdorf" title="Kevin Batdorf on Twitter">
+        <img src="./assets/mee.jpeg">
+      </a>
+      <div class="info">
+        <h2 class="title">by Kevin Batdorf</h2>
+        <!-- <a href="https://twitter.com/kevinbatdorf" class="twitter-follow-button" data-show-count="false" data-size="large" data-show-screen-name="false" data-dnt="true">Follow @kevinbatdorf</a> -->
+        <script>/*!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');*/</script>
+        <p>Hey there fellow developer. I wrote the <a class="link" href="https://github.com/KevinBatdorf/codaslider" title="Liquid Slider">Liquid Slider</a> with the purpose of building a fast, lightweight and flexible slider that runs great on any device. It is also the successor to the <a class="link" href="https://github.com/KevinBatdorf/codaslider" title="Coda Slider download">Coda Slider</a> which has been around for years. I'm a freelance web developer for hire, so send me a message here.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/jquery.liquidslider.npm.demo.min.js"></script>
+  <script src="./assets/prism.js"></script>
+  <script>
+  $('#slider-1').liquidSlider();
+  $('#slider-2').liquidSlider({continuous:false});
+  $('#slider-3').liquidSlider({/*autoSlide:true*/});
+  var api = $.data( $('#slider-3')[0], 'liquidSlider');
+  $('.btn').on('click', function() {
+      var text = $(this).text() === 'Start' ? 'Stop' : 'Start';
+      if (text === 'Stop')
+        api.startAutoSlide();
+      else
+        api.stopAutoSlide();
+      $(this).text(text);
+  });
+  $('#range-speed').change(function() {
+    api.options.slideEaseDuration = -$(this).val()
+  });
+  $('#range-delay').change(function() {
+    api.options.autoSlideInterval = -$(this).val()
+  });
+
+  $('#slider-4').liquidSlider({
+    //hashLinking:true,
+    crossLinks:true,
+    firstPanelToLoad:2
+  });
+  var api2 = $.data( $('#slider-4')[0], 'liquidSlider');
+  $('.enable-hash').on('click', function(e){
+    e.preventDefault();
+    api2.options.hashLinking = true;
+    api2.buildHashTags();
+    $(this).fadeOut();
+  });
+  $('.btn-hover').on('mouseover', function() {
+    api2.setNextPanel(3);
+  });
+
+  $('#slider-5').liquidSlider({
+    preloader:true,
+    preload: function() {
+      var self = this;
+      $('.btn-load').on('click', function () {
+        self.finalize();
+      });
+    },
+    onload: function () {
+      $('.btn-load').after('<button class="pure-button pure-button-disabled">onload complete!</button>').fadeOut();
+    },
+    pretransition: function() {
+      $('.top-bar').text(this.getFromPanel(this.options.panelTitleSelector, this.nextPanel));
+      $('.top-bar').css('top', '0');
+      this.transition();
+    },
+    callback: function() {
+       $('.top-bar').css('top', '-100px');
+       $('#slider-5-nav-ul a').each(function() {
+        // http://www.paulirish.com/2009/random-hex-color-code-snippets/
+        $(this).css('background', '#'+Math.floor(Math.random()*16777215).toString(16));
+        $(this).css('color', '#'+Math.floor(Math.random()*16777215).toString(16));
+       })
+    }
+  });
+  </script>
+</footer>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
+  <meta name="description" content="Liquid Slider : A JQuery Slider Plugin">
+  <meta property="og:image" content="http://kevinbatdorf.github.io/liquidslider/examples/assets/fb.png"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans|Montserrat|Lobster' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.4.2/pure-min.css">
+  <link rel="stylesheet" href="../css/liquid-slider.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.0.0/animate.min.css">
+  <link rel="stylesheet" href="./assets/prism.css">
+  <link rel="stylesheet" href="./assets/styles.css">
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
+
+  <title>Liquid Slider Examples</title>
+</head>
+<body class='no-js'>
+  <h1 class="gradient"><a href="http://liquidslider.com">Liquid Slider Examples</a></h1>
+<div class="container">
+  <a class="link" href="http://liquidslider.com">Download Page</a>
+  <div class="message">
+  <p>Below is a collection of demos mainly used for visual testing. I've included the code for your convenience. I'll try to add more over time, but feel free to <a class="link" href="http://www.liquidslider.com/support">contact me</a> if you have a clever idea you want to see included. <strong>To view the responsivness, simply resize your browser.</strong></p>
+  </div>
+  <div class="nav-area">
+    <div class="pure-menu pure-menu-open">
+      <a class="pure-menu-heading">Page 1</a>
+      <ul>
+          <li><a href="./page1.npm.html#how-to-install">How To Install</a></li>
+          <li><a href="./page1.npm.html#default-settings">Default Settings</a></li>
+          <li><a href="./page1.npm.html#how-to-edit-settings">How To Edit Settings</a></li>
+          <li><a href="./page1.npm.html#autoplay-and-transition-controls">Autoplay & Transition Controls</a></li>
+          <li><a href="./page1.npm.html#advanced-controls">Advanced Controls</a></li>
+          <li><a href="./page1.npm.html#hooks">Hooks</a></li>
+      </ul>
+    </div>
+    <div class="pure-menu pure-menu-open">
+      <a class="pure-menu-heading">Page 2</a>
+      <ul>
+          <li><a href="#animate-css">Animate.css</a></li>
+          <li><a href="#ajax">Ajax</a></li>
+          <li><a href="#alternative-navigation">Alternative Navigation</a></li>
+ <!--          <li><a href="#"></a></li>
+          <li><a href="#"></a></li>
+          <li><a href="#"></a></li> -->
+      </ul>
+    </div>
+    <!-- <div class="pure-menu pure-menu-open">
+      <a class="pure-menu-heading">Page 2</a>
+      <ul>
+          <li><a href="#how-to-install">Animate.css</a></li>
+          <li><a href="#default-settings">Default Settings</a></li>
+          <li><a href="#autoplay-and-transition-controls">Autoplay & Transition Controls</a></li>
+          <li><a href="#continuous-slide-disabled">Continuous Slide Disabled</a></li>
+          <li><a href="#advanced-controls">Advanced Controls</a></li>
+          <li><a href="#hooks">Hooks</a></li>
+      </ul>
+    </div>     -->
+  </div>
+<div id="animate-css">
+  <h2>Animate.css<a href="#animate-css">#</a></h2>
+  <p>The Liquid Slider now natively supports the popular animate.css plugin. Test it out below by selecting your animation types and moving the slider. Note that if you want to use the same transition for both entrance and exit, you must include a specific callback function (see below). You can also <a class="link height-toggle" href="#">turn on</a> the <code class="language-javascript">autoHeight</code> setting too.</p>
+  <div class="liquid-slider" id="slider-6">
+    <div>
+      <h2 class="title">Slide 1</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 2</h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 3</h2>
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+    </div>
+    <div>
+      <h2 class="title">Slide 4</h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+    </div>
+  </div>
+  <p>The following are supported. Click to activate, then use the navigation above to continue testing.</p>
+  <div class="animation-block">
+    <div class="animations exit">
+      <h3>Exit Animations</h3>
+      <h4>Attention seekers</h4>
+      <button class="pure-button">flash</button><button class="pure-button">bounce</button><button class="pure-button">shake</button><button class="pure-button">tada</button><button class="pure-button">swing</button><button class="pure-button">wobble</button><button class="pure-button">wiggle</button><button class="pure-button">pulse</button>
+      <h4>Flippers (currently Webkit, Firefox, & IE10 only):</h4>
+      <button class="pure-button">flip</button><button class="pure-button">flipInX</button><button class="pure-button">flipInY</button>
+      <h4>Fading exits:</h4>
+      <button class="pure-button">fadeOut</button><button class="pure-button">fadeOutUp</button><button class="pure-button">fadeOutDown</button><button class="pure-button">fadeOutLeft</button><button class="pure-button">fadeOutRight</button><button class="pure-button">fadeOutUpBig</button><button class="pure-button">fadeOutDownBig</button><button class="pure-button">fadeOutLeftBig</button><button class="pure-button">fadeOutRightBig</button>
+      <h4>Bouncing exits:</h4>
+      <button class="pure-button">bounceOut</button><button class="pure-button">bounceOutDown</button><button class="pure-button">bounceOutUp</button><button class="pure-button">bounceOutLeft</button><button class="pure-button">bounceOutRight</button>
+      <h4>Rotating exits:</h4>
+      <button class="pure-button">rotateOut</button><button class="pure-button">rotateOutDownLeft</button><button class="pure-button pure-button-secondary">rotateOutDownRight</button><button class="pure-button">rotateOutUpLeft</button><button class="pure-button">rotateOutUpRight</button>
+      <h4>Lightspeed:</h4>
+      <button class="pure-button">lightSpeedOut</button>
+      <h4>Specials:</h4>
+      <button class="pure-button">hinge</button><button class="pure-button">rollOut</button>
+    </div>
+    <div class="animations entrance">
+      <h3>Entrance Animations</h3>
+      <h4>Attention seekers</h4>
+      <button class="pure-button">flash</button><button class="pure-button">bounce</button><button class="pure-button">shake</button><button class="pure-button">tada</button><button class="pure-button">swing</button><button class="pure-button">wobble</button><button class="pure-button">wiggle</button><button class="pure-button">pulse</button>
+      <h4>Flippers (currently Webkit, Firefox, & IE10 only):</h4>
+      <button class="pure-button">flip</button><button class="pure-button">flipInX</button><button class="pure-button">flipInY</button>
+      <h4>Fading entrances:</h4>
+      <button class="pure-button">fadeIn</button><button class="pure-button">fadeInUp</button><button class="pure-button">fadeInDown</button><button class="pure-button">fadeInLeft</button><button class="pure-button">fadeInRight</button><button class="pure-button">fadeInUpBig</button><button class="pure-button">fadeInDownBig</button><button class="pure-button">fadeInLeftBig</button><button class="pure-button">fadeInRightBig</button>
+      <h4>Bouncing entrances:</h4>
+      <button class="pure-button">bounceIn</button><button class="pure-button">bounceInDown</button><button class="pure-button">bounceInUp</button><button class="pure-button">bounceInLeft</button><button class="pure-button">bounceInRight</button>
+      <h4>Rotating entrances:</h4>
+      <button class="pure-button">rotateIn</button><button class="pure-button">rotateInDownLeft</button><button class="pure-button">rotateInDownRight</button><button class="pure-button">rotateInUpLeft</button><button class="pure-button pure-button-secondary">rotateInUpRight</button>
+      <h4>Lightspeed:</h4>
+      <button class="pure-button">lightSpeedIn</button>
+      <h4>Specials:</h4>
+      <button class="pure-button">hinge</button><button class="pure-button">rollIn</button>
+    </div>
+  </div>
+  <p>This one is easy to set up.</p>
+  <pre class="line-numbers language-javascript"><code>$('#slider-6').liquidSlider({
+  autoHeight:false,
+  slideEaseFunction:'animate.css',
+  slideEaseDuration:1000,
+  heightEaseDuration:1000,
+  animateIn:"rotateInUpRight",
+  animateOut:"rotateOutUpLeft",
+  callback: function() {
+    var self = this;
+    $('.slider-6-panel').each(function() {
+      $(this).removeClass('animated ' + self.options.animateIn);
+    });
+  }
+});</code></pre>
+<p>To disable the Auto Height on the fly like I did above, you simply jump into the api, disable the setting, then recalculate the height. Without height animation the slider is set to use the heighest panel height.</p>
+<pre class="line-numbers language-javascript"><code>$('.height-toggle').on('click', function(e) {
+  var api = $.data( $('#slider-6')[0], 'liquidSlider');
+  if ($(this).text() === "turn off") {
+    api.options.autoHeight = false;
+    $(this).text('turn on');
+    api.adjustHeight(false, api.getHeighestPanel());
+  } else {
+    api.options.autoHeight = true;
+    $(this).text('turn off');
+    api.adjustHeight(false, api.getHeight());
+  }
+  e.preventDefault();
+});</code></pre>
+ <hr>
+</div>
+<div id="ajax">
+  <h2>Ajax<a href="#ajax">#</a></h2>
+  <p>This section actually has very little to do with Ajax, but when people ask me how to use the slider with Ajax, I know they are really asking how they can reconfigure the height after the content has loaded in. To take it one step further, I'll show you how you can easily use the built in preloader function as well!</p>
+  <div class="liquid-slider" id="slider-7">
+    <div>
+      <h2 class="title">Form</h2>
+      <div class="ajax-container">
+        <form class="pure-form">
+          <fieldset>
+              <legend>My favorite thing is...</legend>
+
+              <input style="font-size:0.97em" class="ajax1-input" type="text" placeholder="">
+              <button type="submit" class="ajax1 pure-button pure-button-secondary">Search</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+    <div>
+      <h2 class="title">Slider Settings</h2>
+      <pre class="language-javascript line-numbers"><code>$('#slider-7').liquidSlider({
+  includeTitle:false,
+  slideEaseFunction:'animate.css',
+  slideEaseDuration:1000,
+  heightEaseDuration:1000,
+  animateIn:"fadeIn",
+  animateOut:"bounceOutRight"
+});</code></pre>
+    </div>
+    <div>
+      <h2 class="title">AJAX Logic</h2>
+      <pre class="language-javascript line-numbers"><code>var api2 = $.data( $('#slider-7')[0], 'liquidSlider');
+
+$('.ajax1').on('click', function(e) {
+  e.preventDefault();
+  api2.addPreloader();
+  $('.ajax-container').html('');
+  $.ajax({
+    type: "GET",
+    url: "",
+    dataType: "jsonp",
+    success: function() {},
+    error: function() {},
+    complete: function() {
+      $('.ajax-container').html('&lt;p&gt;This JSON request was faked...&lt;/p&gt;' + $('.profile').html());
+      api2.adjustHeight(true, api2.getHeight());
+      api2.removePreloader();
+    }
+  });</code></pre>
+    </div>
+  </div>
+  <p>I know I fooled you there a bit, but there's no sense in actually running an ajax request here. You can find those tutorials elsewhere. However, if you skip over to the AJAX Logic tab above I will walk you through the code.</p>
+  <p>Actually, it should be very easy to follow. Line 1 stores the slider in an object that lets us access the public functions. Then after the button is clicked, we prevent the form submission, add the preloader, delete the form, and make the ajax request. Here you would set up situations that run on success or error, then once completed you would adjust the height and finally remove the preloader. It's too simple, right?</p>
+  <hr>
+</div> <!-- end #ajax -->
+<style>
+  @media (max-width: 550px) {
+    .slider-8-wrapper .ls-nav ul {
+      font-size: 2em;
+      width:100%;
+    }
+    .slider-8-wrapper .ls-nav ul span {
+      display:none;
+    }
+    .slider-8-wrapper .ls-nav ul li {
+      display: block;
+      width: 25%;
+      float: left;
+    }
+    .slider-8-wrapper .ls-nav ul a {
+      box-sizing:border-box;
+      width:100%;
+      text-align: center;
+    }
+  }
+</style>
+
+<div id="alternative-navigation">
+  <h2>Alternative Navigation<a href="#alternative-navigation">#</a></h2>
+  <p>Using the select box on mobile devices provides a native experience that makes sense to the user and is hard to confuse. However, there are times when an alternative mobile navigation makes more sense. Here I will show you one popular alternative.</p>
+  <div class="liquid-slider" id="slider-8">
+    <div>
+      <h2 class="title"><i class="icon-home"></i><span>Home</span></h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+    </div>
+    <div>
+      <h2 class="title"><i class="icon-inbox"></i><span>Inbox</span></h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+    </div>
+    <div>
+      <h2 class="title"><i class="icon-camera-retro"></i><span>Album</span></h2>
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+    </div>
+    <div>
+      <h2 class="title"><i class="icon-signout"></i><span>Sign Out</span></h2>
+      <p>Proin nec turpis eget dolor dictum lacinia. Nullam nunc magna, tincidunt eu porta in, faucibus sed magna. Suspendisse laoreet ornare ullamcorper. Nulla in tortor nibh. Pellentesque sed est vitae odio vestibulum aliquet in nec leo.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Sed volutpat ante id mauris laoreet vestibulum. Nam blandit felis non neque cursus aliquet. Morbi vel enim dignissim massa dignissim commodo vitae quis tellus. Nunc non mollis nulla. Sed consectetur elit id mi consectetur bibendum. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Etiam suscipit nisl eget lorem pellentesque quis iaculis mi mattis. Aliquam sit amet purus lectus. Maecenas tempor ornare sollicitudin.</p>
+    </div>
+  </div>
+  <p>This is also very easy to set up and involves a few simple settings and some css media queries. Additionally, you may need to realign the navigation in some cases where the content width is unknown until later on (i.e. images, fonts, etc).</p>
+  <pre class="language-javascript line-numbers"><code>$('#slider-8').liquidSlider({
+  includeTitle:false,
+  mobileNavigation:false,
+  onload: function() {
+    this.alignNavigation();
+  }
+});</code></pre>
+<p>Here I have removed the title, disabled the mobile navigation, and told the slider to recalculate the alignment of the navigation after being loaded. The last part is only necessary if your navigation looks split in half and drops down to a second line.</p>
+<pre class="language-css line-numbers"><code class="language-markup">&lt;!-- html --&gt;
+&lt;h2 class="title"&gt;
+  &lt;i class="icon-inbox"&gt;&lt;/i&gt;
+  &lt;span&gt;Inbox&lt;/span&gt;
+&lt;/h2&gt;</code>
+<code class="language-css">/*css*/
+@media (max-width: 550px) {
+    .slider-8-wrapper .ls-nav ul {
+      font-size: 2em;
+      width:100%;
+    }
+    .slider-8-wrapper .ls-nav ul span {
+      display:none;
+    }
+    .slider-8-wrapper .ls-nav ul li {
+      display: block;
+      width: 25%;
+      float: left;
+    }
+    .slider-8-wrapper .ls-nav ul a {
+      box-sizing:border-box;
+      width:100%;
+      text-align: center;
+    }
+  }</code></pre>
+  <p>I included both the html I used within a panel and the css media query, which you would include in the head of your document. There isn't a lot of advanced wizardry happening here, but there are two important things to note.</p>
+  <ul>
+    <li>This might not be the best media query to use as it's not mobile-first in design. I included it for ease, but you might want to set these styles in your base css, then use a "min-width" media query to  override them on larger screens. @media queries only load if they are needed, and the less you load on mobile devices, the better. If you only have a few lines then the footprint is small and don't worry about it, but if you're building a full site then that approach is a must. </li>
+    <li>The <code class="language-css">box-sixing:border-box</code> propery basically tells an element that it will be the width stated, and not increase due to padding, etc. It's an amazing thing, but unfortunately, be sure to check browser support if you plan to use it as you might need vendor prefixes or a polyfill.</li>
+  </ul>
+  <hr>
+</div> <!-- end #ajax -->
+
+</div> <!-- End of container -->
+<footer class="site-footer" role="contentinfo">
+<div class="container">
+  <div class="profile">
+    <a class="circle-image-link" href="https://twitter.com/kevinbatdorf" title="Kevin Batdorf on Twitter">
+      <img src="./assets/mee.jpeg">
+    </a>
+    <div class="info">
+      <h2 class="title">by Kevin Batdorf</h2>
+      <a href="https://twitter.com/kevinbatdorf" class="twitter-follow-button" data-show-count="false" data-size="large" data-show-screen-name="false" data-dnt="true">Follow @kevinbatdorf</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      <p>Hey there fellow developer. I wrote the <a class="link" href="https://github.com/KevinBatdorf/codaslider" title="Liquid Slider">Liquid Slider</a> with the purpose of building a fast, lightweight and flexible slider that runs great on any device. It is also the successor to the <a class="link" href="https://github.com/KevinBatdorf/codaslider" title="Coda Slider download">Coda Slider</a> which has been around for years. I'm a freelance web developer for hire, so send me a message here.</p>
+    </div>
+  </div>
+</div>
+
+<script src="../js/jquery.liquidslider.npm.demo.min.js"></script>
+<script src="./assets/prism.js"></script>
+<script>
+$('#slider-6').liquidSlider({
+  autoHeight:false,
+  slideEaseFunction:'animate.css',
+  slideEaseDuration:1000,
+  heightEaseDuration:1000,
+  mobileUIThreshold: 360,
+  animateIn:"rotateInUpRight",
+  animateOut:"rotateOutUpLeft",
+  callback: function() {
+    var self = this;
+    $('.slider-6-panel').each(function() {
+      $(this).removeClass('animated ' + self.options.animateIn);
+    });
+  }
+});
+$('.height-toggle').on('click', function(e) {
+  var api = $.data( $('#slider-6')[0], 'liquidSlider');
+  if ($(this).text() === "turn off") {
+    api.options.autoHeight = false;
+    $(this).text('turn on');
+    api.adjustHeight(false, api.getHeighestPanel());
+  } else {
+    api.options.autoHeight = true;
+    $(this).text('turn off');
+    api.adjustHeight(true, api.getHeight());
+  }
+  e.preventDefault();
+});
+$('.entrance button').on('click', function(e) {
+  let $target = $(e.currentTarget);
+  $('.entrance button').removeClass('pure-button-secondary');
+  var api = $('#slider-6').data('liquidSlider');
+  
+  $target.addClass('pure-button-secondary');
+  if (api.options.animateIn !== api.options.animateOut)
+    $(api.panelClass).removeClass(api.options.animateIn);
+  api.options.animateIn = $target.text();
+  console.log(api.options);
+});
+$('.exit button').on('click', function() {
+  $('.exit button').removeClass('pure-button-secondary');
+  var api = $.data( $('#slider-6')[0], 'liquidSlider');
+  $(this).addClass('pure-button-secondary');
+  if (api.options.animateIn !== api.options.animateOut)
+    $(api.panelClass).removeClass(api.options.animateOut);
+  api.options.animateOut = $(this).text();
+  console.log(api.options);
+});
+
+$('#slider-7').liquidSlider({
+  includeTitle:false,
+  slideEaseFunction:'animate.css',
+  slideEaseDuration:1000,
+  heightEaseDuration:1000,
+  animateIn:"fadeIn",
+  animateOut:"bounceOutRight"
+});
+var api2 = $.data( $('#slider-7')[0], 'liquidSlider');
+// Ajax stuff
+$('.ajax1').on('click', function(e) {
+  e.preventDefault();
+  api2.addPreloader();
+  $('.ajax-container').html('');
+  $.ajax({
+    type: "GET",
+    url: "",
+    dataType: "jsonp",
+    success: function() {},
+    error: function() {},
+    complete: function() {
+      $('.ajax-container').html('<p>This JSON request was faked, and you will surely want to write a real one in it\'s place</p>' + $('.profile').html());
+      api2.adjustHeight(true, api2.getHeight());
+      api2.removePreloader();
+    }
+  });
+});
+
+$('#slider-8').liquidSlider({
+  includeTitle:false,
+  mobileNavigation:false,
+  onload: function() {
+    this.alignNavigation();
+  }
+});
+</script>
+
+</footer>
+</body>
+</html>
