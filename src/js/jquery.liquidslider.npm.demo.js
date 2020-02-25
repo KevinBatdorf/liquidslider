@@ -14,15 +14,12 @@ var LiquidSlider = require('./jquery.liquidslider.npm.js');
 // Should show an error in console.
 LiquidSlider.bindTojQuery($);
 
-// will allow binding to data-liquid-slider tagged containers.
-Base.bindToRender(LiquidSlider);
-
 document.addEventListener("DOMContentLoaded", () => {
   let slider9 = document.getElementById('slider-9');
   if(slider9) {
     //let LiquidSlider = require('liquid-slider'),
     let slider_nine = new LiquidSlider(slider9, {
-      autoHeight:false,
+      autoHeight:true,
       slideEaseFunction:'animate.css',
       slideEaseDuration:1000,
       heightEaseDuration:1000,
@@ -30,4 +27,23 @@ document.addEventListener("DOMContentLoaded", () => {
       animateOut:"rotateOutUpLeft"     
     });
   }
+  
+  let $destroyable = $('#destroyable_from_npm');
+  console.log($destroyable);
+  if($destroyable.length > 0) {
+    let slider_destroy = new LiquidSlider($destroyable, {
+      autoHeight:true,
+      slideEaseFunction:'animate.css',
+      slideEaseDuration:1000,
+      heightEaseDuration:1000,
+      animateIn:"rollIn",
+      animateOut:"rollOut"     
+    });
+    $destroyable.on('what_can_i_say_except_delete_this', () => {
+      slider_destroy.sysDestroy();
+      setTimeout(()=>{$destroyable.fadeOut('slow');}, 3000);
+    });
+  }
+  
+  $(document).trigger('render');
 });

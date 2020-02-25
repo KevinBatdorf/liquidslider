@@ -164,7 +164,7 @@ LiquidSlider.prototype.handlers = function(type)
  * whilst the foobar needs a this.foobar=null in the destroy function.
  */
 LiquidSlider.prototype.init = function() 
-{console.log('removed', this.options);
+{
   if(this.options.removeGlobalNoJsMarker) {
       $('.no-js').removeClass('no-js');
   }
@@ -279,6 +279,9 @@ LiquidSlider.prototype.init = function()
  */
 LiquidSlider.prototype.destroy = function() 
 {
+    clearTimeout(this.cloneJumperTimeout);
+    clearTimeout(this.autoSlideTimeout)
+    clearTimeout(this.resizingTimeout);
     this.$panelClass
         .children()
         .filter('.panel-wrapper')
@@ -290,14 +293,26 @@ LiquidSlider.prototype.destroy = function()
     else {
         this.$sliderWrap.css('width','');
     }
+    this.$allPanels.each((index, elem) => {
+      let $el = $(elem);
+      $el.removeClass();
+      $el.addClass($el.data('ls-original-classes'));
+      $el.removeData('ls-original-classes');
+      $el.css('width','');
+    });
     this.$panelContainer.css('margin-left', '');
     this.$allPanels.removeClass('ls-panel');
-    
+    this.$panelContainer.children().unwrap();
     this.leftArrow && this.leftArrow.remove();
     this.rightArrow && this.rightArrow.remove();
     this.dropdown && this.dropdown.remove();
+    this.$clones && this.$clones.remove();
     this.dynamicTabsElement && this.dynamicTabsElement.remove();
     this.$el.removeData('liquidSlider');
+    this.$el.css('height','');
+    this.$el.css('transition','');
+    this.$el.css('transform','');
+    this.$el.css('width','');
     
 }
 
@@ -322,7 +337,10 @@ LiquidSlider.prototype.build = function()
   this.options.preloader && this.addPreloader();
 
   // Add the .panel class to the individual panels
-  
+  this.$el.children().each((index, elem) => {
+     let $el = $(elem);
+     $el.data('ls-original-classes', $el.attr('class'));
+  });
   this.$el.children().addClass('ls-panel');
   
   this.$panelClass = this.$el.find(this.panelClass);
@@ -1133,7 +1151,7 @@ LiquidSlider.prototype.showArrow = function(arrow)
 }
 LiquidSlider.prototype.onArrowClick = function(e) {
   e.preventDefault();
-  console.log(e.currentTarget);
+  
   this.setNextPanel($.data(e.currentTarget, 'ls-navigate'));
   return false;
 }
@@ -1421,4 +1439,5 @@ LiquidSlider.bindTojQuery = function(jQueryInstance)
         console.error('liquid slider is already bound to this jQuery instance');
     }
 }
+Base.bindToRender(LiquidSlider);
 LiquidSlider.bindTojQuery($);

@@ -40,7 +40,11 @@ h1 a {
   color: inherit;
   text-decoration: none;
 }
-
+section {
+    display: inline-block;
+    width: 100%;
+    clear: both;
+}
 h2, h3, h4 {
   font-family: 'Montserrat', sans-serif;
 }
