@@ -187,6 +187,13 @@
   margin-top: 50px;
   position:relative;
 }
+}
+.ls-nav-left-arrow a, .ls-nav-right-arrow a {
+  display: block;
+}
+
+
+
 .ls-nav-left-arrow a, .ls-nav-right-arrow a {
   display: block;
 }

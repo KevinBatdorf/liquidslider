@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "@tschallacka/oc.foundation.base": "^1.0.6",
-    "jquery": "^3.4.1",
+    "jquery": "*",
     "jquery-touchswipe": "^1.6.19",
     "jquery.easing": "^1.4.1"
   }
