@@ -42,15 +42,15 @@
     <div class="pure-menu pure-menu-open">
       <a class="pure-menu-heading">Page 2</a>
       <ul>
-          <li><a href="#animate-css">Animate.css</a></li>
-          <li><a href="#ajax">Ajax</a></li>
-          <li><a href="#alternative-navigation">Alternative Navigation</a></li>
+          <li><a href="./page2.npm.html#animate-css">Animate.css</a></li>
+          <li><a href="./page2.npm.html#ajax">Ajax</a></li>
+          <li><a href="./page2.npm.html#alternative-navigation">Alternative Navigation</a></li>
       </ul>
     </div>
     <div class="pure-menu pure-menu-open">
       <a class="pure-menu-heading">Page 3</a>
       <ul>
-          <li><a href="#animate-css">Simplest node Application</a></li>
+          <li><a href="#simple-node-slider">Simplest node Application</a></li>
           <li><a href="#ajax">October Foundation</a></li>
           <li><a href="#alternative-navigation">Ajax, but different</a></li>
           <li><a href="#binding-to-jquery">Binding to a second jQuery instance</a></li>
@@ -68,18 +68,22 @@
         <img src="./assets/tschallacka.png" style="width: 100px;height:auto;">
       </a>
       Hey there. This part isn't written by Kevin, but by me, Tschallacka.<BR/>
-      I've invested some time to upgrade this library to nodejs because I was encountering some
+      I've invested some time to upgrade this library to NodeJS because I was encountering some
       issues with the original script within my node application.<BR/>
       This part doesn't cover the "vanilla" uses the original documentation covers
-      but the added functionality by me and a bit how to use it in your nodejs application.<BR/>
+      but the added functionality by me and a bit how to use it in your NodeJS application.<BR/>
       The tone of this document may be a bit different, and if you were wondering why, this is why.
     <p>
+    <p>
+        Page 1 and 2 largely use the "old" approach via the jQuery function. 
+        This page largely concerns with the NodeJS implementation and newly added features.
+  </p>
   </div>
 <div id="simple-node-slider">
   <h2>Simplest node application<a href="#simple-node-slider">#</a></h2>
   <p>
-    When you wish to start the slider on an element from your nodejs application you can simply do 
-    it by initializing an instance and pass the element(DOM object or jQuery instance) and options to the instance.
+    When you wish to start the slider on an element from your NodeJS application, you can do this by initializing a LiquidSlider 
+    instance and pass the target element(DOM object or jQuery instance) and options to the LiquidSlider instance.
   </p>
   <section>
     <div class="liquid-slider" id="slider-9">
@@ -107,10 +111,7 @@
     To compile the demo call <code class="line-numbers language-bash">gulp browserify</code> 
     if you wish to fiddle around with the sample under this section.
   </p>
-  <p>
-    Page 1 and 2 largely use the "old" approach via the jQuery function. 
-    This page largely concerns with the node js implementation and newly added features.
-  </p>
+  
   
   <pre class="line-numbers language-javascript"><code>
 document.addEventListener("DOMContentLoaded", () => {
@@ -128,14 +129,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 }</code></pre>
   <p>
-    If you don't wish to concern with the methods laid out under the october foundation section to dispose of your LiquidSlider
-    you can trigger the self clean up from the code, if you have a reference to the LiquidSlider instance by calling 
+    If you don't wish to use the methods implemented by the october foundation section, to dispose of your LiquidSlider by triggering events on the DOM,
+    you can trigger the self clean up directly from code. When you have a reference to the LiquidSlider instance, you can invoke
     <code class="language-javascript">liquidSliderInstance.sysDestroy()</code>.
   <p>
   <p>
     Why not <code class="language-javascript">liquidSliderInstance.destroy()</code> you ask? Because sysDestroy cleans up
     everything related to the instance and a lot of <i>"under the hood"</i> stuff, and a method named <code class="language-javascript">destroy()</code> is much nicer name to present to 
-    people extending the <a href="https://github.com/tschallacka/npm_oc.foundation.base">framework</a> for their own purposes.
+    people extending the <a href="https://github.com/tschallacka/npm_oc.foundation.base">framework</a> for their own purposes when cleaning up their own objects.
   </p>
   <pre class="line-numbers language-javascript"><code>
 let $destroyable = $('#destroyable_from_npm');
@@ -158,7 +159,7 @@ let $destroyable = $('#destroyable_from_npm');
 <section>
   <div class="liquid-slider" id="destroyable_from_npm">
     <div>
-      <h2 class="title">You're welcome</h2>
+      <h2 class="title">You're welcome?</h2>
       <p>What can I say except you're welcome.</p>
     </div>
     <div>
@@ -343,15 +344,18 @@ if(array_key_exists('x-october-request-handler', $headers)
   </p>
   <p>
     Do note that although the <code class="language-javascript">jQuery.fn.liquidSlider()</code> method gets registered on the provided jQuery instance,
-    the internals of liquidSlider still use the default returned jQuery instance by require('jquery'). Your milage may vary.
+    the internals of liquidSlider still use the default returned jQuery instance by <code class="language-javascript">require('jquery')</code>. Your milage may vary.
   </p>
   <p>
-    When you try to bind the liquidSlider function a second time to a jQuery instance an error warning will be shown in the console.
+    When you try to bind the LiquidSlider function a second time to a jQuery instance an error warning will be shown in the console.
     If you hit F12 you should see the error. It's quite harmless, but allows you to pinpoint where you duplicate your work.
   </p>
   <p>
-    If you try to initalize LiquidSlider for a second time on an alredy existing instance a error will be thrown.
-    This will halt your execution flow.
+    If you try to initalize LiquidSlider for a second time on an already existing instance, an error will be thrown.<BR/>
+    This <strong>will</strong> halt your execution flow when not caught.
+  </p>
+  <p>Open your console and click this button to see how such an error would present itself.
+    <BR/>
     <button class="pure-button" onclick="$('#slider-10').liquidSlider({});">Trigger an Error</button>
   </p>
   <hr>
@@ -359,7 +363,8 @@ if(array_key_exists('x-october-request-handler', $headers)
 <div id="access-the-instance">
     <h2>Access the instance<a href="#access-the-instance">#</a></h2>
     <p>
-        When you initialize the LiquidSlider from your NodeJS application you of course have direct access to the instance. Just keep it around until you don't need it anymore.
+        When you initialize the LiquidSlider from your NodeJS application, you have direct access to the instance.<BR/>
+        Just keep it around until you don't need it anymore.
 <pre class="line-numbers language-javascript"><code>let LiquidSlider = require('liquid-slider'),
 // hang on to my_slider
 my_slider = new LiquidSlider(element, {
@@ -373,7 +378,7 @@ my_slider = new LiquidSlider(element, {
 </code></pre>
     </p>
     <p>
-        When you initialize the slider via the jQuery function or any other method you can access the instance via jQuery data value liquidSlider.
+        When you initialize the slider via the jQuery function or any other method, you can access the instance via jQuery data value liquidSlider.
 <pre class="line-numbers language-javascript"><code>let $slider = $('#slider');
 $slider.liquidSlider({
   autoHeight:false,
@@ -387,8 +392,8 @@ let liquidSlider = $slider.data('liquidSlider');
 </code></pre>
     </p>
     <p>
-      When you initialized the LiquidSlider via the data attributes api and triggered the <code class="language-javascript">'render'</code> event you can 
-      also access also the liquid slider in the <code class="language-javascript">'oc.LiquidSlider'</code> jQuery data value.
+      When you initialized the LiquidSlider via the data attributes api and triggered the <code class="language-javascript">'render'</code> event, you can 
+      access the liquid slider also in the <code class="language-javascript">'oc.LiquidSlider'</code> jQuery data value.
     </p>
 </div>
 
