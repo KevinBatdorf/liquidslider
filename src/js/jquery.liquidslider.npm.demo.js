@@ -7,7 +7,6 @@
  *  Copyright 2020 Michael Dibbets
  *  MIT license
  */
-var Base = require("@tschallacka/oc.foundation.base");
 var $ = window.$ = window.jQuery = require('jquery');
 var LiquidSlider = require('./jquery.liquidslider.npm.js');
 
