@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   
   let $destroyable = $('#destroyable_from_npm');
-  console.log($destroyable);
+  
   if($destroyable.length > 0) {
     let slider_destroy = new LiquidSlider($destroyable, {
       autoHeight:true,

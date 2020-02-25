@@ -27,10 +27,13 @@ var Base = require("@tschallacka/oc.foundation.base");
 var APPNAME = 'LiquidSlider';
 var LiquidSlider = function (element, options) 
 {  
-    
-  options = $.extend({}, LiquidSlider.DEFAULTS, element && $.data(element), typeof options == 'object' && options);
-    
-	Base.call(this, APPNAME, element, options);
+  if(element && ($.data(element, 'liquidSlider') instanceof LiquidSlider || $.data(element, this.oc) instanceof LiquidSlider)) {
+      console.error(element);
+      throw new Error("LiquidSlider is already bound to this element");
+  }
+  options = $.extend({}, LiquidSlider.DEFAULTS, element && $.data(element), typeof options == 'object' && options);  
+  
+  Base.call(this, APPNAME, element, options);
 }; 
 LiquidSlider.prototype = Object.create(Base.prototype); 
 LiquidSlider.prototype.constructor = LiquidSlider;
@@ -165,6 +168,7 @@ LiquidSlider.prototype.handlers = function(type)
  */
 LiquidSlider.prototype.init = function() 
 {
+  this.$el.data('liquidSlider', this);
   if(this.options.removeGlobalNoJsMarker) {
       $('.no-js').removeClass('no-js');
   }
@@ -267,6 +271,8 @@ LiquidSlider.prototype.init = function()
       this.rightArrow.outerWidth(true)
     );
   }
+  
+  
   // Set the slider as loaded (almost)
   this.loaded = true;  
 }
@@ -1418,20 +1424,12 @@ module.exports = LiquidSlider;
 
 LiquidSlider.bindTojQuery = function(jQueryInstance) 
 {
-   let instance = new LiquidSlider();
    if(!jQueryInstance.fn.liquidSlider) {
        jQueryInstance.fn.liquidSlider = function(options) 
        {         
          return this.each(function(index, elem) 
          {
-           if(!$.data(elem, 'liquidSlider') && !$.data(elem, instance.oc)) {
-            let slider = new LiquidSlider(elem, options);
-            $.data(elem, 'liquidSlider', slider);
-           }
-           else {
-               console.error(elem);
-               throw new Error('liquid slider is already bound to this object');
-           }
+             let slider = new LiquidSlider(elem, options);
          });
        }
     }

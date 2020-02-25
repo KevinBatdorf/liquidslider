@@ -47,7 +47,33 @@
           <li><a href="#alternative-navigation">Alternative Navigation</a></li>
       </ul>
     </div>
+    <div class="pure-menu pure-menu-open">
+      <a class="pure-menu-heading">Page 3</a>
+      <ul>
+          <li><a href="#animate-css">Simplest node Application</a></li>
+          <li><a href="#ajax">October Foundation</a></li>
+          <li><a href="#alternative-navigation">Ajax, but different</a></li>
+          <li><a href="#binding-to-jquery">Binding to a second jQuery instance</a></li>
+          <li><a href="#access-the-instance">Accessing the instance</a></li>
+      </ul>
+    </div>
     
+  </div>
+  <div id="introduction">
+    <h2>
+      Introduction <a href="#introduction">#</a>
+    </h2>
+    <p>
+      <a href="https://www.tschallacka.de" style="float: left;margin-right:10px;">
+        <img src="./assets/tschallacka.png" style="width: 100px;height:auto;">
+      </a>
+      Hey there. This part isn't written by Kevin, but by me, Tschallacka.<BR/>
+      I've invested some time to upgrade this library to nodejs because I was encountering some
+      issues with the original script within my node application.<BR/>
+      This part doesn't cover the "vanilla" uses the original documentation covers
+      but the added functionality by me and a bit how to use it in your nodejs application.<BR/>
+      The tone of this document may be a bit different, and if you were wondering why, this is why.
+    <p>
   </div>
 <div id="simple-node-slider">
   <h2>Simplest node application<a href="#simple-node-slider">#</a></h2>
@@ -282,8 +308,89 @@ $wiped.html($('#replacement-10').val()).trigger('render');">
   DOM elements  before replacing html content, you should be fine and dandy.
   Should you be replacing it with a new slider just call <code class="language-javascript">$(document).render()</code>
   </p>
+  <p>
+    A thing that is supported in this framework by itself is the use of the octobercms request api method.
+    This is not essential to the workings of the liquid slider, but if you are interested you can read up
+    at the relevant <a href="https://github.com/tschallacka/npm_oc.foundation.request">git repo</a> and the 
+    <a href="https://github.com/tschallacka/npm_jquery.request">links</a> placed to the other packages 
+    within to understand how to use it.<BR/>
+    When you don't use OctoberCMS you might have to build your own wrapper to read out the relevant headers
+    to direct the ajax requests to the appropiate <a href="javascript:;" onclick="$('#server-side-basic-handler').toggle()">server side application handler</a>.
+  </p>
+  <pre class="line-numbers language-php" style="display:none;" id="server-side-basic-handler"><code>$headers = array_change_key_case(getallheaders(), CASE_LOWER);
+/**
+ * Is it an ajax request given to our api? EG, is the X-OCTOBER-REQUEST-HANDLER header set?
+ */
+if(array_key_exists('x-october-request-handler', $headers) 
+    && !is_null($headers['x-october-request-handler']) 
+    && !empty(trim($headers['x-october-request-handler']))) {
+  $ret = $controller->ajaxMethodRequest(trim($headers['x-october-request-handler']));
+  \header('Content-Type: application/json;');
+  echo json_encode($ret);
+  exit();
+}</code></pre>
   <hr>
 </div> <!-- end #ajax -->
+
+<div id="binding-to-jquery">
+  <h2>Binding to a second jQuery instance<a href="#binding-to-jquery">#</a></h2>
+  <p>
+    Sometimes, for whatever reason, you have multiple versions of jQuery running on the same page.<BR/>
+    Default the LiquidSlider will bind itself to the default jQuery instance that is returned by 
+    <code class="language-javascript">require('jquery')</code>.<BR/>
+    If you have an older version, or a secondary MSIE compatible version of jQuery running, you can<BR/>
+    bind the LiquidSlider to that jQuery by calling <code class="language-javascript">LiquidSlider.bindTojQuery(another_jquery_instance);</code>
+  </p>
+  <p>
+    Do note that although the <code class="language-javascript">jQuery.fn.liquidSlider()</code> method gets registered on the provided jQuery instance,
+    the internals of liquidSlider still use the default returned jQuery instance by require('jquery'). Your milage may vary.
+  </p>
+  <p>
+    When you try to bind the liquidSlider function a second time to a jQuery instance an error warning will be shown in the console.
+    If you hit F12 you should see the error. It's quite harmless, but allows you to pinpoint where you duplicate your work.
+  </p>
+  <p>
+    If you try to initalize LiquidSlider for a second time on an alredy existing instance a error will be thrown.
+    This will halt your execution flow.
+    <button class="pure-button" onclick="$('#slider-10').liquidSlider({});">Trigger an Error</button>
+  </p>
+  <hr>
+</div>
+<div id="access-the-instance">
+    <h2>Access the instance<a href="#access-the-instance">#</a></h2>
+    <p>
+        When you initialize the LiquidSlider from your NodeJS application you of course have direct access to the instance. Just keep it around until you don't need it anymore.
+<pre class="line-numbers language-javascript"><code>let LiquidSlider = require('liquid-slider'),
+// hang on to my_slider
+my_slider = new LiquidSlider(element, {
+  autoHeight:true,
+  slideEaseFunction:'animate.css',
+  slideEaseDuration:1000,
+  heightEaseDuration:1000,
+  animateIn:"rotateInUpRight",
+  animateOut:"rotateOutUpLeft"`
+});
+</code></pre>
+    </p>
+    <p>
+        When you initialize the slider via the jQuery function or any other method you can access the instance via jQuery data value liquidSlider.
+<pre class="line-numbers language-javascript"><code>let $slider = $('#slider');
+$slider.liquidSlider({
+  autoHeight:false,
+  slideEaseFunction:'animate.css',
+  slideEaseDuration:1000,
+  heightEaseDuration:1000,
+  animateIn:"rotateInUpRight",
+  animateOut:"rotateOutUpLeft"
+});
+let liquidSlider = $slider.data('liquidSlider');
+</code></pre>
+    </p>
+    <p>
+      When you initialized the LiquidSlider via the data attributes api and triggered the <code class="language-javascript">'render'</code> event you can 
+      also access also the liquid slider in the <code class="language-javascript">'oc.LiquidSlider'</code> jQuery data value.
+    </p>
+</div>
 
 </div> <!-- End of container -->
 <footer class="site-footer" role="contentinfo">
