@@ -8,6 +8,9 @@
  *  MIT license
  */
 var $ = window.$ = window.jQuery = require('jquery');
+// replace the local import with the npm registry name in your own application
+// or call npm link in this directory and npm link liquidslider in your working
+// directory and then require('liquidslider');
 var LiquidSlider = require('./jquery.liquidslider.npm.js');
 
 // Should show an error in console.
